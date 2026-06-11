@@ -1,0 +1,25 @@
+{
+  "updated": "2026-06-11",
+  "_schema": {
+    "id": "唯一编号，建议 <child>_dayNN 或 <child>_<subject>_<date>",
+    "knowledge_points": "本卷覆盖的知识点名称数组，用于和 profile 联动、避免重复、循序渐进",
+    "difficulty": "easy | medium | hard | 未标注",
+    "result": "批改后回填的总体表现（如 正确率/星数/简评），未批改填 未录入"
+  },
+  "papers": [
+    {
+      "id": "kenton_day11",
+      "date": "2026-06-11",
+      "child": "kenton",
+      "subject": "综合(语数英)",
+      "title": "语数英综合卷 · 第11天",
+      "quiz_file": "papers/kenton_day11_quiz.pdf",
+      "answer_file": "papers/kenton_day11_answers.pdf",
+      "app_file": "apps/kenton_day11_output.html",
+      "knowledge_points": [],
+      "difficulty": "未标注",
+      "result": "未录入",
+      "notes": "导入记忆层时的台账第一条。标题为'第11天'，说明此前还有第 1-10 天的卷子未入库——如有历史文件可补录到本台账，记忆会更连贯。"
+    }
+  ]
+}
