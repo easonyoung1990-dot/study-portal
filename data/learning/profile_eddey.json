@@ -1,0 +1,29 @@
+{
+  "child": "eddey",
+  "name": "Eddey",
+  "updated": "2026-06-11",
+  "summary": "首次建立学情画像。后续每次出卷/批改后，更新对应知识点的掌握度(0-100)、趋势与薄弱项。",
+  "subjects": {
+    "语文": {
+      "strengths": [],
+      "weaknesses": [],
+      "knowledge_points": {}
+    },
+    "数学": {
+      "strengths": [],
+      "weaknesses": [],
+      "knowledge_points": {}
+    },
+    "英语": {
+      "strengths": [],
+      "weaknesses": [],
+      "knowledge_points": {}
+    }
+  },
+  "milestones": [],
+  "_schema": {
+    "knowledge_points": "形如 { \"小数除法\": { \"mastery\": 85, \"trend\": \"up|flat|down\", \"last_seen\": \"YYYY-MM-DD\" } }，mastery 为 0-100 的掌握度估计",
+    "strengths/weaknesses": "知识点名称数组，从 knowledge_points 中提炼，便于出卷时快速取用",
+    "milestones": "形如 { \"date\": \"YYYY-MM-DD\", \"text\": \"小数除法从 62% 提升到 85%\" }"
+  }
+}

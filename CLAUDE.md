@@ -85,13 +85,34 @@
 约定：`child`/`who` 仅限 `kenton` 或 `eddey`；日期用 `YYYY-MM-DD`；
 `link`/`file` 为相对仓库根的相对路径；JSON 必须合法（改完务必校验）。
 
+## 学习记忆层（内容迭代铁律 ⭐）
+
+学习内容（卷子/练习等）需要**长期记忆、逐次迭代**：后面的内容要基于以前的来出。
+记忆载体是仓库文件（`data/learning/` + `docs/学习记忆.md`），因为 AI 无跨会话记忆——
+每次会话都是重新克隆仓库，**只有提交进 git 的文件才读得到**。因此：
+
+**出任何学习卷子/练习内容前，必须先读：**
+1. `data/learning/profile_<who>.json` —— 该孩子的学情画像（各知识点掌握度、薄弱项）
+2. `data/learning/papers_log.json` —— 已出过的卷子台账（避免重复、保证循序渐进、难度递进）
+3. `docs/学习记忆.md` —— 成长记录概览
+
+**出完之后，必须更新（同一次提交里一起改）：**
+1. `papers_log.json` 追加本卷一条（id/日期/学科/知识点/难度/结果）
+2. `profile_<who>.json` 按本次表现调整相关知识点 `mastery` 与 `strengths/weaknesses`
+3. `docs/学习记忆.md` 顶部追加一段成长日志
+
+> 这条闭环每次都走 = 内容持续进化。漏更新记忆 = 记忆断档，下次就"失忆"。
+> 注：本仓库内 AI 不能"后台常驻自动进化"，迭代发生在每次被调用时；
+> 若要定时自动跑（如每日出题），属蓝图 P2 的 GitHub Actions 定时任务，另议。
+
 ## 常见任务做法（"更新门户"）
 
 - **加今日任务** → 改 `data/tasks.json`（更新 `date` 与对应孩子数组）。
 - **入库新软件** → 把 HTML 放进 `apps/`，在 `data/apps.json` 追加一条索引。
 - **更新积分** → 改 `data/scores.json`（同时更新 `updated`）。
 - **发布播报** → 在 `podcast/` 新建 `YYYY-MM-DD.html`，在 `data/podcast.json` 追加一条。
-- **加卷子** → PDF 放进 `papers/`，在对应 `tasks.json` 用 `type:"pdf"` 链接到它。
+- **加卷子** → PDF 放进 `papers/`，在对应 `tasks.json` 用 `type:"pdf"` 链接到它，
+  **并按上节"学习记忆层"铁律先读后更新** `data/learning/`。
 
 新建软件/播报页时，复用现有页面的窄屏单列结构与 `assets/styles.css`，保持视觉一致。
 
