@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff7f0">
+<title>今日任务 · 家庭学习门户</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back" href="index.html">‹</a>
+    <h1 id="title">今日任务</h1>
+  </div>
+
+  <div class="card" id="dateCard">
+    <div style="font-size:15px;color:var(--muted)">今天是</div>
+    <div id="dateText" style="font-size:22px;font-weight:800">—</div>
+  </div>
+
+  <div id="list" class="grid">
+    <div class="empty">正在加载今日任务…</div>
+  </div>
+
+  <div class="grid" style="margin-top:16px">
+    <a class="app-card" id="appsLink" href="apps.html" style="border-left-color:var(--candy-purple)">
+      <span class="ico">🎮</span>
+      <span><div class="t">打开软件库</div><div class="meta">所有学习软件</div></span>
+    </a>
+    <a class="app-card" id="podcastLink" href="#" style="border-left-color:var(--candy-pink)">
+      <span class="ico">🎧</span>
+      <span><div class="t">今日播报</div><div class="meta" id="podMeta">点这里听今天的播报</div></span>
+    </a>
+  </div>
+
+  <div class="footer-note">完成一个任务，就能拿到星星 🌟</div>
+</div>
+
+<script>
+  const CHILD_NAME = { kenton: "Kenton", eddey: "Eddey" };
+  const CHILD_ICON = { kenton: "🦁", eddey: "🐯" };
+  function getParam(k){ return new URLSearchParams(location.search).get(k); }
+
+  async function load() {
+    const who = getParam("who") || "kenton";
+    document.title = CHILD_NAME[who] + " 的今日任务";
+    document.getElementById("title").textContent =
+      (CHILD_ICON[who]||"") + " " + (CHILD_NAME[who]||who) + " 的今日任务";
+    // 软件库链接带上 who，进去只看自己的软件
+    document.getElementById("appsLink").href = "apps.html?who=" + who;
+
+    const list = document.getElementById("list");
+    try {
+      const res = await fetch("data/tasks.json", { cache: "no-store" });
+      const data = await res.json();
+      document.getElementById("dateText").textContent = data.date || "—";
+      const tasks = data[who] || [];
+      if (!tasks.length) {
+        list.innerHTML = '<div class="empty">今天没有安排任务，去软件库自由探索吧 ✨</div>';
+      } else {
+        list.innerHTML = tasks.map(t => {
+          const ico = t.type === "pdf" ? "📄" : "📖";
+          const star = "⭐".repeat(t.stars || 0);
+          return `<a class="app-card" href="${t.link}" style="border-left-color:var(--candy-green)">
+            <span class="ico">${ico}</span>
+            <span>
+              <div class="t">${t.title}</div>
+              <div class="meta"><span class="stars">${star}</span> 完成可得 ${t.stars||0} 颗星</div>
+            </span>
+          </a>`;
+        }).join("");
+      }
+    } catch (e) {
+      list.innerHTML = '<div class="empty">今日任务读取失败，请稍后再试</div>';
+    }
+
+    // 播报入口（取最新一期）
+    try {
+      const pres = await fetch("data/podcast.json", { cache: "no-store" });
+      const pods = await pres.json();
+      if (pods && pods.length) {
+        const latest = pods[pods.length - 1];
+        document.getElementById("podcastLink").href = latest.file;
+        document.getElementById("podMeta").textContent =
+          latest.date + " · " + (latest.topics||[]).join(" / ");
+      } else {
+        document.getElementById("podMeta").textContent = "播报即将上线";
+      }
+    } catch (e) {
+      document.getElementById("podMeta").textContent = "播报即将上线";
+    }
+  }
+  load();
+</script>
+</body>
+</html>

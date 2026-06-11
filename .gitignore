@@ -1,0 +1,9 @@
+# ===== 隐私红线：本地敏感数据，永不上传 =====
+local-data/
+
+# 系统/编辑器杂物
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+node_modules/

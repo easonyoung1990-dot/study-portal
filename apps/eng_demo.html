@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e3fbff">
+<title>English Adventure · Demo</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0; min-height: 100vh;
+    font-family: "Segoe UI", "PingFang SC", system-ui, sans-serif;
+    background: radial-gradient(circle at 20% 0%, #d7f6ff 0, transparent 45%),
+                radial-gradient(circle at 90% 8%, #ffe6f0 0, transparent 40%), #f3fcff;
+    color: #2b3a42; display: flex; flex-direction: column;
+  }
+  .wrap { max-width: 520px; margin: 0 auto; padding: 16px; width: 100%; flex: 1; display: flex; flex-direction: column; }
+  .bar { display: flex; align-items: center; gap: 10px; }
+  .bar a { text-decoration: none; font-size: 22px; background:#fff; width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:#2b3a42;box-shadow:0 6px 16px rgba(80,120,140,.18); }
+  .bar h1 { font-size: 18px; margin: 0; flex: 1; }
+  .progress { height: 12px; background:#fff; border-radius:999px; overflow:hidden; margin:14px 0 4px; box-shadow: inset 0 1px 3px rgba(0,0,0,.08); }
+  .progress > i { display:block; height:100%; width:0; background: linear-gradient(90deg,#36c5d6,#8ce99a); transition: width .35s ease; }
+  .stage { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:6px; }
+  .emoji { font-size: 92px; line-height:1; }
+  .word { font-size: 46px; font-weight: 800; letter-spacing:1px; }
+  .zh { font-size: 18px; color:#6b7c85; }
+  .hint { font-size: 14px; color:#9aa7ad; margin-top: 4px; }
+  .controls { display:grid; gap:12px; padding: 8px 0 20px; }
+  button {
+    font: inherit; border: none; border-radius: 18px; padding: 18px;
+    font-size: 20px; font-weight: 800; color:#fff; box-shadow:0 8px 18px rgba(80,120,140,.22);
+    cursor: pointer;
+  }
+  button:active { transform: scale(.97); }
+  .say { background: linear-gradient(135deg,#36c5d6,#2bb6c7); }
+  .next { background: linear-gradient(135deg,#ffb15b,#ff8a5b); }
+  .again { background:#fff; color:#36c5d6; box-shadow:0 6px 16px rgba(80,120,140,.18); }
+  .done .emoji { font-size: 80px; }
+  .stars { font-size: 40px; letter-spacing: 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <a href="../index.html" title="返回">‹</a>
+    <h1>📖 English Adventure</h1>
+  </div>
+  <div class="progress"><i id="pbar"></i></div>
+
+  <div class="stage" id="stage"></div>
+
+  <div class="controls" id="controls"></div>
+</div>
+
+<script>
+  const CARDS = [
+    { word: "Apple",  zh: "苹果", emoji: "🍎" },
+    { word: "Tiger",  zh: "老虎", emoji: "🐯" },
+    { word: "Rocket", zh: "火箭", emoji: "🚀" },
+    { word: "Happy",  zh: "开心", emoji: "😄" },
+    { word: "Star",   zh: "星星", emoji: "⭐" }
+  ];
+  let i = 0;
+
+  function speak(text) {
+    try {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-US"; u.rate = 0.85;
+      window.speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+  function setProgress() {
+    document.getElementById("pbar").style.width = Math.round((i / CARDS.length) * 100) + "%";
+  }
+  function render() {
+    const stage = document.getElementById("stage");
+    const controls = document.getElementById("controls");
+    setProgress();
+    if (i >= CARDS.length) {
+      document.getElementById("pbar").style.width = "100%";
+      stage.className = "stage done";
+      stage.innerHTML = `<div class="emoji">🎉</div>
+        <div class="word">Great job!</div>
+        <div class="stars">⭐⭐⭐</div>
+        <div class="zh">你读完了所有单词，得到 3 颗星！</div>`;
+      controls.innerHTML = `<button class="again" onclick="restart()">🔁 再玩一次</button>
+        <button class="next" onclick="location.href='../index.html'">🏡 回到首页</button>`;
+      return;
+    }
+    const c = CARDS[i];
+    stage.className = "stage";
+    stage.innerHTML = `<div class="emoji">${c.emoji}</div>
+      <div class="word">${c.word}</div>
+      <div class="zh">${c.zh}</div>
+      <div class="hint">点下面的喇叭，听它怎么读</div>`;
+    controls.innerHTML = `<button class="say" onclick="speak('${c.word}')">🔊 听一听 / Say it</button>
+      <button class="next" onclick="next()">下一个 →</button>`;
+    speak(c.word);
+  }
+  function next(){ i++; render(); }
+  function restart(){ i = 0; render(); }
+  render();
+</script>
+</body>
+</html>

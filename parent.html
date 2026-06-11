@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff7f0">
+<title>家长页 · 家庭学习门户</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back" href="index.html">‹</a>
+    <h1>👨‍💻 家长页</h1>
+  </div>
+
+  <div class="card">
+    <h2 style="margin:0 0 6px;font-size:18px">📄 卷子下载 / 打印</h2>
+    <p style="color:var(--muted);font-size:14px;margin:0 0 12px">在电脑或手机点开即可下载打印</p>
+    <div id="papers" class="grid">
+      <div class="empty">还没有卷子，生成后会出现在这里 <span class="badge-soon">P1 接入</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin:0 0 6px;font-size:18px">📈 错题趋势（匿名化）</h2>
+    <p style="color:var(--muted);font-size:14px;margin:0 0 12px">仅展示匿名统计，题目原文与批改只存本地</p>
+    <svg viewBox="0 0 320 160" width="100%" role="img" aria-label="示例趋势图">
+      <polyline points="10,120 70,110 130,90 190,70 250,52 310,40"
+                fill="none" stroke="var(--kenton)" stroke-width="4" stroke-linecap="round"/>
+      <polyline points="10,135 70,128 130,118 190,108 250,92 310,84"
+                fill="none" stroke="var(--eddey)" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 7"/>
+      <text x="10" y="155" font-size="11" fill="#8a7e91">示例：小数除法正确率 62% → 85%</text>
+    </svg>
+    <div class="empty" style="padding:12px 0">真实趋势图将在错题库上线后自动生成 <span class="badge-soon">P2</span></div>
+  </div>
+
+  <div class="footer-note">本页不保存任何账号密码 · 敏感数据只在本地 local-data/</div>
+</div>
+</body>
+</html>

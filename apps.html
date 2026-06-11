@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff7f0">
+<title>软件库 · 家庭学习门户</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back" href="index.html">‹</a>
+    <h1>🎮 软件库</h1>
+  </div>
+
+  <div id="filterNote" class="footer-note" style="margin:0 0 14px;text-align:left"></div>
+
+  <div id="list" class="grid">
+    <div class="empty">正在加载软件…</div>
+  </div>
+
+  <div class="footer-note">点一张卡片，直接打开软件开始玩</div>
+</div>
+
+<script>
+  const SUBJECT_META = {
+    "英语": { cls: "eng", ico: "📖", color: "#36c5d6" },
+    "语文": { cls: "chi", ico: "📜", color: "#ff8a5b" },
+    "古诗": { cls: "chi", ico: "🏯", color: "#ff8a5b" },
+    "数学": { cls: "math", ico: "🔢", color: "#8ce99a" }
+  };
+  const CHILD_NAME = { kenton: "Kenton", eddey: "Eddey" };
+
+  function getParam(k){ return new URLSearchParams(location.search).get(k); }
+
+  async function load() {
+    const who = getParam("who"); // kenton / eddey / null=全部
+    const note = document.getElementById("filterNote");
+    const list = document.getElementById("list");
+    try {
+      const res = await fetch("data/apps.json", { cache: "no-store" });
+      let apps = await res.json();
+      if (who) {
+        apps = apps.filter(a => a.child === who);
+        note.textContent = "只显示 " + (CHILD_NAME[who] || who) + " 的软件";
+      } else {
+        note.textContent = "全部学习软件";
+      }
+      if (!apps.length) {
+        list.innerHTML = '<div class="empty">还没有软件，等爸爸添加 ✨</div>';
+        return;
+      }
+      list.innerHTML = apps.map(a => {
+        const m = SUBJECT_META[a.subject] || { cls:"", ico:"🧩", color:"#b39ddb" };
+        return `<a class="app-card" style="border-left-color:${m.color}" href="${a.file}">
+          <span class="ico">${m.ico}</span>
+          <span>
+            <div class="t">${a.title}</div>
+            <div class="meta"><span class="tag ${m.cls}">${a.subject}</span> · ${CHILD_NAME[a.child]||a.child} · 加入于 ${a.added}</div>
+          </span>
+        </a>`;
+      }).join("");
+    } catch (e) {
+      list.innerHTML = '<div class="empty">软件清单读取失败，请稍后再试</div>';
+    }
+  }
+  load();
+</script>
+</body>
+</html>

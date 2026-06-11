@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff7f0">
+<title>星星榜 · 家庭学习门户</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back" href="index.html">‹</a>
+    <h1>🌟 星星榜</h1>
+  </div>
+
+  <div id="board" class="grid">
+    <div class="empty">正在加载积分…</div>
+  </div>
+
+  <div class="footer-note" id="updated"></div>
+</div>
+
+<script>
+  const KIDS = [
+    { id: "kenton", name: "Kenton", avatar: "🦁", cls: "k", color: "var(--kenton)", soft: "var(--kenton-soft)" },
+    { id: "eddey",  name: "Eddey",  avatar: "🐯", cls: "e", color: "var(--eddey)",  soft: "var(--eddey-soft)" }
+  ];
+  async function load() {
+    const board = document.getElementById("board");
+    try {
+      const res = await fetch("data/scores.json", { cache: "no-store" });
+      const s = await res.json();
+      board.innerHTML = KIDS.map(k => {
+        const d = s[k.id] || { week: 0, total: 0 };
+        return `<div class="card" style="background:${k.soft};border:3px solid ${k.color}">
+          <div style="display:flex;align-items:center;gap:14px">
+            <span style="font-size:46px">${k.avatar}</span>
+            <div>
+              <div style="font-size:22px;font-weight:800">${k.name}</div>
+              <div style="color:var(--muted);font-size:14px">本周 <b style="color:${k.color}">${d.week}</b> ⭐ · 累计 <b>${d.total}</b> ⭐</div>
+            </div>
+          </div>
+        </div>`;
+      }).join("");
+      document.getElementById("updated").textContent = "更新于 " + (s.updated || "—") + " · 每晚由爸爸汇总";
+    } catch (e) {
+      board.innerHTML = '<div class="empty">积分读取失败，请稍后再试</div>';
+    }
+  }
+  load();
+</script>
+</body>
+</html>
