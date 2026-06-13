@@ -2,7 +2,7 @@
   "child": "eddey",
   "name": "Eddey",
   "updated": "2026-06-13",
-  "summary": "2026-06-13 建立语文期末复习主线（三下，以期末复习索引为总骨架）。学情画像各知识点掌握度待孩子用闯关软件练习后导出回填。",
+  "summary": "2026-06-13 建立语文期末复习主线（三下，以期末复习索引为总骨架）；同日归档英语期末冲刺卷（四）错题，建立英语学情画像。各知识点掌握度待孩子练习/重做后回填。",
   "语文复习主线": {
     "index": "data/learning/chinese_review_eddey_grade3b.json",
     "outline": "docs/复习大纲_eddey_语文3下.md",
@@ -31,10 +31,30 @@
       }
     },
     "数学": { "strengths": [], "weaknesses": [], "knowledge_points": {} },
-    "英语": { "strengths": [], "weaknesses": [], "knowledge_points": {} }
+    "英语": {
+      "strengths": [],
+      "weaknesses": [
+        "形容词性物主代词：she/her 混用（This is Kitty. Her dress...）",
+        "句型转换：对划线提问(What/Who)、单数改复数(strawberry→strawberries)、be动词改否定(am not)",
+        "一般疑问句应答：Do you...? 误用 Yes, I am.（应 Yes, I do.）",
+        "阅读理解：判断题不回原文找细节、问答题漏 is/不用完整句",
+        "动词搭配：like + doing（误写 I like play football）",
+        "单词拼写：合成长词 skateboard、see 误拼 cee"
+      ],
+      "knowledge_points": {
+        "物主代词": { "mastery": 50, "trend": "flat", "last_seen": "2026-06-13" },
+        "句型转换": { "mastery": 50, "trend": "flat", "last_seen": "2026-06-13" },
+        "一般疑问句应答": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-13" },
+        "阅读理解": { "mastery": 60, "trend": "flat", "last_seen": "2026-06-13" },
+        "动词搭配(like+doing)": { "mastery": 50, "trend": "flat", "last_seen": "2026-06-13" },
+        "单词拼写": { "mastery": 60, "trend": "flat", "last_seen": "2026-06-13" },
+        "写作(自我介绍)": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-13" }
+      }
+    }
   },
   "milestones": [
-    { "date": "2026-06-13", "text": "建立三下语文期末复习主线，上线15关'语文期末闯关王'。掌握度为基于历史错题的初估，待真实练习数据回填。" }
+    { "date": "2026-06-13", "text": "建立三下语文期末复习主线，上线15关'语文期末闯关王'。掌握度为基于历史错题的初估，待真实练习数据回填。" },
+    { "date": "2026-06-13", "text": "归档英语期末冲刺卷（四）错题，建立英语学情画像。9 个错题组，重点薄弱：物主代词、句型转换、一般疑问句应答、like+doing。已生成可打印错题重做卷私发家长。" }
   ],
   "_schema": {
     "knowledge_points": "形如 { \"小数除法\": { \"mastery\": 85, \"trend\": \"up|flat|down\", \"last_seen\": \"YYYY-MM-DD\" } }，mastery 为 0-100 的掌握度估计",
