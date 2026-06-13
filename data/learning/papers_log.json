@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-11",
+  "updated": "2026-06-13",
   "_schema": {
     "id": "唯一编号，建议 <child>_dayNN 或 <child>_<subject>_<date>",
     "knowledge_points": "本卷覆盖的知识点名称数组，用于和 profile 联动、避免重复、循序渐进",
@@ -20,6 +20,18 @@
       "difficulty": "未标注",
       "result": "未录入",
       "notes": "导入记忆层时的台账第一条。标题为'第11天'，说明此前还有第 1-10 天的卷子未入库——如有历史文件可补录到本台账，记忆会更连贯。"
+    },
+    {
+      "id": "kenton_dictation_2026-06-13",
+      "date": "2026-06-13",
+      "child": "kenton",
+      "subject": "英语+语文",
+      "title": "默写软件练习 · 37 次（导入存档）",
+      "source_file": "data/learning/dictation_kenton.json",
+      "knowledge_points": ["语文第23课词语", "英语 M4U3 nest/swan", "英语 bedroom/sound"],
+      "difficulty": "—",
+      "result": "整体优秀；薄弱：语文第23课(顽强/惊天动地/摧毁 小测1/4)、英语 nest/swan",
+      "notes": "来自孩子端默写软件本地记录导出，原始逐词明细见 source_file。下次复习应优先安排这些薄弱点。"
     }
   ]
 }

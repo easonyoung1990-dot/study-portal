@@ -1,13 +1,17 @@
 {
   "child": "kenton",
   "name": "Kenton",
-  "updated": "2026-06-11",
-  "summary": "首次建立学情画像。后续每次出卷/批改后，更新对应知识点的掌握度(0-100)、趋势与薄弱项。",
+  "updated": "2026-06-13",
+  "summary": "2026-06-13 导入默写软件 37 次真实练习。英语词汇与句型整体扎实，语文默写量大且准；薄弱集中在语文第23课词语和英语个别单词。",
   "subjects": {
     "语文": {
-      "strengths": [],
-      "weaknesses": [],
-      "knowledge_points": {}
+      "strengths": ["默写量大且准（第19课11/11、第24课16/16、第27课17/17全对）"],
+      "weaknesses": ["第23课词语：顽强、惊天动地、摧毁（小测仅 1/4）", "第14课：凄惨"],
+      "knowledge_points": {
+        "第23课词语(顽强/惊天动地/摧毁)": { "mastery": 35, "trend": "down", "last_seen": "2026-06-13" },
+        "第14课(凄惨)": { "mastery": 70, "trend": "flat", "last_seen": "2026-06-13" },
+        "第15/16/17/19/24/26/27课默写": { "mastery": 95, "trend": "up", "last_seen": "2026-06-13" }
+      }
     },
     "数学": {
       "strengths": [],
@@ -15,15 +19,24 @@
       "knowledge_points": {}
     },
     "英语": {
-      "strengths": [],
-      "weaknesses": [],
-      "knowledge_points": {}
+      "strengths": ["词汇与句型整体扎实，多数单元小测满分", "Module 1-4 单词量稳固"],
+      "weaknesses": ["M4U3：nest、swan（小测 2/3 错，默写曾对，不稳定）", "M2U3：bedroom", "M3U1：sound", "句子：Would you like to join us?；I like the Spring Festival."],
+      "knowledge_points": {
+        "M4U3 故事时间(nest/swan)": { "mastery": 55, "trend": "down", "last_seen": "2026-06-13" },
+        "M2U3 家庭生活(bedroom)": { "mastery": 80, "trend": "flat", "last_seen": "2026-06-13" },
+        "M3U1 声音(sound)": { "mastery": 80, "trend": "flat", "last_seen": "2026-06-13" },
+        "句型默写(疑问句/节日句)": { "mastery": 80, "trend": "flat", "last_seen": "2026-06-13" },
+        "M1-M4 单词整体": { "mastery": 92, "trend": "up", "last_seen": "2026-06-13" }
+      }
     }
   },
-  "milestones": [],
+  "milestones": [
+    { "date": "2026-06-13", "text": "首次导入默写软件真实数据：37 次练习。英语/语文整体扎实，定位薄弱点：语文第23课词语、英语 nest/swan。" }
+  ],
   "_schema": {
     "knowledge_points": "形如 { \"小数除法\": { \"mastery\": 85, \"trend\": \"up|flat|down\", \"last_seen\": \"YYYY-MM-DD\" } }，mastery 为 0-100 的掌握度估计",
     "strengths/weaknesses": "知识点名称数组，从 knowledge_points 中提炼，便于出卷时快速取用",
-    "milestones": "形如 { \"date\": \"YYYY-MM-DD\", \"text\": \"小数除法从 62% 提升到 85%\" }"
+    "milestones": "形如 { \"date\": \"YYYY-MM-DD\", \"text\": \"小数除法从 62% 提升到 85%\" }",
+    "原始明细": "完整逐次记录见 data/learning/dictation_kenton.json"
   }
 }
