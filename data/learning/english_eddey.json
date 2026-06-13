@@ -1,0 +1,34 @@
+{
+  "child": "eddey",
+  "subject": "英语",
+  "updated": "2026-06-13",
+  "source": "英语练习软件家长页导出（家长投喂）",
+  "note": "弟弟英语学习档案主线。后续每次导出追加一个 session，并据此刷新 profile_eddey 英语知识点。",
+  "sessions": [
+    {
+      "date": "2026-06-13",
+      "topic": "房间 + 好玩的活动（rooms + fun activities）",
+      "stars": 153,
+      "accuracy": "95%",
+      "practice_days": 1,
+      "error_categories": {
+        "听音判对错": 3,
+        "句子顺序": 2,
+        "房间/家具词": 1,
+        "There is/are": 1,
+        "地道用词": 1
+      },
+      "pronunciation_counts": { "swimming": 82, "rooms": 11, "bathroom": 1, "second": 1 },
+      "pronunciation_weak": { "rooms": "40%", "bathroom": "46%" },
+      "wrong_items": [
+        { "type": "句子顺序", "q": "有很多好玩的事可以做。", "user": "There are lots to fun of things do", "correct": "There are lots of fun things to do." },
+        { "type": "句子顺序", "q": "我喜欢在泳池里游泳。", "user": "I like in the swimming pool", "correct": "I like swimming in the pool." },
+        { "type": "地道用词", "q": "I ___ English classes every week.（我每周上英语课）", "user": "have", "correct": "take" },
+        { "type": "听音判对错", "q": "There is a balcony on the second floor.", "user": "False", "correct": "True" },
+        { "type": "听音判对错", "q": "The balcony is on the first floor.", "user": "True", "correct": "False" }
+      ],
+      "teacher_note": "主题：房间+好玩活动。重点薄弱：名词复数 s、地道用词(take classes / certified in skills)、发音(rooms 40% / bathroom 46%)。建议每天 8-10 分钟，外教课前再做 5 分钟冲刺。",
+      "next_focus": "听音判对错"
+    }
+  ]
+}

@@ -60,6 +60,18 @@
       "difficulty": "medium",
       "result": "弟弟语文期末复习主线骨架；题库已上线，等导出成绩回填掌握度",
       "notes": "这是弟弟语文期末复习总骨架，后续复习/出题/软件都以此索引为准、全覆盖。软件含15关闯关+错题回炉+家长页，内置声音/计时/记录面板（标准模板）。索引页姓名栏空白，未录入身份信息。"
+    },
+    {
+      "id": "eddey_english_2026-06-13",
+      "date": "2026-06-13",
+      "child": "eddey",
+      "subject": "英语",
+      "title": "英语练习导入 · 房间+好玩的活动（正确率95%）",
+      "source_file": "data/learning/english_eddey.json",
+      "knowledge_points": ["听音判对错", "英语句子语序", "名词复数s", "地道用词take classes", "发音rooms/bathroom", "There is/are"],
+      "difficulty": "—",
+      "result": "正确率95%，整体好；薄弱：听音判对错(错3)、句子语序(错2)、名词复数s、take classes、发音rooms40%/bathroom46%",
+      "notes": "来自英语练习软件家长页导出。下次英语优先补'听音判对错'，并练名词复数s与rooms/bathroom发音。"
     }
   ]
 }

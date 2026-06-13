@@ -31,10 +31,32 @@
       }
     },
     "数学": { "strengths": [], "weaknesses": [], "knowledge_points": {} },
-    "英语": { "strengths": [], "weaknesses": [], "knowledge_points": {} }
+    "英语": {
+      "主线": "data/learning/english_eddey.json",
+      "strengths": ["整体正确率高（95%）", "swimming 发音已熟练（练82次）"],
+      "weaknesses": [
+        "名词复数 s（rooms 等）",
+        "英语句子语序（如 There are lots of fun things to do. / I like swimming in the pool.）",
+        "听音判对错（错最多，3题）",
+        "地道用词（take classes，不是 have）",
+        "发音 rooms(40%)、bathroom(46%)",
+        "There is / There are 区分"
+      ],
+      "knowledge_points": {
+        "听音判对错": { "mastery": 50, "trend": "flat", "last_seen": "2026-06-13" },
+        "英语句子语序": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-13" },
+        "名词复数s": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-13" },
+        "地道用词(take classes)": { "mastery": 45, "trend": "flat", "last_seen": "2026-06-13" },
+        "发音 rooms": { "mastery": 40, "trend": "up", "last_seen": "2026-06-13" },
+        "发音 bathroom": { "mastery": 46, "trend": "flat", "last_seen": "2026-06-13" },
+        "There is/are": { "mastery": 65, "trend": "flat", "last_seen": "2026-06-13" },
+        "房间/家具词": { "mastery": 70, "trend": "flat", "last_seen": "2026-06-13" }
+      }
+    }
   },
   "milestones": [
-    { "date": "2026-06-13", "text": "建立三下语文期末复习主线，上线15关'语文期末闯关王'。掌握度为基于历史错题的初估，待真实练习数据回填。" }
+    { "date": "2026-06-13", "text": "建立三下语文期末复习主线，上线15关'语文期末闯关王'。掌握度为基于历史错题的初估，待真实练习数据回填。" },
+    { "date": "2026-06-13", "text": "导入首批英语练习真实数据（房间+活动主题，正确率95%）。定位薄弱：听音判对错、句子语序、名词复数s、take classes、rooms/bathroom发音。详见 english_eddey.json。" }
   ],
   "_schema": {
     "knowledge_points": "形如 { \"小数除法\": { \"mastery\": 85, \"trend\": \"up|flat|down\", \"last_seen\": \"YYYY-MM-DD\" } }，mastery 为 0-100 的掌握度估计",
