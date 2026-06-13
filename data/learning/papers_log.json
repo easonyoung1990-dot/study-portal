@@ -32,6 +32,20 @@
       "difficulty": "—",
       "result": "整体优秀；薄弱：语文第23课(顽强/惊天动地/摧毁 小测1/4)、英语 nest/swan",
       "notes": "来自孩子端默写软件本地记录导出，原始逐词明细见 source_file。下次复习应优先安排这些薄弱点。"
+    },
+    {
+      "id": "kenton_chinese_review_4xz",
+      "date": "2026-06-13",
+      "child": "kenton",
+      "subject": "语文",
+      "title": "四下期末复习索引（5-8单元）+ 配套104题冲刺软件",
+      "index_file": "data/learning/chinese_review_grade4b.json",
+      "outline_file": "docs/复习大纲_kenton_语文4下.md",
+      "app_file": "apps/kenton_chinese_review.html",
+      "knowledge_points": ["多音字", "易错字音", "形近字", "词语积累", "古诗警句", "关联词", "文学常识", "课文主旨", "古文字义", "修改病句"],
+      "difficulty": "medium",
+      "result": "题库已上线，等孩子练习后导出成绩回填掌握度",
+      "notes": "来源纸质复习索引（已匿名化，未录入姓名/学号/班级）。软件带 localStorage 后台记录+导出（格式兼容默写软件），导出后投喂即可归档进化。"
     }
   ]
 }
