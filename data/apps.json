@@ -26,5 +26,12 @@
     "title": "语文期末冲刺 · 四下5-8单元（104题）",
     "file": "apps/kenton_chinese_review.html",
     "added": "2026-06-13"
+  },
+  {
+    "child": "eddey",
+    "subject": "语文",
+    "title": "语文期末闯关王 · 三下（15关）",
+    "file": "apps/eddey_chinese_review.html",
+    "added": "2026-06-13"
   }
 ]
