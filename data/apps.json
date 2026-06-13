@@ -33,5 +33,12 @@
     "title": "语文期末闯关王 · 三下（15关）",
     "file": "apps/eddey_chinese_review.html",
     "added": "2026-06-13"
+  },
+  {
+    "child": "eddey",
+    "subject": "语文",
+    "title": "第八单元闯关 · 有趣的故事（11关）",
+    "file": "apps/eddey_unit8_review.html",
+    "added": "2026-06-13"
   }
 ]

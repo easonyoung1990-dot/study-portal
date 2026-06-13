@@ -72,6 +72,19 @@
       "difficulty": "—",
       "result": "正确率95%，整体好；薄弱：听音判对错(错3)、句子语序(错2)、名词复数s、take classes、发音rooms40%/bathroom46%",
       "notes": "来自英语练习软件家长页导出。下次英语优先补'听音判对错'，并练名词复数s与rooms/bathroom发音。"
+    },
+    {
+      "id": "eddey_unit8_2026-06-13",
+      "date": "2026-06-13",
+      "child": "eddey",
+      "subject": "语文",
+      "title": "三下第八单元《有趣的故事》整体复习 + 11关闯关软件",
+      "index_file": "data/learning/chinese_unit8_eddey.json",
+      "app_file": "apps/eddey_unit8_review.html",
+      "knowledge_points": ["生字词", "多音字", "课文内容/主旨", "课文判断", "复述故事", "拟声词动作", "有趣题目", "转述句", "日积月累(大林寺桃花)", "想象作文"],
+      "difficulty": "medium",
+      "result": "题库已上线，等导出成绩回填掌握度",
+      "notes": "来源第八单元课文扫描件+语文园地八，结合期末复习索引（📌标注重合考点：课文判断/转述句/有趣题目/想象作文/日积月累）。课文：慢性子裁缝、方帽子店、漏、枣核。扫描件含学习批注、无姓名。"
     }
   ]
 }
