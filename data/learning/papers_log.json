@@ -46,6 +46,20 @@
       "difficulty": "medium",
       "result": "题库已上线，等孩子练习后导出成绩回填掌握度",
       "notes": "来源纸质复习索引（已匿名化，未录入姓名/学号/班级）。软件带 localStorage 后台记录+导出（格式兼容默写软件），导出后投喂即可归档进化。"
+    },
+    {
+      "id": "eddey_chinese_review_3b",
+      "date": "2026-06-13",
+      "child": "eddey",
+      "subject": "语文",
+      "title": "三下期末复习索引（总骨架）+ 语文期末闯关王（15关64题）",
+      "index_file": "data/learning/chinese_review_eddey_grade3b.json",
+      "outline_file": "docs/复习大纲_eddey_语文3下.md",
+      "app_file": "apps/eddey_chinese_review.html",
+      "knowledge_points": ["字词默写", "背默", "多音字", "课文判断", "仿写词句", "加点词", "写具体", "有趣开头", "寻物启事", "拟声词", "有趣题目", "转述句", "阅读表达", "作文", "错题回炉"],
+      "difficulty": "medium",
+      "result": "弟弟语文期末复习主线骨架；题库已上线，等导出成绩回填掌握度",
+      "notes": "这是弟弟语文期末复习总骨架，后续复习/出题/软件都以此索引为准、全覆盖。软件含15关闯关+错题回炉+家长页，内置声音/计时/记录面板（标准模板）。索引页姓名栏空白，未录入身份信息。"
     }
   ]
 }
