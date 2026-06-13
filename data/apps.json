@@ -19,5 +19,12 @@
     "title": "语数英综合 · 输出爆破（第11天）",
     "file": "apps/kenton_day11_output.html",
     "added": "2026-06-11"
+  },
+  {
+    "child": "kenton",
+    "subject": "语文",
+    "title": "语文期末冲刺 · 四下5-8单元（104题）",
+    "file": "apps/kenton_chinese_review.html",
+    "added": "2026-06-13"
   }
 ]
