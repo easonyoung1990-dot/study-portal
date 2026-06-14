@@ -110,5 +110,19 @@
     "title": "语文冲刺软件 · 三下（刷题48题·真人朗读·错题归档）",
     "file": "apps/eddey_chinese_sprint.html",
     "added": "2026-06-15"
+  },
+  {
+    "child": "kenton",
+    "subject": "英语",
+    "title": "外教课复习 · Transport & should（交通/给建议/过去式·课堂改错）",
+    "file": "apps/preply-transport-and-advice.html",
+    "added": "2026-06-15"
+  },
+  {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "外教课复习 · Transport & should（交通/给建议/过去式·课堂改错）",
+    "file": "apps/preply-transport-and-advice.html",
+    "added": "2026-06-15"
   }
 ]
