@@ -35,6 +35,28 @@ body{font-family:'Inter','PingFang SC',system-ui,sans-serif;background:var(--pap
 .opening{margin:0 16px 28px;max-width:720px;margin-left:auto;margin-right:auto;background:linear-gradient(135deg,#FFF6E0 0%,#FCEFD0 100%);border-radius:24px;padding:22px 24px;border:2px solid rgba(212,160,74,0.3);box-shadow:0 4px 18px rgba(212,160,74,0.12);position:relative;overflow:hidden;}
 .opening::before{content:'🌧️';position:absolute;top:-14px;right:-6px;font-size:80px;opacity:.15;}
 .opening .op-eyebrow{font-size:10px;letter-spacing:3px;color:var(--vermillion);font-weight:800;margin-bottom:10px;}
+.op-weather{position:relative;height:92px;border-radius:14px;overflow:hidden;margin-bottom:14px;background:linear-gradient(180deg,#a7d4ee,#e8f4fb);}
+.op-weather .wx-sun{position:absolute;top:14px;left:26px;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#FFE680,#FFB300);box-shadow:0 0 20px rgba(255,193,7,.65);animation:wxSun 4s ease-in-out infinite;}
+@keyframes wxSun{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.op-weather .wx-cloud{position:absolute;height:22px;width:74px;background:#fff;border-radius:18px;box-shadow:0 6px 12px rgba(0,0,0,.06);}
+.op-weather .wx-cloud::before,.op-weather .wx-cloud::after{content:'';position:absolute;background:#fff;border-radius:50%;}
+.op-weather .wx-cloud::before{width:26px;height:26px;top:-12px;left:12px;}
+.op-weather .wx-cloud::after{width:34px;height:34px;top:-18px;left:32px;}
+.op-weather .c1{top:18px;animation:wxDrift 16s linear infinite;}
+.op-weather .c2{top:44px;width:56px;opacity:.85;animation:wxDrift 23s linear infinite 4s;}
+@keyframes wxDrift{from{left:-90px}to{left:115%}}
+.op-weather .wx-drops{position:absolute;inset:0;display:none;pointer-events:none;}
+.op-weather .wx-drops i{position:absolute;top:-14px;width:2px;height:13px;background:linear-gradient(#6fa8d6,rgba(111,168,214,0));border-radius:2px;animation:wxFall .85s linear infinite;}
+@keyframes wxFall{to{transform:translateY(112px);opacity:.15}}
+.op-weather.wx-sunny{background:linear-gradient(180deg,#8fd0f2,#e8f4fb);}
+.op-weather.wx-sunny .wx-cloud{display:none;}
+.op-weather.wx-rain{background:linear-gradient(180deg,#8ea7b6,#cdd9e0);}
+.op-weather.wx-rain .wx-sun{opacity:.3;}
+.op-weather.wx-rain .wx-drops{display:block;}
+.op-weather.wx-snow{background:linear-gradient(180deg,#a9bccb,#e7eef3);}
+.op-weather.wx-snow .wx-sun{opacity:.4;}
+.op-weather.wx-snow .wx-drops{display:block;}
+.op-weather.wx-snow .wx-drops i{width:6px;height:6px;border-radius:50%;background:#fff;animation-duration:2.6s;}
 .opening .op-seg{padding:12px 14px;border-radius:12px;margin-top:10px;line-height:1.75;cursor:pointer;transition:all .35s;border-left:3px solid;position:relative;}
 .opening .op-seg.en{background:rgba(238,245,240,0.8);border-left-color:#6B8E5A;font-family:'Fraunces',serif;font-size:15px;color:var(--ink);}
 .opening .op-seg.zh{background:rgba(255,255,255,0.7);border-left-color:var(--terra);font-family:'Noto Serif SC',serif;font-size:14.5px;color:#5a4a3a;}
@@ -256,6 +278,7 @@ body{font-family:'Inter','PingFang SC',system-ui,sans-serif;background:var(--pap
 </div>
 
 <div class="opening" id="opening">
+  <div class="op-weather wx-rain" id="opWeather" aria-hidden="true"><div class="wx-sun"></div><div class="wx-cloud c1"></div><div class="wx-cloud c2"></div><div class="wx-drops"><i style="left:10%"></i><i style="left:19%;animation-delay:.4s"></i><i style="left:28%;animation-delay:.1s"></i><i style="left:37%;animation-delay:.6s"></i><i style="left:46%;animation-delay:.25s"></i><i style="left:55%;animation-delay:.7s"></i><i style="left:64%;animation-delay:.3s"></i><i style="left:73%;animation-delay:.55s"></i><i style="left:82%;animation-delay:.15s"></i><i style="left:91%;animation-delay:.65s"></i></div></div>
   <div class="op-eyebrow">🌧️ GOOD MORNING · 今日天气开场</div>
   <div class="op-seg en" data-lang="EN" id="op-en" onclick="jumpToOpening('en')"></div>
   <div class="op-seg zh" data-lang="ZH" id="op-zh" onclick="jumpToOpening('zh')"></div>
@@ -490,7 +513,13 @@ function loadVoices() {
 window.speechSynthesis.onvoiceschanged = loadVoices;
 loadVoices();
 
-function speakOnce(text, lang, onEnd) {
+// 预合成神经语音目录（每日任务设为 audio/news_YYYYMMDD/；为空则纯浏览器TTS）
+const AUDIO_DIR = "audio/news_20260615/";
+let curAudio = null;
+// 必须与 gen_audio.py 的 fnv() 一致：对 (lang+"|"+text) 的 UTF-8 字节做 FNV-1a
+function audioHash(s){const b=new TextEncoder().encode(s);let x=0x811c9dc5>>>0;for(let i=0;i<b.length;i++){x^=b[i];x=Math.imul(x,0x01000193)>>>0;}return ('0000000'+x.toString(16)).slice(-8);}
+function haltSpeech(){var ss=window.speechSynthesis;ss.cancel();if(curAudio){try{curAudio.pause();}catch(e){}curAudio=null;}}
+function ttsSpeak(text, lang, onEnd) {
   const speakText = (lang === 'en') ? numbersToEnglishWords(text) : text;
   const u = new SpeechSynthesisUtterance(speakText);
   u.lang = lang === 'en' ? 'en-US' : 'zh-CN';
@@ -500,6 +529,20 @@ function speakOnce(text, lang, onEnd) {
   if (lang === 'zh' && cnVoice) u.voice = cnVoice;
   if (onEnd) { u.onend = onEnd; u.onerror = onEnd; }
   window.speechSynthesis.speak(u);
+}
+function speakOnce(text, lang, onEnd) {
+  if (curAudio) { try{curAudio.pause();}catch(e){} curAudio = null; }
+  if (typeof AUDIO_DIR === 'string' && AUDIO_DIR) {
+    let done = false;
+    const fb = () => { if(done) return; done = true; curAudio = null; ttsSpeak(text, lang, onEnd); };
+    const a = new Audio(AUDIO_DIR + audioHash(lang + "|" + text) + ".mp3");
+    curAudio = a;
+    a.onended = () => { if(done) return; done = true; if(onEnd) onEnd(); };
+    a.onerror = fb;
+    a.play().catch(fb);
+    return;
+  }
+  ttsSpeak(text, lang, onEnd);
 }
 
 function clearHighlights(){
@@ -542,17 +585,17 @@ function playCurrent() {
   speakOnce(s.text, s.lang, () => { if (playing) { curSegIdx++; setTimeout(playCurrent, 360); } });
 }
 function togglePlay() {
-  if (playing) { playing = false; window.speechSynthesis.cancel(); updateUI(); }
+  if (playing) { playing = false; haltSpeech(); updateUI(); }
   else { if (curSegIdx >= allSegments.length) curSegIdx = 0; playing = true; updateUI(); playCurrent(); }
 }
 function nextSeg() {
-  window.speechSynthesis.cancel();
+  haltSpeech();
   curSegIdx = Math.min(curSegIdx + 1, allSegments.length - 1);
   if (playing) playCurrent(); else { highlightSeg(curSegIdx); updateUI(); }
 }
-function rewindSeg() { window.speechSynthesis.cancel(); if (playing) playCurrent(); else highlightSeg(curSegIdx); }
+function rewindSeg() { haltSpeech(); if (playing) playCurrent(); else highlightSeg(curSegIdx); }
 function nextStory() {
-  window.speechSynthesis.cancel();
+  haltSpeech();
   const cur = allSegments[curSegIdx];
   const curStory = cur.type === 'opening' ? -1 : cur.storyIdx;
   const next = allSegments.findIndex(s => s.type === 'story' && s.storyIdx > curStory);
@@ -560,7 +603,7 @@ function nextStory() {
   if (playing) playCurrent(); else { highlightSeg(curSegIdx); updateUI(); }
 }
 function prevStory() {
-  window.speechSynthesis.cancel();
+  haltSpeech();
   const cur = allSegments[curSegIdx];
   const curStory = cur.type === 'opening' ? 0 : cur.storyIdx;
   let prev = 0;
@@ -572,14 +615,14 @@ function prevStory() {
   if (playing) playCurrent(); else { highlightSeg(curSegIdx); updateUI(); }
 }
 function jumpToSeg(si, ui, ki, lang) {
-  window.speechSynthesis.cancel();
+  haltSpeech();
   curSegIdx = allSegments.findIndex(s => s.type==='story' && s.storyIdx === si && s.unitIdx === ui && s.segIdx === ki && s.lang === lang);
   if (curSegIdx < 0) curSegIdx = 0;
   playing = false;
   highlightSeg(curSegIdx); updateUI();
 }
 function jumpToOpening(lang) {
-  window.speechSynthesis.cancel();
+  haltSpeech();
   curSegIdx = allSegments.findIndex(s => s.type==='opening' && s.lang === lang);
   if (curSegIdx < 0) curSegIdx = 0;
   playing = false;
@@ -595,7 +638,7 @@ function finish() {
   setTimeout(() => document.querySelector('.signoff').scrollIntoView({behavior:'smooth'}), 500);
 }
 function speakVocab(el, si, vi) {
-  window.speechSynthesis.cancel();
+  haltSpeech();
   document.querySelectorAll('.vocab-item').forEach(e => e.classList.remove('speaking'));
   el.classList.add('speaking');
   const v = stories[si].vocab[vi];
