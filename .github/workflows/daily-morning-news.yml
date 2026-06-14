@@ -28,7 +28,7 @@ jobs:
       - name: 生成并发布今日早新闻
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: "请严格按仓库中 .github/prompts/morning-news.md 的说明，生成并发布今天（北京时间）的早新闻。全程不要询问，直接做完并 git 提交推送。"
           claude_args: >-
             --model claude-sonnet-4-6
