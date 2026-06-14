@@ -345,7 +345,7 @@ function playWrong(){initAudio();tone(196,0.3,0,"sawtooth");}
 function speak(text){
   try{
     if(!soundOn||!window.speechSynthesis)return;
-    window.speechSynthesis.cancel();
+    window.speechSynthesis.cancel();try{window.speechSynthesis.resume();}catch(e){}
     var u=new SpeechSynthesisUtterance(text);u.lang="zh-CN";u.rate=0.85;
     window.speechSynthesis.speak(u);
   }catch(e){}
@@ -497,7 +497,7 @@ document.getElementById("againBtn").onclick=function(){
 document.getElementById("backMenu").onclick=function(){stopTimer();renderMenu();show("menu");};
 document.getElementById("soundBtn").onclick=function(){
   soundOn=!soundOn;this.textContent=soundOn?"🔔":"🔕";
-  if(soundOn)initAudio();else{try{window.speechSynthesis&&window.speechSynthesis.cancel();}catch(e){}}
+  if(soundOn)initAudio();else{try{window.speechSynthesis&&window.speechSynthesis.cancel();try{window.speechSynthesis.resume();}catch(e){}}catch(e){}}
 };
 
 /* 导出（格式兼容默写软件，可直接投喂给Claude归档） */

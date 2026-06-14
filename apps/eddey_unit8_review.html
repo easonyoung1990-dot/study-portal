@@ -294,7 +294,7 @@ function tone(freq,dur,delay,type){if(!soundOn||!actx)return;try{var o=actx.crea
   g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.22,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.start(t);o.stop(t+dur);}catch(e){}}
 function playRight(){initAudio();tone(880,0.13,0,"triangle");tone(1320,0.18,0.1,"triangle");}
 function playWrong(){initAudio();tone(196,0.3,0,"sawtooth");}
-function speak(text){try{if(!soundOn||!window.speechSynthesis)return;window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang="zh-CN";u.rate=0.8;window.speechSynthesis.speak(u);}catch(e){}}
+function speak(text){try{if(!soundOn||!window.speechSynthesis)return;window.speechSynthesis.cancel();try{window.speechSynthesis.resume();}catch(e){}var u=new SpeechSynthesisUtterance(text);u.lang="zh-CN";u.rate=0.8;window.speechSynthesis.speak(u);}catch(e){}}
 
 var timerInt=null;
 function startTimer(){stopTimer();timerInt=setInterval(function(){if(!cur)return;var sec=Math.floor((Date.now()-cur.t0)/1000);var el=document.getElementById("qTimer");if(el)el.textContent="⏱ "+sec+"s";},500);}
@@ -444,7 +444,7 @@ function copyToClipboard(txt,boxId,btn){var box=document.getElementById(boxId);b
 function downloadText(txt){try{var blob=new Blob([txt],{type:"text/plain;charset=utf-8"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download="弟弟第八单元复习记录_"+stamp()+".txt";document.body.appendChild(a);a.click();setTimeout(function(){a.remove();URL.revokeObjectURL(url);},500);return true;}catch(e){return false;}}
 document.getElementById("menuExport").onclick=function(){copyToClipboard(buildExport(loadStore()),"menuExportBox",this);};
 document.getElementById("menuDownload").onclick=function(){this.textContent=downloadText(buildExport(loadStore()))?"✅ 已存成文件":"用上面的复制按钮试试";};
-document.getElementById("soundBtn").onclick=function(){soundOn=!soundOn;this.textContent=soundOn?"🔔":"🔕";if(soundOn)initAudio();else{try{window.speechSynthesis&&window.speechSynthesis.cancel();}catch(e){}}};
+document.getElementById("soundBtn").onclick=function(){soundOn=!soundOn;this.textContent=soundOn?"🔔":"🔕";if(soundOn)initAudio();else{try{window.speechSynthesis&&window.speechSynthesis.cancel();try{window.speechSynthesis.resume();}catch(e){}}catch(e){}}};
 
 renderMap();
 </script>

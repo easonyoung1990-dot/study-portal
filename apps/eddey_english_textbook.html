@@ -142,19 +142,19 @@ const CN_QUIZ={
 
 let voices=[];function loadVoices(){voices=speechSynthesis.getVoices();}
 if('speechSynthesis'in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices;}
-let warmed=false;function warm(){if(warmed||!('speechSynthesis'in window))return;const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u);warmed=true;}
+let warmed=false;function warm(){if(!('speechSynthesis'in window))return;try{speechSynthesis.resume();}catch(e){}if(warmed)return;loadVoices();try{var wu=new SpeechSynthesisUtterance('ok');wu.volume=0.02;speechSynthesis.speak(wu);}catch(e){}warmed=true;}
 document.body.addEventListener('touchstart',warm,{once:true});
 document.body.addEventListener('click',warm,{once:true});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){try{speechSynthesis.cancel();}catch(e){}stopTimer();}});
 setInterval(()=>{if('speechSynthesis'in window&&speechSynthesis.speaking){try{speechSynthesis.pause();speechSynthesis.resume();}catch(e){}}},9000);
 function mkUtter(t,lang){
   const u=new SpeechSynthesisUtterance(t);
-  if(lang==='en'){const v=voices.find(v=>/en[-_](US|GB)/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang));if(v)u.voice=v;u.lang='en-US';u.rate=0.92;}
+  if(lang==='en'){const v=voices.find(v=>/en[-_]GB/i.test(v.lang))||voices.find(v=>/en[-_]US/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang));if(v)u.voice=v;u.lang=(v&&v.lang)||'en-GB';u.rate=0.8;}
   else{const v=voices.find(v=>/zh|cmn|Chinese/i.test(v.lang));if(v)u.voice=v;u.lang='zh-CN';u.rate=0.95;}
   u.pitch=1.0;return u;
 }
-function speakOnce(t,lang){try{speechSynthesis.cancel();}catch(e){}speechSynthesis.speak(mkUtter(t,lang));}
-function testVoice(){warm();speakOnce('你好弟弟,我们来默写英语单词。','zh');setTimeout(()=>speakOnce('Hello, I can speak English too.','en'),2600);}
+function speakOnce(t,lang){try{speechSynthesis.cancel();speechSynthesis.resume();}catch(e){}try{speechSynthesis.speak(mkUtter(t,lang));}catch(e){}}
+function testVoice(){if(!('speechSynthesis'in window)){var k=document.querySelector('.kou');if(k)k.textContent='这个浏览器不支持朗读，请用 Safari 或 Chrome 打开';return;}warm();speakOnce('你好弟弟,我们来默写英语单词。','zh');setTimeout(()=>speakOnce('Hello, I can speak English too.','en'),2600);}
 
 /* 读 N 遍,读完回调(带超时保护) */
 let speakSession=0;
@@ -169,7 +169,7 @@ function speakTimes(t,lang,times,onDone){
     u.onend=()=>{ if(sid!==speakSession)return; count++;
       if(count<times){ setTimeout(one,900); } else { setTimeout(fire,400); } };
     u.onerror=()=>{ count++; if(count<times){setTimeout(one,900);} else {setTimeout(fire,400);} };
-    speechSynthesis.speak(u);
+    try{speechSynthesis.resume();}catch(e){}speechSynthesis.speak(u);
   }
   one();
   /* 超时保护: 估算每遍时长 */

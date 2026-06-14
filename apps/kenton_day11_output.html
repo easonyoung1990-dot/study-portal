@@ -104,8 +104,8 @@ body{font-family:'LXGW WenKai Screen','Baloo 2','PingFang SC','Microsoft YaHei',
 /* TTS */
 let voices=[];function loadVoices(){voices=speechSynthesis.getVoices();}
 if('speechSynthesis'in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices;}
-let warmed=false;function warm(){if(warmed||!('speechSynthesis'in window))return;const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u);warmed=true;}
-function speak(t,rate){if(!('speechSynthesis'in window))return;try{speechSynthesis.cancel();}catch(e){}const u=new SpeechSynthesisUtterance(t);const zh=voices.find(v=>/zh|cmn|Chinese/i.test(v.lang));if(zh)u.voice=zh;u.lang='zh-CN';u.rate=rate||0.85;u.pitch=1.04;speechSynthesis.speak(u);}
+let warmed=false;function warm(){if(!('speechSynthesis'in window))return;try{speechSynthesis.resume();}catch(e){}if(warmed)return;loadVoices();try{var wu=new SpeechSynthesisUtterance('ok');wu.volume=0.02;speechSynthesis.speak(wu);}catch(e){}warmed=true;}
+function speak(t,rate){if(!('speechSynthesis'in window))return;try{speechSynthesis.cancel();speechSynthesis.resume();}catch(e){}const u=new SpeechSynthesisUtterance(t);const zh=voices.find(v=>/zh|cmn|Chinese/i.test(v.lang));if(zh)u.voice=zh;u.lang='zh-CN';u.rate=rate||0.85;u.pitch=1.04;speechSynthesis.speak(u);}
 function testVoice(){warm();speak('你好哥哥，第7天三科一起加油！');}
 document.body.addEventListener('touchstart',warm,{once:true});document.body.addEventListener('click',warm,{once:true});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){try{speechSynthesis.cancel();}catch(e){}}});

@@ -64,7 +64,7 @@
 
   function speak(text) {
     try {
-      window.speechSynthesis.cancel();
+      window.speechSynthesis.cancel();try{window.speechSynthesis.resume();}catch(e){}
       const u = new SpeechSynthesisUtterance(text);
       u.lang = "en-US"; u.rate = 0.85;
       window.speechSynthesis.speak(u);
