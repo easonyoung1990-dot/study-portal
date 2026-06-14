@@ -347,52 +347,44 @@ function confirmQuit(){
   if(S.mode==='cn')showCnList();else showEnList();
 }
 
-/* ===================== 答案对照（每词强制判 ✅/❌，杜绝默认全对） ===================== */
+/* ===================== 答案对照（点错标红，原版操作） ===================== */
 function showAnswers(){
   const b=document.getElementById('ans');
-  S.marks=new Array(S.items.length).fill(null);
   b.innerHTML=`<button class="back" onclick="confirmQuit()">← 返回选课</button>
     <div class="card">
       <h2>📋 ${S.key} · 对答案</h2>
-      <div class="lead">看你写的，<b>每个词都要点</b>：写对点 ✅，写错点 ❌（全部判完才能完成）。</div>
-      <div id="ansgrid"></div>
-      <div class="kou" id="ansprog"></div>
+      <div class="lead">对照你写的：<b>写错/没写出来的，点一下变红</b>（其余算写对）。</div>
+      <div class="ansgrid">${S.items.map((it,i)=>`<div class="answord" id="aw${i}" onclick="toggleMiss(${i})">${it.t}${it.hint?`<span class="py">${it.hint}</span>`:''}</div>`).join('')}</div>
+      <div class="kou" id="ansprog">把写错的点红，再点完成。</div>
       <div class="row">
         <button class="btn big" id="redoBtn" onclick="redoMiss()" style="display:none">🔁 只重默写错的</button>
-        <button class="btn green big" id="finishBtn" onclick="finishLesson()" disabled style="opacity:.5">完成（先判完每个词）</button>
+        <button class="btn green big" onclick="finishLesson()">✅ 完成</button>
       </div>
     </div>`;
-  show('ans');renderAnswers();
-  speakOnce('默完了！对照答案，每个词点写对还是写错。','zh');
+  show('ans');
+  speakOnce('默完了！对照答案，写错的点一下变红。','zh');
 }
-function renderAnswers(){
-  const g=document.getElementById('ansgrid');if(!g)return;
-  g.innerHTML=S.items.map((it,i)=>{const m=S.marks[i];
-    return `<div class="answrow ${m===true?'mok':(m===false?'mno':'')}">
-      <span class="aw">${it.t}${it.hint?`<span class="py">${it.hint}</span>`:''}</span>
-      <span class="markbtns"><button class="mk ok ${m===true?'on':''}" onclick="mark(${i},true)">✅</button>
-      <button class="mk no ${m===false?'on':''}" onclick="mark(${i},false)">❌</button></span></div>`;}).join('');
-  const done=S.marks.filter(x=>x!==null).length, wrong=S.marks.filter(x=>x===false).length;
-  const prog=document.getElementById('ansprog');
-  if(prog)prog.innerHTML=`已判 <b>${done}/${S.items.length}</b>`+(done===S.items.length?` ｜ 写对 ${S.items.length-wrong}，写错 ${wrong}`:'');
-  const fb=document.getElementById('finishBtn');
-  if(fb){if(done===S.items.length){fb.disabled=false;fb.style.opacity='1';fb.textContent='✅ 完成，存档';}else{fb.disabled=true;fb.style.opacity='.5';fb.textContent='完成（先判完每个词）';}}
-  const rb=document.getElementById('redoBtn');if(rb)rb.style.display=wrong?'inline-flex':'none';
+function toggleMiss(i){
+  const el=document.getElementById('aw'+i);if(!el)return;
+  if(S.miss.has(i)){S.miss.delete(i);el.classList.remove('miss');}
+  else{S.miss.add(i);el.classList.add('miss');}
+  const rb=document.getElementById('redoBtn');if(rb)rb.style.display=S.miss.size?'inline-flex':'none';
+  const p=document.getElementById('ansprog');if(p)p.innerHTML=S.miss.size?('标红 '+S.miss.size+' 个错词，点完成会记进错词本'):'把写错的点红，再点完成。';
 }
-function mark(i,ok){S.marks[i]=ok;ding();renderAnswers();}
 function redoMiss(){
-  const idx=S.items.map((_,i)=>i).filter(i=>S.marks[i]===false);
-  if(!idx.length)return;
-  S.items=idx.map(i=>S.items[i]);S.idx=0;S.marks=[];
-  renderDict();show('dict');speakOnce('好，只重默写错的。准备！','zh');setTimeout(()=>runWord(),1500);
+  if(!S.miss.size)return;
+  S.items=[...S.miss].sort((a,b)=>a-b).map(i=>S.items[i]);
+  S.idx=0;S.miss=new Set();
+  renderDict();show('dict');
+  speakOnce('好，只重默写错的。准备！','zh');
+  setTimeout(()=>runWord(),1500);
 }
 function finishLesson(){
-  if(!S.marks||S.marks.some(x=>x===null))return;
-  const items=S.items.map((it,i)=>{const pi=S.perItem.find(p=>p.word===it.t);return {word:it.t,hint:it.hint||'',ok:S.marks[i]===true,ms:pi?pi.ms:0};});
-  const wrong=S.marks.filter(x=>x===false).length;
-  logEvent({ts:Date.now(),type:'dict',subject:(S.mode==='cn'?'cn':'en'),lesson:S.key,total:S.items.length,wrong:wrong,durationSec:Math.round((Date.now()-S.startTime)/1000),items:items});
-  speakOnce(wrong?('记下了，写错 '+wrong+' 个，下次重点练。'):'全对，真棒！','zh');
-  setTimeout(()=>confirmQuit(),1300);
+  const missWords=new Set([...S.miss].map(i=>S.items[i].t));
+  const items=S.items.map((it,i)=>{const pi=S.perItem.find(p=>p.word===it.t);return {word:it.t,hint:it.hint||'',ok:!missWords.has(it.t),ms:pi?pi.ms:0};});
+  logEvent({ts:Date.now(),type:'dict',subject:(S.mode==='cn'?'cn':'en'),lesson:S.key,total:S.items.length,wrong:S.miss.size,durationSec:Math.round((Date.now()-S.startTime)/1000),items:items});
+  speakOnce(S.miss.size?('记下了，错词留着再练。'):'真棒，这一课默完了！','zh');
+  setTimeout(()=>confirmQuit(),1200);
 }
 
 /* ===================== 理解小测引擎 ===================== */
