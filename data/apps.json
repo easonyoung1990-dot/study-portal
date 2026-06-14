@@ -28,17 +28,59 @@
     "added": "2026-06-13"
   },
   {
+    "child": "kenton",
+    "subject": "综合",
+    "title": "默写助手 · 语文+英语（全自动报默）",
+    "file": "apps/kenton_dictation.html",
+    "added": "2026-06-14"
+  },
+  {
+    "child": "kenton",
+    "subject": "综合",
+    "title": "默写错词重做 · 昨天错的词（中英）",
+    "file": "apps/kenton_dictation_redo.html",
+    "added": "2026-06-14"
+  },
+  {
+    "child": "kenton",
+    "subject": "英语",
+    "title": "英语单元默写 · 四下（教材12单元·全自动报默）",
+    "file": "apps/kenton_english_textbook.html",
+    "added": "2026-06-14"
+  },
+  {
     "child": "eddey",
-    "subject": "语文",
-    "title": "语文期末闯关王 · 三下（15关）",
-    "file": "apps/eddey_chinese_review.html",
-    "added": "2026-06-13"
+    "subject": "英语",
+    "title": "英语练习 · 三下（错词重做+单元默写+句子）",
+    "file": "apps/eddey_english.html",
+    "added": "2026-06-14"
   },
   {
     "child": "eddey",
     "subject": "语文",
-    "title": "第八单元闯关 · 有趣的故事（11关）",
-    "file": "apps/eddey_unit8_review.html",
-    "added": "2026-06-13"
+    "title": "语文练习 · 三下（口说作答+纸上默写，10关）",
+    "file": "apps/eddey_chinese.html",
+    "added": "2026-06-14"
+  },
+  {
+    "child": "eddey",
+    "subject": "语文",
+    "title": "语文听写 · 三下（限时报读·听词写字·拼音中文双读·错词本）",
+    "file": "apps/eddey_chinese_dictation.html",
+    "added": "2026-06-14"
+  },
+  {
+    "child": "kenton",
+    "subject": "英语",
+    "title": "小小世界播报 6.15",
+    "file": "apps/news_20260615.html",
+    "added": "2026-06-15"
+  },
+  {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "小小世界播报 6.15",
+    "file": "apps/news_20260615.html",
+    "added": "2026-06-15"
   }
 ]

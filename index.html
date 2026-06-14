@@ -33,6 +33,11 @@
     </a>
   </nav>
 
+  <a class="app-card" id="broadcastCard" href="apps.html" style="margin-top:22px;border-left-color:#36c5d6;background:linear-gradient(135deg,#fff3df,#ffe6c9)">
+    <span class="ico">📻</span>
+    <span><div class="t">小小世界播报 · 每日英语新闻</div><div class="meta">🎧 点我直接听今天这一期 · 中英双语朗读</div></span>
+  </a>
+
   <div class="grid" style="margin-top:22px">
     <a class="app-card" href="apps.html" style="border-left-color:var(--candy-purple)">
       <span class="ico">🎮</span>
@@ -46,9 +51,28 @@
       <span class="ico">👨‍💻</span>
       <span><div class="t">家长页</div><div class="meta">卷子下载 · 学习趋势</div></span>
     </a>
+    <a class="app-card" href="exam-prep.html" style="border-left-color:var(--candy-green)">
+      <span class="ico">🎯</span>
+      <span><div class="t">赛考备考看板</div><div class="meta">GESP/CTL 备考 · 今日计划 · 报考判断</div></span>
+    </a>
   </div>
 
   <div class="footer-note">家庭专用 · 打开网址即可使用</div>
 </div>
+<script>
+// 让"小小世界播报"卡片自动指向最新一期 news_YYYYMMDD.html
+(async function(){
+  try{
+    const res = await fetch('data/apps.json',{cache:'no-store'});
+    const apps = await res.json();
+    const news = apps.filter(a => /news_\d{8}\.html$/.test(a.file||''));
+    if(news.length){
+      news.sort((a,b)=> (a.file < b.file ? 1 : -1)); // 文件名按日期降序，取最新
+      const card = document.getElementById('broadcastCard');
+      if(card){ card.href = news[0].file; }
+    }
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
