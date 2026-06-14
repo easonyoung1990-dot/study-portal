@@ -24,7 +24,7 @@
     <h2 style="margin:0 0 6px;font-size:18px">📄 卷子下载 / 打印</h2>
     <p style="color:var(--muted);font-size:14px;margin:0 0 12px">在电脑或手机点开即可下载打印</p>
     <div id="papers" class="grid">
-      <div class="empty">还没有卷子，生成后会出现在这里 <span class="badge-soon">P1 接入</span></div>
+      <div class="empty">正在加载卷子…</div>
     </div>
   </div>
 
@@ -105,6 +105,26 @@ async function ebInit(){
 }
 (function(){ const i = document.getElementById('ebUrl'); if(i) i.value = ebGet(); })();
 ebInit();
+
+// 卷子下载/打印：读 data/papers.json 列出可下载的卷子
+async function loadPapers(){
+  const el = document.getElementById('papers');
+  const SUBC = { '语文':'#ff8a5b', '数学':'#8ce99a', '英语':'#36c5d6' };
+  const KN = { kenton:'🦁 Kenton', eddey:'🐯 Eddey', both:'两人通用' };
+  try{
+    const r = await fetch('data/papers.json', { cache:'no-store' });
+    const ps = await r.json();
+    if(!ps.length){ el.innerHTML = '<div class="empty">还没有卷子 —— 让爸爸说"出张卷"，生成后会自动出现在这里</div>'; return; }
+    el.innerHTML = ps.slice().reverse().map(function(p){
+      const c = SUBC[p.subject] || '#b39ddb';
+      return '<a class="app-card" style="border-left-color:' + c + '" href="' + p.file + '" target="_blank" rel="noopener">'
+        + '<span class="ico">📄</span>'
+        + '<span><div class="t">' + (p.title||'卷子') + '</div><div class="meta">'
+        + (p.subject||'') + ' · ' + (KN[p.child]||p.child||'通用') + ' · ' + (p.added||'') + ' · 点开下载/打印</div></span></a>';
+    }).join('');
+  }catch(e){ el.innerHTML = '<div class="empty">卷子清单读取失败，请稍后再试</div>'; }
+}
+loadPapers();
 </script>
 </body>
 </html>
