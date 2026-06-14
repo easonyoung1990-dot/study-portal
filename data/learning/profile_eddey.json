@@ -1,7 +1,8 @@
 {
   "child": "eddey",
   "name": "Eddey",
-  "updated": "2026-06-13",
+  "updated": "2026-06-14",
+  "学习总档案": "docs/学习记忆_弟弟.md —— 长期画像/三科错题/复习规则权威总档，出题前必读",
   "summary": "2026-06-13 建立语文期末复习主线（三下，以期末复习索引为总骨架）。学情画像各知识点掌握度待孩子用闯关软件练习后导出回填。",
   "语文复习主线": {
     "index": "data/learning/chinese_review_eddey_grade3b.json",
@@ -30,7 +31,12 @@
         "作文": { "mastery": 60, "trend": "flat", "last_seen": "2026-06-13" }
       }
     },
-    "数学": { "strengths": [], "weaknesses": [], "knowledge_points": {} },
+    "数学": {
+      "strengths": [],
+      "weaknesses": ["计算(竖式对位/进位/漏0)", "余数单位还原(如800÷90余80元)", "脱式顺序、乱用简便", "应用题建模找中间量", "单位量感(长度/周长/面积)", "组合图形面积(拆/补/移)", "线段图(少的一份→多的量)", "分数意义", "统计图表达"],
+      "note": "校内沪教版；详见 docs/学习记忆_弟弟.md",
+      "knowledge_points": {}
+    },
     "英语": {
       "主线": "data/learning/english_eddey.json",
       "strengths": ["整体正确率高（95%）", "swimming 发音已熟练（练82次）"],
