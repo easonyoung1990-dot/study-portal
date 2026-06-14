@@ -1,0 +1,47 @@
+{
+  "updated": "2026-06-13",
+  "source": "docs/核桃编程学习进度.md（家长整理，已匿名化）",
+  "platform": "核桃编程（Walnut Coding）· 信奥科技特长生班",
+  "lang": "C++",
+  "cadence": "每周 1 节课",
+  "sharedContent": "两娃共用同一套教学内容，辅导重点差异化",
+  "goals": ["CTL 一级（老师称约 40% 考点覆盖）", "图灵杯", "蓝桥杯"],
+  "learners": {
+    "kenton": { "name": "Kenton", "grade": "四年级下(4B)", "trait": "理解力强，可做进阶/默写/读运行结果", "math弱": "小数除法(1÷5=0.2、40÷200=0.2)", "typing": "待加强(hunt-and-peck)" },
+    "eddey": { "name": "Eddey", "grade": "三年级下(3B)", "trait": "游戏与成就感驱动，重在认识与体验", "math弱": "", "typing": "" }
+  },
+  "lessons": [
+    { "id": "L1-1", "topic": "for 语句初识 & 顺序执行", "status": "done" },
+    { "id": "L1-2", "topic": "if 语句、变量、关系运算符", "status": "done" },
+    { "id": "L1-3", "topic": "for 语句(三要素)、顺序执行中的 for", "status": "done" },
+    { "id": "L1-4", "topic": "智能门铃 & 语音留言(指令类)", "status": "done" },
+    { "id": "L2-1", "topic": "if 语句进阶 & 初识与或(&& / ||)", "status": "done", "latest": true },
+    { "id": "L2-2", "topic": "if-else 初识 & 进阶(项目：月相观测仪)", "status": "next" }
+  ],
+  "syntaxChecklist": [
+    { "item": "#include/using/main/return 框架", "ok": true },
+    { "item": "变量定义 int a;", "ok": true },
+    { "item": "输入 cin>>a; 连续输入 cin>>a>>b;", "ok": true },
+    { "item": "输出 cout<<...<<endl;", "ok": true },
+    { "item": "关系运算符 > < == >= <= !=", "ok": true },
+    { "item": "if 语句、并列 if", "ok": true },
+    { "item": "for 循环(三要素)", "ok": true },
+    { "item": "逻辑运算符 && ||", "ok": true },
+    { "item": "核桃硬件指令 isPressed/isTouched/playSound/printPos/record", "ok": true },
+    { "item": "if-else 语句", "ok": false, "note": "L2-2 即将学" }
+  ],
+  "alignWithBank": "已学 ≈ GESP/CTL 一级全部 + 二级的 if/并列if/for/&&|| 部分；未学：if-else、while、数组、字符串、函数。出题时不要超纲到未学项（除非是预习）。",
+  "teachingRules": [
+    "哥哥(Kenton)：可默写、读程序运行结果、进阶任务、数学融合(尤其小数除法)。",
+    "弟弟(Eddey)：重在认识与体验，记发音+大意即可，不强求深度理解。",
+    "不直接给答案，用引导话术让孩子自己想。",
+    "单词卡含：发音 + 词性 + 释义 + 短语。",
+    "代码示例配『白话翻译』。"
+  ],
+  "vocab": {
+    "L1-3": [["dig","/dɪg/","v.","挖、掘","dig into 刻苦钻研"],["get","/get/","v.","获得、得到","get into 进入、陷入"]],
+    "L1-4": [["show","/ʃoʊ/","v./n.","显示、表现","music show 音乐表演"],["print","/prɪnt/","v./n.","打印、印刷","print out 打印出"],["sound","/saʊnd/","v./n.","听起来；声音","sound like 听起来像"],["press","/pres/","v./n.","按、压","is pressed 被按压"],["touch","/tʌtʃ/","v./n.","触摸、触碰","is touched 被触碰"],["record","/ˈrekɔːd/","n./v.","录音、记录","record a song 录一首歌"],["play","/pleɪ/","v./n.","玩、播放","play music 播放音乐"]],
+    "L2-1": [["and","/ənd/","conj.","与、和","wait and see 等等看"],["or","/ɔːr/","conj.","或、或者","either...or... 要么…要么"],["super","/ˈsuːpər/","adj.","超级的","super power 超能力"],["rare","/rer/","adj.","稀有的、珍贵的","rare animals 珍稀动物"],["normal","/ˈnɔːrml/","adj.","正常的","as normal 像平常一样"],["turn right","/tɜːn raɪt/","v.","右转","——"],["turn left","/tɜːn left/","v.","左转","——"]],
+    "L2-2": [["else","/els/","adv.","其他的；(编程)否则","something else 别的东西"],["kick","/kɪk/","v./n.","踢、踹","kick off 开始"],["forward","/ˈfɔːwəd/","adv.","向前、前进","look forward to 期待"],["get","/get/","v./n.","获得、得到","get into 进入"]]
+  }
+}
