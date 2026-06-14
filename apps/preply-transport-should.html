@@ -60,14 +60,6 @@
   .home-msg { background:var(--bg); border-radius:14px; padding:14px; text-align:left; font-size:13px; line-height:1.7; margin:14px 0; }
   .home-msg strong { color:var(--pink-deep); }
 
-  /* 选孩子 */
-  .kid-picker { display:flex; gap:10px; margin:16px 0; }
-  .kid-card { flex:1; padding:14px 8px; border-radius:18px; text-align:center; background:var(--bg); border:3px solid transparent; cursor:pointer; transition:all 0.2s; }
-  .kid-card.active { border-color:var(--pink-deep); background:white; transform:scale(1.03); box-shadow:var(--shadow); }
-  .kid-card .avatar { font-size:40px; }
-  .kid-card .name { font-weight:800; font-size:15px; margin-top:2px; }
-  .kid-card .age { font-size:11px; color:var(--text-light); }
-
   /* 模式按钮 */
   .mode-btn { width:100%; padding:18px; border:none; border-radius:20px; font-family:inherit; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:14px; box-shadow:var(--shadow); margin-bottom:10px; text-align:left; transition:transform 0.15s; }
   .mode-btn:active { transform:translateY(2px); }
@@ -231,7 +223,7 @@
   <!-- 顶部 -->
   <div id="topbar" class="topbar hidden">
     <div class="pill back" onclick="goHome()">← 首页</div>
-    <div class="pill" id="whoPill">👦 Kenton</div>
+    <div class="pill">🚌 Transport</div>
     <div class="pill">⭐ <span id="totalStars">0</span></div>
   </div>
   <div id="progressWrap" class="progress-wrap hidden"><div class="progress-bar" id="progressBar"></div></div>
@@ -251,7 +243,7 @@
     </div>
 
     <div style="background:#FFF4E0; border-radius:14px; padding:12px; margin: 14px 0; font-size:12px; line-height:1.6;">
-      📢 <strong>先测一下声音:</strong> 手机端首次使用要先点一下按钮,浏览器才会允许播放英文朗读。
+      📢 <strong>先测一下声音:</strong> 手机端首次使用要先点一下按钮,浏览器才会允许播放真人发音。
       <button id="testVoiceBtn" class="btn btn-yellow btn-small" style="margin-top:10px; width:100%;" onclick="testVoice()">
         🔊 点这里测试声音
       </button>
@@ -264,17 +256,7 @@
       • 选择题的题目和选项<strong>只翻译、不读出来</strong>(免得报答案)
     </div>
 
-    <div style="font-weight:800; margin: 12px 0 8px; font-size:14px;">先选一下你是谁:</div>
-    <div class="kid-picker">
-      <div class="kid-card" data-kid="kenton" onclick="pickKid('kenton')">
-        <div class="avatar">👦</div><div class="name">Kenton</div><div class="age">10 岁</div>
-      </div>
-      <div class="kid-card" data-kid="eddey" onclick="pickKid('eddey')">
-        <div class="avatar">🧒</div><div class="name">Eddey</div><div class="age">9 岁</div>
-      </div>
-    </div>
-
-    <div id="modeBtns" style="opacity:0.4; pointer-events:none;">
+    <div style="margin-top:18px;">
       <button class="mode-btn daily" onclick="startMode('daily')">
         <span class="icon">📚</span>
         <span class="text"><div class="t1">每日复习模式</div><div class="t2">10 关全套 · 约 8-10 分钟</div></span>
@@ -289,7 +271,7 @@
       </button>
       <button class="mode-btn parent" onclick="showStage('parent')">
         <span class="icon">👨‍👩‍👧</span>
-        <span class="text"><div class="t1">家长页</div><div class="t2">查看孩子进度和建议</div></span>
+        <span class="text"><div class="t1">家长页</div><div class="t2">查看进度和建议</div></span>
       </button>
     </div>
   </div>
@@ -304,7 +286,7 @@
   <!-- ===== 家长页 ===== -->
   <div id="parentBox" class="card hidden">
     <div class="stage-title">👨‍👩‍👧 家长页</div>
-    <div class="stage-sub">基于孩子真实练习记录</div>
+    <div class="stage-sub">基于真实练习记录</div>
     <div id="parentContent"></div>
   </div>
 
@@ -312,18 +294,27 @@
 
 <script>
 /* =========================================================
-   全局: 语音 + 翻译
+   全局: 语音(神经预合成 mp3 优先, 浏览器 TTS 兜底) + 翻译
    ========================================================= */
+
+// 预合成音频目录(由 gen_audio_manifest.py 用 edge-tts 离线生成,文件名= FNV-1a 哈希)
+const AUDIO_DIR = "audio/preply-transport/";
+let bcAudio = null;        // 复用单个 Audio 元素(移动端更兼容)
+let audioToken = 0;        // 打断/过期保护
 
 let voicesReady = false;
 let enVoice = null;
 let voiceUnlocked = false;
 
+// 必须与 gen_audio_manifest.py 的 fnv() 一致: 对 (lang+"|"+text) 的 UTF-8 字节做 FNV-1a
+function audioHash(s){ const b=new TextEncoder().encode(s); let x=0x811c9dc5>>>0; for(let i=0;i<b.length;i++){ x^=b[i]; x=Math.imul(x,0x01000193)>>>0; } return ('0000000'+x.toString(16)).slice(-8); }
+
 function loadVoices() {
   if (!('speechSynthesis' in window)) return;
   const voices = window.speechSynthesis.getVoices();
   if (voices.length === 0) return;
-  enVoice = voices.find(v => v.lang === 'en-US') ||
+  enVoice = voices.find(v => /en-US/i.test(v.lang) && /natural|aria|jenny|guy/i.test(v.name)) ||
+            voices.find(v => v.lang === 'en-US') ||
             voices.find(v => v.lang && v.lang.startsWith('en-US')) ||
             voices.find(v => v.lang && v.lang.startsWith('en')) ||
             voices[0];
@@ -351,23 +342,20 @@ function unlockVoice() {
   } catch(e) {}
 }
 
-function speak(text, slow=false) {
+// 浏览器 TTS(仅当预合成 mp3 缺失/失败时兜底)
+function ttsSpeak(text, slow) {
   if (!('speechSynthesis' in window)) {
     alert('⚠️ 你的浏览器不支持朗读功能。请用最新版 Chrome、Safari 或 Edge 打开这个网页。');
     return;
   }
-
-  // 缩写字母转换
   let processedText = text
     .replace(/\bPE\b/g, 'P E').replace(/\bTV\b/g, 'T V')
     .replace(/\bUK\b/g, 'U K').replace(/\bUSA\b/g, 'U S A')
     .replace(/\bUS\b/g, 'U S').replace(/\bCD\b/g, 'C D')
     .replace(/\bDVD\b/g, 'D V D').replace(/\bPC\b/g, 'P C')
     .replace(/\bAI\b/g, 'A I');
-
   window.speechSynthesis.cancel();
   if (!voicesReady) loadVoices();
-
   setTimeout(() => {
     const u = new SpeechSynthesisUtterance(processedText);
     u.lang = 'en-US'; u.rate = slow ? 0.55 : 0.9; u.pitch = 1.05; u.volume = 1;
@@ -376,6 +364,35 @@ function speak(text, slow=false) {
     window.speechSynthesis.speak(u);
     voiceUnlocked = true;
   }, 50);
+}
+
+// 主朗读: 先放真人神经音 mp3, 放不出再退回浏览器 TTS
+function speak(text, slow=false) {
+  audioToken++;
+  const myToken = audioToken;
+  const stale = () => myToken !== audioToken;
+  try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch(e) {}
+
+  if (AUDIO_DIR && typeof Audio !== 'undefined') {
+    if (!bcAudio) {
+      bcAudio = new Audio();
+      bcAudio.setAttribute('playsinline', '');
+      bcAudio.preload = 'auto';
+      try { document.body.appendChild(bcAudio); } catch(e) {}
+    }
+    const a = bcAudio;
+    try { a.pause(); } catch(e) {}
+    const fb = () => { if (stale()) return; ttsSpeak(text, slow); };
+    a.onended = null;
+    a.onerror = fb;
+    a.src = AUDIO_DIR + audioHash('en|' + text) + '.mp3';
+    try { a.currentTime = 0; } catch(e) {}
+    const p = a.play();
+    if (p && typeof p.catch === 'function') p.catch(fb);
+    voiceUnlocked = true;
+    return;
+  }
+  ttsSpeak(text, slow);
 }
 
 function testVoice() {
@@ -395,14 +412,16 @@ function testVoice() {
    ========================================================= */
 
 const DICT = {
-  // 交通工具
-  'bus':'公共汽车', 'car':'小汽车', 'motorbike':'摩托车',
-  'train':'火车', 'plane':'飞机', 'airplane':'飞机',
-  'bicycle':'自行车', 'bike':'自行车', 'taxi':'出租车',
-  'ship':'轮船', 'boat':'小船', 'transport':'交通工具',
-  'ticket':'车票', 'station':'车站', 'airport':'机场',
-  'helmet':'头盔', 'journey':'旅程', 'trip':'旅行/旅程',
-  'destination':'目的地', 'timetable':'时刻表', 'road':'马路',
+  // 交通工具(本课真实词)
+  'bus':'公共汽车', 'supercar':'超级跑车', 'car':'小汽车',
+  'train':'火车', 'airplane':'飞机', 'plane':'飞机', 'motorbike':'摩托车',
+  'bicycle':'自行车', 'bike':'自行车', 'taxi':'出租车', 'ship':'轮船', 'boat':'小船',
+  'transport':'交通工具', 'vehicle':'交通工具/车辆',
+  'bus driver':'公交车司机', 'busman':'公交车司机', 'bus stop':'公交车站',
+  'yellow school bus':'黄色校车', 'driver':'司机',
+  'destination':'目的地', 'timetable':'时刻表', 'ticket':'车票',
+  'station':'车站', 'airport':'机场', 'helmet':'头盔', 'road':'马路',
+  'journey':'旅程', 'trip':'旅行/旅程',
   // 形容词
   'comfortable':'舒服的', 'fast':'快的', 'quick':'快的',
   'slow':'慢的', 'big':'大的', 'large':'大的', 'amazing':'棒极了',
@@ -418,23 +437,20 @@ const DICT = {
   // should 建议
   'should':'应该', 'should not':'不应该', "shouldn't":'不应该',
   'advice':'建议', 'vegetables':'蔬菜', 'chocolate':'巧克力',
-  'water':'水', 'candy':'糖果', 'games':'游戏', 'helmet on':'戴头盔',
+  'water':'水', 'candy':'糖果', 'games':'游戏',
   // 冠词/介词/小词
   'a':'一个(辅音前)', 'an':'一个(元音前)', 'the':'这个/那个',
   'by':'乘坐(by+交通工具)', 'on':'在……上', 'in':'在……里',
   'at':'在', 'to':'到', 'for':'为了/给', 'every day':'每天',
   'every night':'每晚', 'yesterday':'昨天', 'today':'今天',
   'eight hours':'八小时', 'on time':'准时', 'last holiday':'上个假期',
-  // 职业/词形
-  'driver':'司机', 'bus driver':'公交车司机', 'busman':'公交车司机',
-  'bus man':'(错)应写成 busman', 'bus car':'(错)没有这个词',
   // 常用短语
   'by car':'坐小汽车', 'by bus':'坐公交车', 'by train':'坐火车',
   'by bike':'骑自行车', 'by plane':'坐飞机', 'by taxi':'坐出租车',
   'I take the bus':'我坐公交车', 'go to school':'上学', 'go to work':'去上班',
   'You should':'你应该', 'You should not':'你不应该',
   'I went':'我去了', 'I ate':'我吃了', 'I took':'我乘坐了',
-  'beach':'海滩', 'mall':'购物中心', 'school':'学校', 'work':'工作',
+  'beach':'海滩', 'mall':'购物中心', 'school':'学校', 'work':'工作', 'sushi':'寿司',
   'three':'三', 'four':'四', 'two':'二', 'one':'一', 'eight':'八',
 };
 
@@ -535,30 +551,30 @@ function setupLongPress() {
    一、题库(来自 Preply 报告: Transport and 'should' advice)
    ========================================================= */
 
-// 1. 听音选词(交通工具词 · ★=课堂真实词, 其余为补充的常见交通词)
+// 1. 听音选词(交通工具词 · 全部为课堂真实词)
 const Q_LISTEN = [
   { en:'bus',         opts:['公共汽车','飞机','火车','轮船'],     a:0 },
-  { en:'car',         opts:['小汽车','自行车','出租车','马路'],   a:0 },
-  { en:'motorbike',   opts:['摩托车','火车','飞机','轮船'],       a:0 },
+  { en:'supercar',    opts:['超级跑车','公交车','火车','马路'],   a:0 },
   { en:'train',       opts:['火车','汽车','头盔','车票'],         a:0 },
-  { en:'plane',       opts:['飞机','轮船','自行车','车站'],       a:0 },
-  { en:'bicycle',     opts:['自行车','出租车','摩托车','飞机'],   a:0 },
-  { en:'taxi',        opts:['出租车','公共汽车','火车','马路'],   a:0 },
+  { en:'motorbike',   opts:['摩托车','火车','飞机','轮船'],       a:0 },
+  { en:'airplane',    opts:['飞机','轮船','自行车','车站'],       a:0 },
+  { en:'bus driver',  opts:['公交车司机','乘客','售票员','警察'], a:0 },
+  { en:'bus stop',    opts:['公交车站','机场','花园','学校'],     a:0 },
   { en:'destination', opts:['目的地','时刻表','车票','车站'],     a:0 },
   { en:'timetable',   opts:['时刻表','目的地','头盔','旅程'],     a:0 },
   { en:'comfortable', opts:['舒服的','危险的','快的','吵的'],     a:0 }
 ];
 
-// 2. 是不是交通工具(destination/timetable/comfortable 不是车)
+// 2. 是不是交通工具(destination/timetable/bus stop/comfortable 不是车)
 const Q_CATEGORY = [
   { word:'bus',         opts:['交通工具 🚗','不是交通工具'], a:0 },
   { word:'destination', opts:['交通工具 🚗','不是交通工具'], a:1 },
-  { word:'motorbike',   opts:['交通工具 🚗','不是交通工具'], a:0 },
+  { word:'supercar',    opts:['交通工具 🚗','不是交通工具'], a:0 },
   { word:'timetable',   opts:['交通工具 🚗','不是交通工具'], a:1 },
   { word:'train',       opts:['交通工具 🚗','不是交通工具'], a:0 },
-  { word:'comfortable', opts:['交通工具 🚗','不是交通工具'], a:1 },
-  { word:'taxi',        opts:['交通工具 🚗','不是交通工具'], a:0 },
-  { word:'ticket',      opts:['交通工具 🚗','不是交通工具'], a:1 }
+  { word:'bus stop',    opts:['交通工具 🚗','不是交通工具'], a:1 },
+  { word:'airplane',    opts:['交通工具 🚗','不是交通工具'], a:0 },
+  { word:'comfortable', opts:['交通工具 🚗','不是交通工具'], a:1 }
 ];
 
 // 3. should / should not(核心知识点①: 给建议)
@@ -593,7 +609,7 @@ const Q_ADVICE = [
 const Q_FIXPREP = [
   { wrong:'I love traveling car.', right:'I love traveling by car.',
     blank:'I love traveling ___ car.', opts:['by','in','at','to'], a:0,
-    explain:'说"乘坐某交通工具"要用 by → by car / by bus / by train / by plane。这是外教这次帮你改的句子!' },
+    explain:'说"乘坐某交通工具"要用 by → by car / by bus / by train / by airplane。这是外教这次帮你改的句子!' },
   { wrong:'I go to school car.', right:'I go to school by car.',
     blank:'I go to school ___ car.', opts:['by','on','with','of'], a:0,
     explain:'坐车去学校用 by car。记: by + 交通工具。' },
@@ -625,7 +641,7 @@ const Q_FIXWORD = [
 const Q_PAST = [
   { q:'Yesterday I ___ to the shopping mall.', cn:'(go 的过去式)',
     opts:['goed','went','gone'], a:1,
-    explain:'go 是不规则动词,过去式是 went,不是 goed。I went to the mall.' },
+    explain:'go 是不规则动词,过去式是 went,不是 goed。I went to the shopping mall.' },
   { q:'I ___ sushi for lunch.', cn:'(eat 的过去式)',
     opts:['eated','ate','eaten'], a:1,
     explain:'eat 不规则,过去式是 ate。I ate sushi.' },
@@ -643,7 +659,7 @@ const Q_PAST = [
     explain:'buy 不规则,过去式是 bought。I bought a ticket.' }
 ];
 
-// 7. 同义词配对(⚠ 词汇页未提供, 这3对为补充的常见同义词)
+// 7. 同义词配对(⚠ 课堂未提供同义词, 这3对为补充的常见同义词)
 const Q_SYNONYMS = [
   { left:'bike',  right:'bicycle', cn:'自行车(两种说法)' },
   { left:'trip',  right:'journey', cn:'旅程 / 旅行' },
@@ -673,9 +689,9 @@ const Q_DRAG = [
   { words:['I','go','to','school','by','bus'], answer:'I go to school by bus.',
     cn:'我坐公交车上学。',
     hints:['第一步: I go to school','第二步: by(乘坐)','第三步: by bus'] },
-  { words:['I','went','to','the','mall','yesterday'], answer:'I went to the mall yesterday.',
+  { words:['I','went','to','the','shopping','mall','yesterday'], answer:'I went to the shopping mall yesterday.',
     cn:'我昨天去了购物中心。',
-    hints:['第一步: I went(去的过去式)','第二步: to the mall','第三步: yesterday(昨天)'] },
+    hints:['第一步: I went(去的过去式)','第二步: to the shopping mall','第三步: yesterday(昨天)'] },
   { words:['He','is','a','bus','driver'], answer:'He is a bus driver.',
     cn:'他是一名公交车司机。',
     hints:['第一步: He is','第二步: a(职业前加 a)','第三步: bus driver'] }
@@ -692,7 +708,7 @@ const Q_DIALOG = [
   { teacher:'Should you wear a helmet on a motorbike?',
     opts:['Yes, I should wear a helmet.','No, I should not.','Maybe I wear it.'], a:0 },
   { teacher:'What is your favourite transport?',
-    opts:['I like the train.','I like traveling by car.','My favourite is the plane.'],
+    opts:['I like the train.','I like the supercar.','My favourite is the airplane.'],
     a:-1, note:'三个都是好句子!选你真正喜欢的。' },
   { teacher:'Is the bus comfortable?',
     opts:['Yes, it is comfortable.','No, but it is fast.','It is a little slow.'],
@@ -700,10 +716,10 @@ const Q_DIALOG = [
 ];
 
 /* =========================================================
-   二、状态层
+   二、状态层(单一版本, 不分孩子)
    ========================================================= */
 
-let currentKid = null;
+const STORE_KEY = 'preplyTransport';
 let currentMode = 'daily';
 let stars = 0;
 let history = { wrong:[], pronCount:{}, days:[], totalCorrect:0, totalTried:0 };
@@ -738,13 +754,12 @@ function longPressHint() {
 }
 
 function saveProgress() {
-  if (!currentKid) return;
-  localStorage.setItem('preplyTransport_' + currentKid, JSON.stringify({ stars, history, lastDate: new Date().toISOString() }));
+  localStorage.setItem(STORE_KEY, JSON.stringify({ stars, history, lastDate: new Date().toISOString() }));
 }
 
-function loadProgress(kid) {
+function loadProgress() {
   try {
-    const raw = localStorage.getItem('preplyTransport_' + kid);
+    const raw = localStorage.getItem(STORE_KEY);
     return raw ? JSON.parse(raw) : null;
   } catch(e) { return null; }
 }
@@ -796,25 +811,10 @@ function setStageTitle(title, sub) {
 }
 
 /* =========================================================
-   首页 + 选孩子
+   首页 + 模式
    ========================================================= */
 
-function pickKid(kid) {
-  currentKid = kid;
-  document.querySelectorAll('.kid-card').forEach(el => {
-    el.classList.toggle('active', el.dataset.kid === kid);
-  });
-  $('modeBtns').style.opacity = '1';
-  $('modeBtns').style.pointerEvents = 'auto';
-  const data = loadProgress(kid);
-  history = data ? data.history : { wrong:[], pronCount:{}, days:[], totalCorrect:0, totalTried:0 };
-  stars = data ? (data.stars || 0) : 0;
-  $('whoPill').innerHTML = (kid === 'kenton' ? '👦 Kenton' : '🧒 Eddey');
-  $('totalStars').textContent = stars;
-}
-
 function startMode(mode) {
-  if (!currentKid) { alert('先选 Kenton 或 Eddey!'); return; }
   currentMode = mode;
   seqIdx = 0;
   const today = new Date().toDateString();
@@ -898,7 +898,7 @@ function renderListenOne() {
       <div style="font-size:13px; color:var(--text-light); margin-bottom:10px;">第 ${subIdx+1} / ${subTotal} 题</div>
       <div style="font-size:13px; color:var(--text-light); margin-bottom:6px;">👇 先点这里听一遍</div>
       <button class="icon-btn coral pulse-btn" style="font-size:20px; padding:20px 32px;" onclick="speak('${q.en}')">🔊 听单词</button>
-      <div style="margin-top:10px;"><button class="icon-btn yellow" onclick="speak('${q.en}', true)">🐢 慢速</button></div>
+      <div style="margin-top:10px;"><button class="icon-btn yellow" onclick="speak('${q.en}', true)">🐢 再听一遍</button></div>
     </div>
     <div class="question" style="text-align:center; margin-top:16px;">这个单词是什么意思?</div>
     <div class="options" style="margin-top:14px;">
@@ -921,7 +921,7 @@ function pickListen(i) {
   fb.innerHTML = `
     <div class="title">${right ? '🎉 Good job!' : '这个词是 ' + q.opts[q.a]}</div>
     <div>${en(q.en)} = ${q.opts[q.a]}</div>
-    <button class="btn btn-mint btn-small" style="margin-top:8px;" onclick="speak('${q.en}', true)">🐢 再听</button>
+    <button class="btn btn-mint btn-small" style="margin-top:8px;" onclick="speak('${q.en}', true)">🔊 再听</button>
     <button class="btn btn-primary btn-small" style="margin-top:8px; width:100%;" onclick="subIdx++; renderListenOne();">下一题 →</button>
   `;
   if (right) { logRight(); subScore++; }
@@ -1023,7 +1023,7 @@ function pickAdvice(i) {
     <div class="title">${right ? '🎉 对!' : '正确: ' + q.opts[q.a]}</div>
     <div>完整句: <strong>${en(fullSent)}</strong></div>
     <div style="margin-top:6px;">💡 ${q.explain}</div>
-    <button class="btn btn-mint btn-small" style="margin-top:8px;" onclick="speak(\`${fullSent.replace(/'/g,"\\'")}\`, true)">🔊 慢速听</button>
+    <button class="btn btn-mint btn-small" style="margin-top:8px;" onclick="speak(\`${fullSent.replace(/'/g,"\\'")}\`, true)">🔊 听一遍</button>
     <button class="btn btn-primary btn-small" style="margin-top:8px; width:100%;" onclick="subIdx++; renderAdviceOne();">下一题 →</button>
   `;
   if (right) { logRight(); subScore++; }
@@ -1068,7 +1068,7 @@ function renderFixOne() {
         <div style="margin-top:10px; font-size:13px; line-height:1.6;">💡 ${q.explain}</div>
         <div class="speak-btns" style="margin-top:12px;">
           <button class="icon-btn mint" onclick="speak(\`${q.right.replace(/'/g,"\\'")}\`)">🔊 听对的</button>
-          <button class="icon-btn yellow" onclick="speak(\`${q.right.replace(/'/g,"\\'")}\`, true)">🐢 慢读</button>
+          <button class="icon-btn yellow" onclick="speak(\`${q.right.replace(/'/g,"\\'")}\`, true)">🐢 再听</button>
         </div>
       </div>
       <button class="btn btn-primary" onclick="subState.phase='practice'; renderFixOne();">我懂了,练一道 →</button>
@@ -1154,7 +1154,7 @@ function pickPast(i) {
     <div class="title">${right ? '🎉 对!' : '正确: ' + q.opts[q.a]}</div>
     <div>完整句: <strong>${en(fullSent)}</strong></div>
     <div style="margin-top:6px;">💡 ${q.explain}</div>
-    <button class="btn btn-mint btn-small" style="margin-top:8px;" onclick="speak(\`${fullSent.replace(/'/g,"\\'")}\`, true)">🔊 慢速听</button>
+    <button class="btn btn-mint btn-small" style="margin-top:8px;" onclick="speak(\`${fullSent.replace(/'/g,"\\'")}\`, true)">🔊 听一遍</button>
     <button class="btn btn-primary btn-small" style="margin-top:8px; width:100%;" onclick="subIdx++; renderPastOne();">下一题 →</button>
   `;
   if (right) { logRight(); subScore++; }
@@ -1281,7 +1281,7 @@ function renderPronOne() {
       <div class="pron-cn">${q.cn}</div>
       <div class="speak-btns">
         <button class="icon-btn coral pulse-btn" onclick="speak('${q.en}', false)">🔊 听示范</button>
-        <button class="icon-btn yellow" onclick="speak('${q.en}', true)">🐢 慢速</button>
+        <button class="icon-btn yellow" onclick="speak('${q.en}', true)">🐢 再听</button>
       </div>
       <div class="pron-tip">${q.tip}</div>
       <button class="btn btn-mint" onclick="pronDone('${q.en}')" style="margin-top:8px;">🎙️ 我跟读了</button>
@@ -1386,7 +1386,7 @@ function checkDrag() {
     <div>对的: <strong style="color:var(--green);">${q.answer}</strong></div>
     <div style="margin-top:8px; font-size:12px; color:var(--text-light);">${q.cn}</div>
     <button class="btn btn-mint btn-small" style="margin-top:10px;" onclick="speak(\`${q.answer.replace(/'/g,"\\'")}\`)">🔊 听</button>
-    <button class="btn btn-yellow btn-small" style="margin-top:10px;" onclick="speak(\`${q.answer.replace(/'/g,"\\'")}\`, true)">🐢 慢读</button>
+    <button class="btn btn-yellow btn-small" style="margin-top:10px;" onclick="speak(\`${q.answer.replace(/'/g,"\\'")}\`, true)">🐢 再听</button>
     <button class="btn btn-primary btn-small" style="margin-top:10px; width:100%;" onclick="subIdx++; renderDragOne();">下一题 →</button>
   `;
   if (right) { logRight(); subScore++; }
@@ -1508,7 +1508,7 @@ function renderWrongOne() {
     </div>
     <div class="speak-btns" style="margin-top:14px;">
       <button class="icon-btn coral" onclick="speak(\`${String(w.right).replace(/'/g,"\\'")}\`)">🔊 听对的</button>
-      <button class="icon-btn yellow" onclick="speak(\`${String(w.right).replace(/'/g,"\\'")}\`, true)">🐢 慢读</button>
+      <button class="icon-btn yellow" onclick="speak(\`${String(w.right).replace(/'/g,"\\'")}\`, true)">🐢 再听</button>
     </div>
     <button class="btn btn-primary" style="margin-top:14px;" onclick="subIdx++; renderWrongOne();">记住了 →</button>
   `;
@@ -1532,7 +1532,7 @@ function renderDone() {
   doneCard.innerHTML = `
     <div class="result-hero">
       <div class="result-emoji">🏆</div>
-      <div style="font-size:14px; color:var(--text-light);">${currentKid === 'kenton' ? 'Kenton' : 'Eddey'} 完成啦!</div>
+      <div style="font-size:14px; color:var(--text-light);">完成啦!</div>
       <div class="result-score">${stars} ⭐</div>
       <div style="font-size:14px; color:var(--text-light); margin-top:6px;">累计正确率 ${acc}%</div>
       <div style="font-weight:700; margin-top:14px; line-height:1.5;">${tip}</div>
@@ -1552,7 +1552,6 @@ function renderDone() {
 
 function showStage(name) {
   if (name === 'parent') {
-    if (!currentKid) { alert('先选孩子!'); return; }
     $('stage0').classList.add('hidden');
     $('stageBox').classList.add('hidden');
     $('topbar').classList.remove('hidden');
@@ -1563,7 +1562,6 @@ function showStage(name) {
 }
 
 function renderParent() {
-  const whoName = currentKid === 'kenton' ? 'Kenton (10岁)' : 'Eddey (9岁)';
   const acc = history.totalTried > 0 ? Math.round(history.totalCorrect / history.totalTried * 100) : 0;
   const wrongByTag = {};
   history.wrong.forEach(w => wrongByTag[w.tag] = (wrongByTag[w.tag] || 0) + 1);
@@ -1594,10 +1592,10 @@ function renderParent() {
 
   $('parentContent').innerHTML = `
     <div style="background:linear-gradient(135deg, var(--blue), var(--mint)); border-radius:14px; padding:14px; margin-bottom:14px; font-size:13px; line-height:1.6;">
-      <strong>给家长的话:</strong> 本节课主题是<strong>"交通 + should 建议"</strong>。外教这次纠正的真实错误:<strong>少了介词 by</strong>(traveling car → traveling by car)、<strong>职业前漏冠词 a</strong>(bus driver → a bus driver)。发音最低的是 <strong>timetable(31%)、destination(34%)、comfortable(34%)</strong>。建议每天 8-10 分钟,外教课前再做一次 5 分钟冲刺。
+      <strong>给家长的话:</strong> 本节课主题是<strong>"交通 + should 建议"</strong>(外教 Denys, 6/13)。外教这次纠正的真实错误:<strong>少了介词 by</strong>(traveling car → traveling by car)、<strong>职业前漏冠词 a</strong>(bus driver → a bus driver)。发音最低的是 <strong>timetable(31%)、destination(34%)、comfortable(34%)</strong>。建议每天 8-10 分钟,外教课前再做一次 5 分钟冲刺。
     </div>
     <div class="report-section">
-      <h3>👤 ${whoName}</h3>
+      <h3>📊 练习情况</h3>
       <div class="item">累计星星: <strong>${stars} ⭐</strong></div>
       <div class="item">累计正确率: <strong>${acc}%</strong></div>
       <div class="item">练习天数: <strong>${days} 天</strong></div>
@@ -1625,13 +1623,17 @@ function renderParent() {
       `).join('') || '<div class="item">暂无</div>'}
     </div>
     <button class="btn btn-primary" style="margin-top:10px;" onclick="goHome()">回首页 🏠</button>
-    <button class="btn btn-secondary" style="margin-top:10px; width:100%;" onclick="if(confirm('确定清空 '+currentKid+' 的所有记录吗?')) { localStorage.removeItem('preplyTransport_'+currentKid); pickKid(currentKid); renderParent(); }">🗑️ 清空记录</button>
+    <button class="btn btn-secondary" style="margin-top:10px; width:100%;" onclick="if(confirm('确定清空所有练习记录吗?')) { localStorage.removeItem(STORE_KEY); history={wrong:[],pronCount:{},days:[],totalCorrect:0,totalTried:0}; stars=0; $('totalStars').textContent=0; renderParent(); }">🗑️ 清空记录</button>
   `;
 }
 
 /* 启动 */
 window.addEventListener('load', () => {
   setupLongPress();
+  const data = loadProgress();
+  history = data ? data.history : { wrong:[], pronCount:{}, days:[], totalCorrect:0, totalTried:0 };
+  stars = data ? (data.stars || 0) : 0;
+  const ts = $('totalStars'); if (ts) ts.textContent = stars;
 });
 </script>
 </body>
