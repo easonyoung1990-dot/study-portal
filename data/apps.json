@@ -40,5 +40,26 @@
     "title": "第八单元闯关 · 有趣的故事（11关）",
     "file": "apps/eddey_unit8_review.html",
     "added": "2026-06-13"
+  },
+  {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "英语 Module 4 闯关王 · 复习（5关）",
+    "file": "apps/eddey_english_review.html",
+    "added": "2026-06-14"
+  },
+  {
+    "child": "kenton",
+    "subject": "综合",
+    "title": "默写助手 · 语文+英语（全自动报默）",
+    "file": "apps/kenton_dictation.html",
+    "added": "2026-06-14"
+  },
+  {
+    "child": "kenton",
+    "subject": "综合",
+    "title": "默写错词重做 · 昨天错的词（中英）",
+    "file": "apps/kenton_dictation_redo.html",
+    "added": "2026-06-14"
   }
 ]

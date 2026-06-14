@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>弟弟语文期末闯关王 · 三下</title>
+<title>弟弟英语 Module 4 闯关王</title>
 <style>
 :root{
   --eddey:#ff8a5b;--eddeyd:#e8643a;--eddeybg:#fff0e6;
@@ -41,7 +41,6 @@ body{font-family:'LXGW WenKai Screen','PingFang SC','Microsoft YaHei',system-ui,
 .speak:active{transform:translateY(2px);box-shadow:0 1px 0 #f0dca0;}
 .soundtoggle{margin-left:auto;background:none;border:none;font-size:20px;cursor:pointer;padding:0 4px;}
 .toolrow{display:flex;align-items:center;margin-bottom:12px;}
-.passage{background:var(--bluebg);border-radius:12px;padding:13px 15px;font-size:16px;line-height:1.8;margin-bottom:14px;}
 .qtext{font-size:21px;font-weight:800;line-height:1.6;margin:4px 0 16px;}
 .qtext .blank{color:var(--eddeyd);border-bottom:3px solid var(--gold);padding:0 16px;}
 .opts{display:grid;gap:11px;}
@@ -51,11 +50,15 @@ body{font-family:'LXGW WenKai Screen','PingFang SC','Microsoft YaHei',system-ui,
 .opt.wrong{background:var(--redbg);border-color:var(--red);color:var(--red);font-weight:800;}
 .opt.dim{opacity:.5;}
 .trybox{width:100%;font-family:inherit;font-size:18px;border:2px dashed var(--line);border-radius:12px;padding:12px;margin-bottom:12px;min-height:54px;}
+input.trybox{min-height:0;}
+.mic{width:100%;font-family:inherit;font-size:18px;font-weight:800;background:#fff;border:2px solid var(--eddey);color:var(--eddeyd);border-radius:14px;padding:15px;cursor:pointer;box-shadow:0 5px 0 #f3e2d6;margin-bottom:10px;}
+.mic:active{transform:translateY(2px);box-shadow:0 3px 0 #f3e2d6;}
+.mic.listening{background:var(--redbg);border-color:var(--red);color:var(--red);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.55;}}
+.micnote{font-size:12px;color:var(--muted);margin:-4px 0 10px;}
 .answer{background:var(--greenbg);border-radius:12px;padding:14px 16px;font-size:18px;line-height:1.7;margin:6px 0 12px;}
 .answer .lab{font-size:13px;color:var(--green);font-weight:800;display:block;margin-bottom:4px;}
 .explain{background:#fff7ef;border-radius:12px;padding:11px 14px;font-size:15px;color:#8a6d4f;line-height:1.6;margin-bottom:12px;}
-.checklist{font-size:15px;line-height:2;margin:6px 0 12px;}
-.checklist label{display:block;}
 .fb{margin-top:6px;padding:13px 15px;border-radius:14px;font-size:16px;line-height:1.6;display:none;}
 .fb.ok{background:var(--greenbg);color:var(--green);display:block;}
 .fb.no{background:var(--redbg);color:var(--red);display:block;}
@@ -86,15 +89,15 @@ textarea.exp{width:100%;height:150px;font-size:12px;border:2px solid var(--line)
 <div class="wrap">
   <div class="top">
     <a class="home" href="../index.html">‹</a>
-    <span class="badge">语文闯关王</span>
-    <h1 id="topTitle">三年级下 · 期末闯关</h1>
+    <span class="badge">Module 4</span>
+    <h1 id="topTitle">弟弟英语 Module 4 闯关王</h1>
   </div>
 
   <!-- 闯关地图 -->
   <div id="map">
     <div class="card" style="padding:14px 16px">
-      <div style="font-weight:800;font-size:16px">弟弟语文期末闯关王 🏆</div>
-      <div style="font-size:13px;color:var(--muted);margin-top:4px">一关一关闯，先看规则再练习。错了会告诉你为什么，还能听声音。</div>
+      <div style="font-weight:800;font-size:16px">英语 Module 4 复习闯关 🦖</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px">6.12 学的三个语法点：身体部位复数、I have… 描述句型、一般现在时(含三单)。一关一关闯，错了会讲为什么，能听英语发音。<b>填空题不用打字——点 🎤 说出答案就行！</b></div>
     </div>
     <button class="lvl parent" id="parentEntry">
       <span class="ico">👨‍👩‍👦</span><span><div class="t">家长检查页</div><div class="meta">看今日错点、要复习什么</div></span>
@@ -132,7 +135,6 @@ textarea.exp{width:100%;height:150px;font-size:12px;border:2px solid var(--line)
         <button class="speak" id="speakBtn">🔊 读题</button>
         <button class="soundtoggle" id="soundBtn" title="开关声音">🔔</button>
       </div>
-      <div id="passage" class="passage hide"></div>
       <div class="qtext" id="qtext"></div>
       <div id="answerArea"></div>
       <div class="fb" id="fb"></div>
@@ -159,15 +161,15 @@ textarea.exp{width:100%;height:150px;font-size:12px;border:2px solid var(--line)
       <div class="pstat" id="pStat"></div>
     </div>
     <div class="card">
-      <div style="font-weight:800;font-size:16px;margin-bottom:6px">📌 明日优先复习建议</div>
+      <div style="font-weight:800;font-size:16px;margin-bottom:6px">📌 复习重点建议</div>
       <div id="pAdvice" style="font-size:15px;line-height:1.8"></div>
     </div>
     <div class="card">
-      <div style="font-weight:800;font-size:15px">📋 索引必做清单（对照检查）</div>
+      <div style="font-weight:800;font-size:15px">📋 Module 4 必会清单（对照检查）</div>
       <div style="font-size:14px;line-height:1.9;color:#6b5c52;margin-top:6px">
-        默写：词语表(P122-123)、《溪边》、《火烧云》3-6段、日积月累(P84/P96/P115)<br>
-        知识点：多音字、仿写词句、加点词、写具体、有趣开头、寻物启事、拟声词、有趣题目、转述句<br>
-        习作：写人记事 + 想象作文（约350字）
+        ① 身体部位复数：eyes/ears/shoulders/legs/knees/hands；特殊 foot→<b>feet</b>、tooth→<b>teeth</b><br>
+        ② 描述句型：I have a/an + 形容词 + 单数部位；I have + 形容词 + 复数部位；My … is/are …<br>
+        ③ 一般现在时：I go… / Do you…? / What do you do？　三单：Alice goes… / Does she…? / What does she do？
       </div>
     </div>
     <button class="bigbtn ghost" id="parentBack">← 回到地图</button>
@@ -176,156 +178,86 @@ textarea.exp{width:100%;height:150px;font-size:12px;border:2px solid var(--line)
 
 <script>
 "use strict";
-/* ===================== 题库（依据三下期末复习索引 + 弟弟弱点） ===================== */
-/* 题型 kind: "choice"=选择自动判分； "self"=看题→看答案→自评(默写/仿写/写作) */
+/* ===================== 题库（6.12 Module 4 复习三大语法点） ===================== */
+/* 题型 kind: "choice"=选择自动判分; "fill"=输入英文自动判分; "self"=看题→看答案→自评 */
 var LEVELS = [
-  {id:"cici",name:"字词默写关",ico:"🔤",tag:"字形不准",
-   intro:'<div class="rule">词语表 P122-123 是默写重点。弟弟常常不是不会，而是<b>写不准</b>：字形差一点、同音字写错。看拼音先在纸上写，再对答案。</div>',
+  {id:"plural",name:"身体部位复数关",ico:"🦶",tag:"名词复数",
+   intro:'<div class="rule">身体部位常常成对/成组出现，要用<b>复数</b>：eyes, ears, shoulders, legs, knees, hands。<br>大多数直接加 <b>s</b>；特殊变化要单独记：<b>foot → feet</b>、<b>tooth → teeth</b>。</div>',
    qs:[
-    {kind:"self",q:"看拼音写词语：qiè qiè sī yǔ",a:"窃窃私语",tag:"字形不准"},
-    {kind:"self",q:"看拼音写词语：shēn suō",a:"伸缩",tag:"字形不准"},
-    {kind:"self",q:"看拼音写词语：yùn cáng",a:"蕴藏",tag:"字形不准"},
-    {kind:"self",q:"看拼音写词语：guāng huī",a:"光辉",tag:"字形不准"},
-    {kind:"self",q:"看拼音写词语：yòu rén",a:"诱人",tag:"字形不准"},
-    {kind:"self",q:"看拼音写词语：yuán rùn",a:"圆润",tag:"字形不准"},
-    {kind:"self",q:"看拼音写词语：hóng tóng tóng",a:"红彤彤",tag:"字形不准"},
-    {kind:"self",q:"看拼音写词语：jīn càn càn",a:"金灿灿",tag:"字形不准"},
-    {kind:"self",q:"看拼音写词语：bàn zǐ bàn huáng",a:"半紫半黄",tag:"字形不准"},
-    {kind:"self",q:"看拼音写词语：bàn huī bàn bǎi hé sè",a:"半灰半百合色",tag:"字形不准"},
-    {kind:"choice",q:"选正确的字：光（　）",a:"辉",opts:["辉","灰"],explain:"光辉的'辉'。",tag:"字形不准"},
-    {kind:"choice",q:"选正确的字：圆（　）",a:"润",opts:["润","闰"],explain:"圆润的'润'，三点水。",tag:"字形不准"},
-    {kind:"choice",q:"选正确的字：（　）缩",a:"伸",opts:["伸","申"],explain:"伸缩的'伸'，单人旁。",tag:"字形不准"},
-    {kind:"choice",q:"选正确的字：（　）人",a:"诱",opts:["诱","秀"],explain:"诱人的'诱'。",tag:"字形不准"},
-    {kind:"choice",q:"选正确的字：（　）藏",a:"蕴",opts:["蕴","温"],explain:"蕴藏的'蕴'，草字头。",tag:"字形不准"}
+    {kind:"fill",q:"填复数：one foot, two ______ .",a:"feet",say:"one foot, two feet",explain:"foot 的复数是特殊变化 feet。",tag:"名词复数"},
+    {kind:"fill",q:"填复数：one tooth, two ______ .",a:"teeth",say:"one tooth, two teeth",explain:"tooth→teeth，也是特殊变化。",tag:"名词复数"},
+    {kind:"choice",q:"\"脚\"的复数形式是哪个？",a:"feet",opts:["feet","foots","feets"],say:"feet",explain:"foot→feet。",tag:"名词复数"},
+    {kind:"fill",q:"填空：My ______ are big.（foot 的正确形式）",a:"feet",say:"My feet are big.",explain:"两只脚用复数 feet，be 动词用 are。",tag:"名词复数"},
+    {kind:"fill",q:"填复数：one hand, two ______ .",a:"hands",say:"one hand, two hands",explain:"一般直接加 s：hand→hands。",tag:"名词复数"},
+    {kind:"fill",q:"填复数：one leg, two ______ .",a:"legs",say:"one leg, two legs",explain:"直接加 s：leg→legs。",tag:"名词复数"},
+    {kind:"fill",q:"填复数：one ear, two ______ .",a:"ears",say:"one ear, two ears",explain:"直接加 s：ear→ears。",tag:"名词复数"},
+    {kind:"fill",q:"填复数：one knee, two ______ .",a:"knees",say:"one knee, two knees",explain:"直接加 s：knee→knees。",tag:"名词复数"},
+    {kind:"choice",q:"下面哪个是\"特殊变化\"(不是直接加 s)？",a:"foot → feet",opts:["foot → feet","hand → hands","leg → legs"],say:"foot, feet",explain:"foot→feet 和 tooth→teeth 是特殊变化，要单独记。",tag:"名词复数"},
+    {kind:"choice",q:"选正确的句子：",a:"My eyes are big.",opts:["My eyes are big.","My eyes is big.","My eye are big."],say:"My eyes are big.",explain:"eyes 是复数，be 动词用 are。",tag:"名词复数"}
    ]},
-  {id:"beimo",name:"背默检查关",ico:"📖",tag:"字形不准",
-   intro:'<div class="rule">会背 ≠ 会写！《火烧云》《溪边》和日积月累，错一个字都要订正。先背、再默、再对答案。</div>',
+  {id:"haveA",name:"I have a/an… 关",ico:"☝️",tag:"a/an用法",
+   intro:'<div class="rule">句型：<b>I have a/an + 形容词 + 单数身体部位</b>。<br>e.g. I have a big head. / I have a small nose.<br>a 还是 an，看后面<b>紧挨那个词的读音</b>：元音音（a/e/i/o/u 的音）前用 <b>an</b>，其余用 <b>a</b>。</div>',
    qs:[
-    {kind:"self",q:"《火烧云》填空：这地方的火烧云变化极多，一会儿____，一会儿____，一会儿____，一会儿____。",a:"红彤彤、金灿灿、半紫半黄、半灰半百合色",tag:"字形不准"},
-    {kind:"self",q:"日积月累补空：近朱者赤，______。",a:"近墨者黑",tag:"字形不准"},
-    {kind:"self",q:"日积月累补空：兵来将挡，______。",a:"水来土掩",tag:"字形不准"},
-    {kind:"self",q:"背默《18童年的水墨画·溪边》全诗（写在纸上，请家长核对）。",a:"（对照课本 P72 核对，错字订正2遍）",tag:"字形不准"},
-    {kind:"self",q:"背默《火烧云》第3-6自然段（写在纸上，请家长核对）。",a:"（对照课本 P91-92 核对，重点看颜色词）",tag:"字形不准"}
+    {kind:"fill",q:"I have ______ big head.（填 a 或 an）",a:"a",say:"I have a big head.",explain:"big 以辅音 /b/ 开头，用 a。",tag:"a/an用法"},
+    {kind:"fill",q:"I have ______ small nose.（a / an）",a:"a",say:"I have a small nose.",explain:"small 以 /s/ 开头，用 a。",tag:"a/an用法"},
+    {kind:"choice",q:"I have ______ round face.",a:"a",opts:["a","an"],say:"I have a round face.",explain:"round 以 /r/ 开头，用 a。",tag:"a/an用法"},
+    {kind:"choice",q:"选 a 或 an：______ egg",a:"an",opts:["an","a"],say:"an egg",explain:"egg 以元音音 /e/ 开头，用 an。",tag:"a/an用法"},
+    {kind:"choice",q:"选 a 或 an：______ orange",a:"an",opts:["an","a"],say:"an orange",explain:"orange 以元音音开头，用 an。",tag:"a/an用法"},
+    {kind:"fill",q:"I have ______ long neck.（a / an）",a:"a",say:"I have a long neck.",explain:"long 以辅音 /l/ 开头，用 a。",tag:"a/an用法"},
+    {kind:"self",q:"用句型造句（big head）：I have …",a:"I have a big head.",say:"I have a big head.",tag:"描述句型"},
+    {kind:"self",q:"用句型造句（small mouth）：I have …",a:"I have a small mouth.",say:"I have a small mouth.",tag:"描述句型"}
    ]},
-  {id:"duoyin",name:"多音字辨析关",ico:"🗣️",tag:"多音字不熟",
-   intro:'<div class="rule">多音字要<b>放回词语里读</b>，不能凭感觉。读音来自识字表蓝色字 P116-118。</div>',
+  {id:"haveP",name:"复数描述 + My…are 关",ico:"🙌",tag:"描述句型",
+   intro:'<div class="rule">部位是<b>复数</b>时：<b>I have + 形容词 + 部位(加 s)</b>，前面<b>不加 a</b>！<br>e.g. I have big hands. / I have long legs.<br>还可以换说法：<b>My + 部位 + is/are + 形容词</b>。e.g. My hands are big.</div>',
    qs:[
-    {kind:"choice",q:"「模型」中的「模」读？",a:"mó",opts:["mó","mú"],explain:"模型 mó；一模一样才读 mú。",tag:"多音字不熟"},
-    {kind:"choice",q:"「一模一样」中的「模」读？",a:"mú",opts:["mú","mó"],explain:"一模一样 mú。",tag:"多音字不熟"},
-    {kind:"choice",q:"「差异」中的「差」读？",a:"chā",opts:["chā","chà","chāi"],explain:"差异 chā（差别）。",tag:"多音字不熟"},
-    {kind:"choice",q:"「出差」中的「差」读？",a:"chāi",opts:["chāi","chā","chà"],explain:"出差 chāi（派去做事）。",tag:"多音字不熟"},
-    {kind:"choice",q:"「劲吹」中的「劲」读？",a:"jìng",opts:["jìng","jìn"],explain:"劲吹 jìng（强劲）。",tag:"多音字不熟"},
-    {kind:"choice",q:"「有劲」中的「劲」读？",a:"jìn",opts:["jìn","jìng"],explain:"有劲 jìn（力气）。",tag:"多音字不熟"}
+    {kind:"fill",q:"I have big ______.（hand 的正确形式）",a:"hands",say:"I have big hands.",explain:"复数部位加 s，且前面不加 a。",tag:"描述句型"},
+    {kind:"choice",q:"选正确的句子：",a:"I have big eyes.",opts:["I have big eyes.","I have a big eyes.","I have big eye."],say:"I have big eyes.",explain:"复数前不加 a，部位要加 s。",tag:"描述句型"},
+    {kind:"fill",q:"I have long ______.（leg 的正确形式）",a:"legs",say:"I have long legs.",explain:"复数部位加 s，前面不加 a。",tag:"描述句型"},
+    {kind:"choice",q:"My hands ______ big.（is / are）",a:"are",opts:["are","is"],say:"My hands are big.",explain:"hands 复数，用 are。",tag:"描述句型"},
+    {kind:"choice",q:"My nose ______ small.（is / are）",a:"is",opts:["is","are"],say:"My nose is small.",explain:"nose 单数，用 is。",tag:"描述句型"},
+    {kind:"choice",q:"My feet ______ big.（is / are）",a:"are",opts:["are","is"],say:"My feet are big.",explain:"feet 是复数，用 are。",tag:"描述句型"},
+    {kind:"self",q:"换种说法（My…are）：I have big hands. → ______",a:"My hands are big.",say:"My hands are big.",tag:"描述句型"},
+    {kind:"self",q:"换种说法（My…are）：I have long legs. → ______",a:"My legs are long.",say:"My legs are long.",tag:"描述句型"}
    ]},
-  {id:"panduan",name:"课文判断关",ico:"📕",tag:"课文理解错",
-   intro:'<div class="rule">弟弟常常<b>只看关键词</b>就下判断。要读懂句子真正的意思！</div>',
+  {id:"present",name:"一般现在时(I / you)关",ico:"🚶",tag:"一般现在时",
+   intro:'<div class="rule">主语是 I / you / we / they 时，动词用<b>原形</b>。<br>陈述：I go to the park. 　疑问：Do you go…? 　提问做什么：What do you do？<br>回答 Do you…? 用 <b>Yes, I do. / No, I don\'t.</b>（不是 I am！）</div>',
    qs:[
-    {kind:"choice",q:"判断对错：「海底是否没有一点儿声音呢？不是的。」说明海底没有声音。",a:"错 ×",opts:["错 ×","对 √"],explain:"'不是的'否定前句，所以海底其实是有声音的。",tag:"课文理解错"},
-    {kind:"choice",q:"判断对错：《漏》中的「漏」是一只可怕的怪物。",a:"错 ×",opts:["错 ×","对 √"],explain:"'漏'是漏雨/漏水，被老虎和贼误会成厉害的东西。",tag:"课文理解错"},
-    {kind:"choice",q:"判断对错：方帽子店主人因循守旧、不懂变通，最终被淘汰。",a:"对 √",opts:["对 √","错 ×"],explain:"方帽子店告诉我们不懂变通会被淘汰。",tag:"课文理解错"},
-    {kind:"choice",q:"判断对错：《海底世界》主要写海底景色奇异、物产丰富。",a:"对 √",opts:["对 √","错 ×"],explain:"全文围绕'景色奇异、物产丰富'来写。",tag:"课文理解错"},
-    {kind:"choice",q:"判断对错：《火烧云》写出了火烧云颜色多、变化快的特点。",a:"对 √",opts:["对 √","错 ×"],explain:"重点写颜色和形状变化又多又快。",tag:"课文理解错"}
+    {kind:"fill",q:"I ______ to the park.（go 的正确形式）",a:"go",say:"I go to the park.",explain:"主语 I 用动词原形 go。",tag:"一般现在时"},
+    {kind:"choice",q:"______ you go to the zoo?",a:"Do",opts:["Do","Does"],say:"Do you go to the zoo?",explain:"主语 you 用 Do。",tag:"一般现在时"},
+    {kind:"fill",q:"— Do you go to school? — Yes, I ______.",a:"do",say:"Yes, I do.",explain:"Do you…? 的回答用 do。",tag:"一般现在时"},
+    {kind:"choice",q:"What ______ you do?",a:"do",opts:["do","does"],say:"What do you do?",explain:"主语 you 用 do。",tag:"一般现在时"},
+    {kind:"choice",q:"— Do you like apples? — ______",a:"Yes, I do.",opts:["Yes, I do.","Yes, I am.","Yes, I like."],say:"Yes, I do.",explain:"Do you…? 用 do/don't 回答，不用 am。",tag:"一般现在时"},
+    {kind:"self",q:"连词成句：cinema / I / go / to / the → ______",a:"I go to the cinema.",say:"I go to the cinema.",tag:"一般现在时"},
+    {kind:"fill",q:"I ______ to the zoo on Sunday.（go）",a:"go",say:"I go to the zoo on Sunday.",explain:"主语 I 用原形 go。",tag:"一般现在时"}
    ]},
-  {id:"fangxie",name:"仿写词语句子关",ico:"✍️",tag:"没用完整句",
-   intro:'<div class="rule">仿写词语要看清结构（如 ABB）；仿写句子要照着例子的样子写。比喻句要有「本体 + 像 + 喻体」。</div>',
+  {id:"third",name:"三单 (she / he / Alice) 关",ico:"🧍",tag:"三单变化",
+   intro:'<div class="rule">主语是 <b>he / she / 名字</b> 时，动词要<b>加 s</b>：go → <b>goes</b>。<br>陈述：Alice goes to the park. 　疑问：Does she go…?（后面动词回原形）<br>提问做什么：What does she do？　回答用 <b>Yes, she does. / No, he doesn\'t.</b></div>',
    qs:[
-    {kind:"self",q:"照样子写3个 ABB 式词语（例：红彤彤）：",a:"金灿灿、绿油油、白茫茫（写对3个即可）",tag:"没用完整句"},
-    {kind:"self",q:"仿写比喻句：清晨，太阳升起来了，就像________。",a:"参考：……就像一个大火球挂在天空。（要有'像'和喻体）",tag:"没用完整句"},
-    {kind:"choice",q:"下面哪句是比喻句？",a:"月亮像一只弯弯的小船。",opts:["月亮像一只弯弯的小船。","月亮升上了天空。"],explain:"比喻句要有本体、像、喻体。",tag:"没用完整句"}
-   ]},
-  {id:"jiadian",name:"加点词理解关",ico:"💡",tag:"课文理解错",
-   intro:'<div class="rule">同一个词，在不同句子里意思可能<b>不一样</b>。要放回句子里体会。</div>',
-   qs:[
-    {kind:"choice",q:"「这件事真新鲜。」加点词「新鲜」的意思是？",a:"少见、有趣",opts:["少见、有趣","食物没有变质"],explain:"这里指事情少见、有趣。",tag:"课文理解错"},
-    {kind:"choice",q:"「今天买的鱼很新鲜。」加点词「新鲜」的意思是？",a:"食物没有变质",opts:["食物没有变质","少见、有趣"],explain:"这里指鱼没有变质。",tag:"课文理解错"},
-    {kind:"choice",q:"「他看起来很精神。」加点词「精神」的意思是？",a:"有活力",opts:["有活力","品质、思想"],explain:"这里指人有活力、有精气神。",tag:"课文理解错"},
-    {kind:"choice",q:"「我们要学习这种精神。」加点词「精神」的意思是？",a:"品质、思想",opts:["品质、思想","有活力"],explain:"这里指可贵的品质、思想。",tag:"课文理解错"}
-   ]},
-  {id:"juti",name:"围绕意思写具体关",ico:"🔍",tag:"作文不具体",
-   intro:'<div class="rule">先给中心句，再用<b>动作、声音、样子</b>写2-3个细节，不能只写一句话。</div>',
-   qs:[
-    {kind:"self",q:"围绕「操场上真热闹」写具体（写在纸上）：",a:"参考：操场上真热闹。同学们有的在跑步，有的在跳绳，还有的在打篮球。欢笑声、加油声连成一片。",tag:"作文不具体"},
-    {kind:"self",q:"围绕「小花猫真可爱」写具体（写在纸上）：",a:"参考：小花猫真可爱。它有一双圆溜溜的大眼睛，走起路来轻轻的。一看见毛线球，就伸出小爪子扑过去。",tag:"作文不具体"}
-   ]},
-  {id:"kaitou",name:"有趣开头关",ico:"🎀",tag:"作文不具体",
-   intro:'<div class="rule">用有趣的开头介绍一种事物，比直接说「我有一个……」更吸引人。先写有趣开头，再介绍样子和作用。</div>',
-   qs:[
-    {kind:"self",q:"用有趣的开头介绍「铅笔盒」（写在纸上）：",a:"参考：我的书包里住着一位'小管家'，它每天帮我看管铅笔、橡皮和尺子。",tag:"作文不具体"},
-    {kind:"self",q:"用有趣的开头介绍「雨伞」：",a:"参考示例：下雨天，它就像一朵会走路的蘑菇，撑在我头顶……",tag:"作文不具体"},
-    {kind:"self",q:"用有趣的开头介绍「小闹钟」：",a:"参考示例：每天早上，我的桌上都有一位准时的'小卫兵'叫我起床……",tag:"作文不具体"}
-   ]},
-  {id:"qiwu",name:"寻物启事格式关",ico:"📄",tag:"应用文格式漏项",
-   intro:'<div class="rule">寻物启事必须有6样：<b>标题、时间地点、物品名称、物品特征、请求联系、署名+日期</b>。期末不能丢格式分！</div>',
-   qs:[
-    {kind:"self",q:"某同学昨天下午第一节体育课后发现校服丢了，校服上有校徽。请写一则寻物启事（写在纸上）。",
-     a:"参考：\n　　　　寻物启事\n　昨天下午第一节体育课后，我丢了一件带有校徽的校服。如有拾到者，请与我联系，谢谢。\n　　　　　　　　　三（X）班 XX\n　　　　　　　　　X月X日",
-     checklist:["标题居中","时间地点","物品名称","物品特征","请求联系","署名+日期"],tag:"应用文格式漏项"}
-   ]},
-  {id:"nisheng",name:"拟声词运用关",ico:"🔔",tag:"没用完整句",
-   intro:'<div class="rule">拟声词能让声音像真的一样。例：小雨淅淅沥沥；门"吱呀"一声；小狗汪汪叫。</div>',
-   qs:[
-    {kind:"self",q:"加合适的拟声词：小猫____地叫。",a:"喵喵",tag:"没用完整句"},
-    {kind:"self",q:"加合适的拟声词：泉水____地流着。",a:"哗哗",tag:"没用完整句"},
-    {kind:"self",q:"加合适的拟声词：雷声____地响起来。",a:"轰隆隆",tag:"没用完整句"},
-    {kind:"self",q:"加合适的拟声词：门____一声开了。",a:"吱呀",tag:"没用完整句"},
-    {kind:"self",q:"用两个拟声词写一小段下雨的场景（写在纸上）：",a:"参考：豆大的雨点噼里啪啦砸下来，雨水哗哗地顺着屋檐流成一条线。",tag:"没用完整句"}
-   ]},
-  {id:"timu",name:"有趣题目关",ico:"🏷️",tag:"作文不具体",
-   intro:'<div class="rule">有趣的题目能让人想读下去。普通题目「小狗」→ 有趣题目《会飞的小狗》《一只不想汪汪叫的小狗》。</div>',
-   qs:[
-    {kind:"self",q:"给故事换个有趣题目：一只小猫迷路了。",a:"参考：《迷路的小猫去了哪里》",tag:"作文不具体"},
-    {kind:"self",q:"给故事换个有趣题目：一支铅笔不想写字了。",a:"参考：《不想写字的铅笔》",tag:"作文不具体"},
-    {kind:"self",q:"给故事换个有趣题目：一朵云掉到了地上。",a:"参考：《掉到地上的云》",tag:"作文不具体"},
-    {kind:"self",q:"给故事换个有趣题目：一个书包会说话。",a:"参考：《会说话的书包》",tag:"作文不具体"}
-   ]},
-  {id:"zhuanshu",name:"转述句关",ico:"🔄",tag:"人称转述错",
-   intro:'<div class="rule">转述口诀：<b>我看说话人；你看听话人；吗变能不能；吧变让；怎么能…呢，改成不能；最后读通顺。</b>改完一定要检查人称和标点！</div>',
-   qs:[
-    {kind:"self",q:"改转述句：妈妈说：「我今天要加班，你自己先吃饭吧。」",a:"妈妈说，她今天要加班，让我自己先吃饭。",tag:"人称转述错"},
-    {kind:"self",q:"改转述句：老师说：「你们明天要带彩笔。」",a:"老师说，明天我们要带彩笔。",tag:"人称转述错"},
-    {kind:"self",q:"改转述句：小明问：「你能帮我拿一下书吗？」",a:"小明问我，能不能帮他拿一下书。",tag:"人称转述错"},
-    {kind:"self",q:"改转述句：爸爸说：「我明天要去昆明，你自己做饭吃吧。」",a:"爸爸说，他明天要去昆明，让我自己做饭吃。",tag:"人称转述错"},
-    {kind:"self",q:"改转述句：庆龄说：「我并不后悔，因为我没有失信。」",a:"庆龄说，她并不后悔，因为她没有失信。",tag:"人称转述错"}
-   ]},
-  {id:"yuedu",name:"阅读表达关",ico:"📰",tag:"只答一点",
-   passage:"放学时，天空突然下起了大雨。小红看见同桌小明站在教室门口，着急地望着雨幕。小红想起小明早上没有带伞，就走过去说：「我们一起走吧。」她把伞往小明那边挪了挪，自己的半边肩膀却被雨水打湿了。",
-   intro:'<div class="rule">答阅读题的规矩：<b>原因题用"因为…所以…"；品质题至少两点；概括题=谁+做了什么+结果怎样。</b>先读上面的短文，再答题。</div>',
-   qs:[
-    {kind:"self",q:"小明为什么站在教室门口？",a:"因为小明没有带伞，外面又下着大雨，所以他站在教室门口。（要用'因为…所以…'）",tag:"只答一点"},
-    {kind:"self",q:"小红为什么把伞往小明那边挪？",a:"因为小红想帮助小明、不让他淋雨，所以把伞往小明那边挪。",tag:"只答一点"},
-    {kind:"self",q:"从这件事看出小红是个怎样的孩子？（至少两点）",a:"小红是一个乐于助人、关心同学的孩子。（至少写两点）",tag:"只答一点"},
-    {kind:"self",q:"请概括短文主要内容。",a:"放学时下起大雨，小红看见小明没带伞，就和他一起撑伞回家。（谁+做了什么+结果）",tag:"只答一点"}
-   ]},
-  {id:"zuowen",name:"作文训练关",ico:"📝",tag:"作文不具体",
-   intro:'<div class="rule">期末作文两大方向：<b>写人记事</b>《身边那些有特点的人》、<b>想象作文</b>《这样想象真有趣》。约350字。要写出特点、有细节、结尾点题。</div>',
-   qs:[
-    {kind:"self",q:"写人记事《身边那些有特点的人》：选一个人，写出他最突出的特点，用一件事来表现（写在纸上）。",
-     a:"结构：①这个人是谁、有什么特点 ②写一件最能表现特点的事 ③自己的感受。\n示例开头：我的弟弟是个'小问号'，他每天都有问不完的问题……",
-     checklist:["审题","有开头","有事情经过","有细节","有结尾点题","标点正确","没有错别字","字数接近350"],tag:"作文不具体"},
-    {kind:"self",q:"想象作文《这样想象真有趣》：让一个事物发生奇怪变化（如会说话的书包），写它后来发生了什么（写在纸上）。",
-     a:"结构：①谁发生了奇怪变化 ②变化后发生了什么 ③结果怎样、有什么感受。\n方向：会说话的书包 / 一朵云掉进教室 / 一支铅笔想去旅行。",
-     checklist:["审题","有开头","有事情经过","有细节","有结尾","标点正确","没有错别字","字数接近350"],tag:"作文不具体"}
+    {kind:"fill",q:"Alice ______ to the park.（go 的正确形式）",a:"goes",say:"Alice goes to the park.",explain:"三单 go→goes。",tag:"三单变化"},
+    {kind:"choice",q:"______ she go to the cinema?",a:"Does",opts:["Does","Do"],say:"Does she go to the cinema?",explain:"主语 she 用 Does，后面动词回原形 go。",tag:"三单变化"},
+    {kind:"fill",q:"— Does he go to school? — Yes, he ______.",a:"does",say:"Yes, he does.",explain:"Does…? 的回答用 does。",tag:"三单变化"},
+    {kind:"choice",q:"What ______ she do?",a:"does",opts:["does","do"],say:"What does she do?",explain:"主语 she 是三单，用 does。",tag:"三单变化"},
+    {kind:"fill",q:"He ______ to the zoo.（go）",a:"goes",say:"He goes to the zoo.",explain:"主语 he 是三单，go→goes。",tag:"三单变化"},
+    {kind:"choice",q:"选正确的句子：",a:"Alice goes to the park.",opts:["Alice goes to the park.","Alice go to the park.","Alice going to the park."],say:"Alice goes to the park.",explain:"主语 Alice 是三单，动词加 s：goes。",tag:"三单变化"},
+    {kind:"self",q:"改成 Alice 开头：I go to the park. → ______",a:"Alice goes to the park.",say:"Alice goes to the park.",tag:"三单变化"},
+    {kind:"self",q:"改成 she 提问：Do you go to school? → ______",a:"Does she go to school?",say:"Does she go to school?",tag:"三单变化"},
+    {kind:"self",q:"改成 she 提问：What do you do? → ______",a:"What does she do?",say:"What does she do?",tag:"三单变化"}
    ]},
   {id:"huilu",name:"错题回炉关",ico:"🔥",tag:"",dynamic:true,
-   intro:'<div class="rule">这一关收集你<b>以前做错的题</b>，再练一遍。错题练熟了，期末就稳了！</div>'}
+   intro:'<div class="rule">这一关收集你<b>以前做错的题</b>，再练一遍。错题练熟了，考试就稳了！</div>'}
 ];
 
-/* 错因 → 回炉建议 */
+/* 错因 → 复习建议 */
 var TAG_ADVICE = {
-  "字形不准":"字词每天默写10个，错字订正2遍、圈出易错部件。",
-  "多音字不熟":"多音字放回词语读，整理'模/差/劲'等组词表。",
-  "课文理解错":"读句子别只看关键词，把课文中心句再读一遍。",
-  "只答一点":"阅读题用'因为…所以…'，品质题至少写两点。",
-  "没用完整句":"仿写、拟声词都要写成完整通顺的句子。",
-  "人称转述错":"转述句默念口诀，改完检查人称和标点。",
-  "应用文格式漏项":"寻物启事对照6项检查框，逐项打钩。",
-  "作文不具体":"作文用动作、声音、样子写细节，结尾要点题。",
-  "标点错误":"句末标点、引号要写对。",
-  "错别字":"写完通读一遍，圈出可疑字查证。"
+  "名词复数":"记牢特殊变化 foot→feet、tooth→teeth；其它身体部位一般加 s。",
+  "a/an用法":"看 a/an 后面紧挨那个词的读音：元音音前用 an，其余用 a。",
+  "描述句型":"单数：I have a + 形容词 + 部位；复数：I have + 形容词 + 部位(加s)、前面不加 a；My + 部位 + is/are。",
+  "一般现在时":"I/you 用动词原形：I go；Do you…?；What do you do？回答用 do/don't。",
+  "三单变化":"主语 he/she/名字：动词加 s（go→goes）；问句用 Does + 原形；What does she do？"
 };
 
 /* ===================== 通用：存储 / 声音 / 计时 ===================== */
-var STORE_KEY="eddey_chinese_review_v1";
+var STORE_KEY="eddey_english_review_v1";
 function loadStore(){try{return JSON.parse(localStorage.getItem(STORE_KEY))||{events:[]};}catch(e){return {events:[]};}}
 function saveEvent(ev){var s=loadStore();s.events.push(ev);try{localStorage.setItem(STORE_KEY,JSON.stringify(s));}catch(e){}}
 
@@ -340,8 +272,8 @@ function tone(freq,dur,delay,type){
 }
 function playRight(){initAudio();tone(880,0.13,0,"triangle");tone(1320,0.18,0.1,"triangle");}
 function playWrong(){initAudio();tone(196,0.3,0,"sawtooth");}
-function speak(text){try{if(!soundOn||!window.speechSynthesis)return;window.speechSynthesis.cancel();
-  var u=new SpeechSynthesisUtterance(text);u.lang="zh-CN";u.rate=0.8;window.speechSynthesis.speak(u);}catch(e){}}
+function speak(text,lang){try{if(!soundOn||!window.speechSynthesis)return;window.speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(text);u.lang=lang||"en-US";u.rate=(lang==="zh-CN"?0.85:0.8);window.speechSynthesis.speak(u);}catch(e){}}
 
 var timerInt=null;
 function startTimer(){stopTimer();timerInt=setInterval(function(){
@@ -354,6 +286,7 @@ function fmt(ts){var d=new Date(ts);return d.getFullYear()+"-"+pad(d.getMonth()+
 function stamp(){var d=new Date();return ""+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+"_"+pad(d.getHours())+pad(d.getMinutes());}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function show(id){["map","intro","quiz","report","parent"].forEach(function(x){document.getElementById(x).classList.add("hide");});document.getElementById(id).classList.remove("hide");window.scrollTo(0,0);}
+function norm(s){return (s||"").toLowerCase().replace(/[.?!,]/g,"").replace(/\s+/g," ").replace(/[’]/g,"'").trim();}
 
 /* ===================== 闯关地图 ===================== */
 function lessonDone(name){var s=loadStore();for(var i=s.events.length-1;i>=0;i--){if(s.events[i].lesson===name)return s.events[i];}return null;}
@@ -369,7 +302,6 @@ function renderMap(){
     b.onclick=function(){openLevel(i);};
     box.appendChild(b);
   });
-  // 记录面板
   var s=loadStore(),items=0,wrong=0;
   s.events.forEach(function(e){items+=(e.items||[]).length;wrong+=(e.wrong||0);});
   var rec=document.getElementById("recStat");
@@ -387,7 +319,7 @@ function buildHuilu(){
   var s=loadStore(),seen={},qs=[];
   s.events.forEach(function(e){(e.items||[]).forEach(function(it){
     if(!it.ok && it.hint && !seen[it.hint]){seen[it.hint]=1;
-      qs.push({kind:"self",q:it.hint,a:it.word,tag:it.tag||"错题"});}
+      qs.push({kind:"self",q:it.hint,a:it.word,say:it.say||"",tag:it.tag||"错题"});}
   });});
   return qs;
 }
@@ -412,7 +344,7 @@ document.getElementById("startLevel").onclick=function(){
 };
 
 function startLevel(L,qs){
-  cur={name:L.name,passage:L.passage||"",qs:qs,idx:0,right:0,wrong:0,items:[],t0:Date.now(),qt0:0};
+  cur={name:L.name,qs:qs,idx:0,right:0,wrong:0,items:[],t0:Date.now(),qt0:0};
   initAudio();startTimer();show("quiz");renderQ();
 }
 
@@ -422,16 +354,25 @@ function renderQ(){
   document.getElementById("qScore").textContent="✅ "+cur.right+" ❌ "+cur.wrong;
   document.getElementById("qbar").style.width=(cur.idx/cur.qs.length*100)+"%";
   document.getElementById("qtag").textContent=cur.name;
-  var pa=document.getElementById("passage");
-  if(cur.passage){pa.textContent=cur.passage;pa.classList.remove("hide");}else{pa.classList.add("hide");}
   document.getElementById("qtext").innerHTML=q.q.replace(/_{2,}/g,'<span class="blank">？</span>').replace(/\n/g,"<br>");
   var sb=document.getElementById("speakBtn");
-  sb.onclick=function(){initAudio();speak(q.q.replace(/_{2,}/g,"什么").replace(/\n/g,"，"));};
+  sb.onclick=function(){initAudio();
+    if(q.say)speak(q.say,"en-US");
+    else speak(q.q.replace(/_{2,}/g,"什么").replace(/\n/g,"，"),"zh-CN");};
   var fb=document.getElementById("fb");fb.className="fb";fb.textContent="";
   document.getElementById("nextBtn").style.display="none";
   var area=document.getElementById("answerArea");area.innerHTML="";
   if(q.kind==="choice")renderChoice(q,area);
+  else if(q.kind==="fill")renderFill(q,area);
   else renderSelf(q,area);
+  // 进入题目自动读一遍英文（如有）
+  if(q.say)speak(q.say,"en-US");
+}
+
+function feedback(ok,q){
+  var fb=document.getElementById("fb");
+  fb.className=ok?"fb ok":"fb no";
+  fb.innerHTML=(ok?"✅ 答对啦！":"❌ 正确答案：「"+q.a+"」")+(q.explain?'<br><span style="font-size:14px">'+q.explain+"</span>":"");
 }
 
 function renderChoice(q,area){
@@ -443,19 +384,72 @@ function renderChoice(q,area){
       if(ok)playRight();else playWrong();
       o.querySelectorAll(".opt").forEach(function(x){x.onclick=null;
         if(x.textContent===q.a)x.classList.add("right");else if(x===b)x.classList.add("wrong");else x.classList.add("dim");});
-      var fb=document.getElementById("fb");
-      fb.className=ok?"fb ok":"fb no";
-      fb.innerHTML=(ok?"✅ 答对啦！":"❌ 正确答案：「"+q.a+"」")+(q.explain?'<br><span style="font-size:14px">'+q.explain+"</span>":"");
-      record(q,ok,opt,ms);
-      showNext();
+      feedback(ok,q);record(q,ok,opt,ms);showNext();
     };
     o.appendChild(b);
   });
   area.appendChild(o);
 }
 
+var SR_OK = !!(window.SpeechRecognition||window.webkitSpeechRecognition);
+var recog=null, recognizing=false;
+function renderFill(q,area){
+  var accepts=[norm(q.a)].concat((q.accept||[]).map(norm));
+  var inp=document.createElement("input");inp.className="trybox";inp.type="text";
+  inp.setAttribute("autocomplete","off");inp.setAttribute("autocorrect","off");
+  inp.setAttribute("autocapitalize","off");inp.setAttribute("spellcheck","false");
+  inp.placeholder="点上面 🎤 说答案，或在这里打字…";
+  var sub=document.createElement("button");sub.className="bigbtn primary";sub.textContent="提交答案 ✔";sub.style.marginTop="0";
+
+  function submit(){
+    if(inp.getAttribute("readonly"))return;
+    if(recognizing&&recog){try{recog.stop();}catch(e){}}
+    var ms=Date.now()-cur.qt0;
+    var ok=(norm(inp.value)!=="" && accepts.indexOf(norm(inp.value))>=0);
+    if(ok)playRight();else playWrong();
+    inp.setAttribute("readonly","readonly");sub.style.display="none";if(mic)mic.style.display="none";
+    feedback(ok,q);record(q,ok,inp.value,ms);showNext();
+  }
+
+  // 🎤 口述识别（避免打字）：说出答案 → 自动填入；听对了自动判分
+  var mic=null;
+  if(SR_OK){
+    mic=document.createElement("button");mic.className="mic";mic.type="button";
+    mic.innerHTML="🎤 点我，说出答案";
+    mic.onclick=function(){
+      if(inp.getAttribute("readonly"))return;
+      if(recognizing&&recog){try{recog.stop();}catch(e){}return;}
+      try{window.speechSynthesis&&window.speechSynthesis.cancel();}catch(e){}
+      var SRC=window.SpeechRecognition||window.webkitSpeechRecognition;
+      recog=new SRC();recog.lang="en-US";recog.interimResults=false;recog.maxAlternatives=5;
+      var matched=false,heard="";
+      recog.onresult=function(ev){
+        var res=ev.results[0];
+        for(var i=0;i<res.length;i++){var t=norm(res[i].transcript);if(i===0)heard=res[i].transcript;
+          if(accepts.indexOf(t)>=0){matched=true;break;}}
+        inp.value=matched?q.a:(heard||"");
+      };
+      recog.onerror=function(){};
+      recog.onend=function(){
+        recognizing=false;mic.classList.remove("listening");mic.innerHTML="🎤 再说一次（或打字）";
+        if(matched){setTimeout(submit,450);}            // 听对了：自动判分
+        else if(inp.value.trim()!==""){inp.focus();}     // 没把准：填进去让孩子确认/重说/改
+      };
+      recognizing=true;mic.classList.add("listening");mic.innerHTML="🔴 在听…（说完会自动停）";
+      try{recog.start();}catch(e){recognizing=false;mic.classList.remove("listening");mic.innerHTML="🎤 点我，说出答案";}
+    };
+    area.appendChild(mic);
+  }
+  area.appendChild(inp);
+  if(SR_OK){var n=document.createElement("div");n.className="micnote";n.textContent="不想打字？点 🎤 说出英文答案就行。说对了会自动判分～";area.appendChild(n);}
+  area.appendChild(sub);
+  sub.onclick=submit;
+  inp.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();submit();}});
+}
+
 function renderSelf(q,area){
-  var tryb=document.createElement("textarea");tryb.className="trybox";tryb.placeholder="可以先在这里或纸上写，再看答案对照～";
+  var tryb=document.createElement("textarea");tryb.className="trybox";tryb.setAttribute("autocapitalize","off");tryb.setAttribute("spellcheck","false");
+  tryb.placeholder="可以先在这里或纸上写，再看答案对照～";
   area.appendChild(tryb);
   var look=document.createElement("button");look.className="bigbtn gold";look.textContent="💡 看答案 / 参考";
   area.appendChild(look);
@@ -465,9 +459,6 @@ function renderSelf(q,area){
     ans.innerHTML='<span class="lab">参考答案</span>'+q.a.replace(/\n/g,"<br>");
     area.appendChild(ans);
     if(q.explain){var ex=document.createElement("div");ex.className="explain";ex.textContent=q.explain;area.appendChild(ex);}
-    if(q.checklist){var cl=document.createElement("div");cl.className="checklist";
-      cl.innerHTML='<b>对照检查（每项打钩）：</b>'+q.checklist.map(function(c){return '<label>☐ '+c+'</label>';}).join("");
-      area.appendChild(cl);}
     var rate=document.createElement("div");rate.className="btnrow";
     var yes=document.createElement("button");yes.className="bigbtn green half";yes.textContent="✅ 我做对了";
     var no=document.createElement("button");no.className="bigbtn red half";no.textContent="❌ 没做对，要回炉";
@@ -480,7 +471,7 @@ function renderSelf(q,area){
 
 function record(q,ok,user,ms){
   if(ok)cur.right++;else cur.wrong++;
-  cur.items.push({word:q.a,hint:q.q,ok:ok,ms:ms,user:user,tag:q.tag||""});
+  cur.items.push({word:q.a,hint:q.q,ok:ok,ms:ms,user:user,tag:q.tag||"",say:q.say||""});
   document.getElementById("qScore").textContent="✅ "+cur.right+" ❌ "+cur.wrong;
 }
 function showNext(){var nb=document.getElementById("nextBtn");nb.textContent=(cur.idx+1>=cur.qs.length)?"看闯关报告 🎉":"下一题 ›";nb.style.display="block";}
@@ -490,21 +481,21 @@ document.getElementById("nextBtn").onclick=function(){cur.idx++;if(cur.idx>=cur.
 function finish(){
   stopTimer();
   var dur=Math.round((Date.now()-cur.t0)/1000),total=cur.qs.length;
-  saveEvent({ts:Date.now(),type:"review",subject:"cn3b",lesson:cur.name,total:total,wrong:cur.wrong,durationSec:dur,items:cur.items});
+  saveEvent({ts:Date.now(),type:"review",subject:"en-m4",lesson:cur.name,total:total,wrong:cur.wrong,durationSec:dur,items:cur.items});
   var pct=total?Math.round(cur.right/total*100):0;
   document.getElementById("rScore").textContent=pct+"%";
   document.getElementById("rSub").textContent="「"+cur.name+"」答对 "+cur.right+" / "+total+" 题 · 用时 "+dur+" 秒 · 平均每题 "+(total?Math.round(dur/total*10)/10:0)+" 秒"+(pct>=90?" 🌟太棒了！":pct>=70?" 👍不错！":" 加油，多练几遍！");
   var wl=document.getElementById("rWrong"),wrongs=cur.items.filter(function(it){return !it.ok;});
   if(wrongs.length){
     var h='<div style="font-weight:800;margin:10px 0 4px">要回炉的题：</div>';
-    wrongs.forEach(function(it){h+='<div class="wrongitem">'+it.hint.replace(/\n/g,"　").slice(0,40)+'…<br>正确/参考：<b>'+it.word.replace(/\n/g,"　").slice(0,40)+'</b></div>';});
+    wrongs.forEach(function(it){h+='<div class="wrongitem">'+it.hint.replace(/\n/g,"　").slice(0,42)+'<br>正确/参考：<b>'+String(it.word).replace(/\n/g,"　").slice(0,42)+'</b></div>';});
     wl.innerHTML=h;document.getElementById("retryWrong").style.display="block";
   }else{wl.innerHTML='<div style="text-align:center;color:var(--green);font-weight:800;font-size:18px;margin:10px 0">全对！这一关通关啦 🎉</div>';document.getElementById("retryWrong").style.display="none";}
   show("report");
 }
 document.getElementById("retryWrong").onclick=function(){
   var wrongQs=[];cur.qs.forEach(function(q,i){if(cur.items[i]&&!cur.items[i].ok)wrongQs.push(q);});
-  if(wrongQs.length)startLevel({name:cur.name+"（错题重练）",passage:cur.passage},wrongQs);
+  if(wrongQs.length)startLevel({name:cur.name+"（错题重练）"},wrongQs);
 };
 document.getElementById("againBtn").onclick=function(){
   var L=LEVELS[curLevelIdx];var qs=L.dynamic?buildHuilu():L.qs.slice();
@@ -526,29 +517,29 @@ function renderParent(){
   ps.innerHTML=
     '今日闯关：<b>'+todayEv.length+'</b> 关<br>'+
     '累计练题：<span class="bignum">'+totItems+'</span> 题，其中错 <b style="color:var(--red)">'+totWrong+'</b> 题<br>'+
-    '高频错因：'+(tags.length?tags.slice(0,3).map(function(t){return t+"("+tagCnt[t]+")";}).join("、"):"暂无 🎉");
+    '高频错点：'+(tags.length?tags.slice(0,3).map(function(t){return t+"("+tagCnt[t]+")";}).join("、"):"暂无 🎉");
   var adv=document.getElementById("pAdvice");
-  if(!tags.length){adv.innerHTML="还没有错题数据。让孩子先闯几关，这里会自动给出明日复习重点。";}
+  if(!tags.length){adv.innerHTML="还没有错题数据。让孩子先闯几关，这里会自动给出复习重点。";}
   else{adv.innerHTML="<ol style='margin:0;padding-left:20px'>"+tags.slice(0,4).map(function(t){return "<li><b>"+t+"</b>："+(TAG_ADVICE[t]||"针对此项加练。")+"</li>";}).join("")+"</ol>";}
 }
 
 /* ===================== 导出（兼容默写软件格式） ===================== */
 function buildExport(s){
   var lines=[];
-  lines.push("【弟弟语文复习档案】导出时间:"+fmt(Date.now()));
+  lines.push("【弟弟英语 Module 4 复习档案】导出时间:"+fmt(Date.now()));
   lines.push("练习总关数:"+s.events.length);lines.push("");
   var wc={};s.events.forEach(function(e){(e.items||[]).forEach(function(it){if(!it.ok)wc[it.word]=(wc[it.word]||0)+1;});});
   var rep=Object.keys(wc).filter(function(k){return wc[k]>=2;});
   lines.push("== 反复错的题(错≥2次,优先复习)==");
-  lines.push(rep.length?rep.map(function(k){return k.slice(0,20)+"(错"+wc[k]+"次)";}).join("、"):"(无)");
+  lines.push(rep.length?rep.map(function(k){return String(k).slice(0,24)+"(错"+wc[k]+"次)";}).join("、"):"(无)");
   lines.push("");lines.push("== 每关明细 ==");
   s.events.forEach(function(e){
     lines.push("["+fmt(e.ts)+"] "+e.lesson+" ｜ "+(e.total-e.wrong)+"/"+e.total+"对 ｜ "+e.durationSec+"秒");
     var w=(e.items||[]).filter(function(it){return !it.ok;});
-    if(w.length)lines.push("  错题:"+w.map(function(it){return (it.tag?"["+it.tag+"]":"")+it.hint.replace(/\n/g," ").slice(0,24);}).join("；"));
+    if(w.length)lines.push("  错题:"+w.map(function(it){return (it.tag?"["+it.tag+"]":"")+String(it.hint).replace(/\n/g," ").slice(0,26);}).join("；"));
   });
   lines.push("");lines.push("== 原始数据(JSON,可直接投喂给Claude)==");
-  lines.push(JSON.stringify({child:"弟弟",subject:"语文三下期末",events:s.events}));
+  lines.push(JSON.stringify({child:"弟弟",subject:"英语Module4复习",events:s.events}));
   return lines.join("\n");
 }
 function copyToClipboard(txt,boxId,btn){
@@ -558,7 +549,7 @@ function copyToClipboard(txt,boxId,btn){
   btn.textContent=done?"✅ 已复制！发给爸爸吧":"👆 长按上面文字框全选复制";
 }
 function downloadText(txt){try{var blob=new Blob([txt],{type:"text/plain;charset=utf-8"});var url=URL.createObjectURL(blob);
-  var a=document.createElement("a");a.href=url;a.download="弟弟语文复习记录_"+stamp()+".txt";document.body.appendChild(a);a.click();
+  var a=document.createElement("a");a.href=url;a.download="弟弟英语Module4记录_"+stamp()+".txt";document.body.appendChild(a);a.click();
   setTimeout(function(){a.remove();URL.revokeObjectURL(url);},500);return true;}catch(e){return false;}}
 document.getElementById("menuExport").onclick=function(){copyToClipboard(buildExport(loadStore()),"menuExportBox",this);};
 document.getElementById("menuDownload").onclick=function(){this.textContent=downloadText(buildExport(loadStore()))?"✅ 已存成文件":"用上面的复制按钮试试";};
