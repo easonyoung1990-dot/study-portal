@@ -28,20 +28,6 @@
     "added": "2026-06-13"
   },
   {
-    "child": "eddey",
-    "subject": "语文",
-    "title": "语文期末闯关王 · 三下（15关）",
-    "file": "apps/eddey_chinese_review.html",
-    "added": "2026-06-13"
-  },
-  {
-    "child": "eddey",
-    "subject": "语文",
-    "title": "第八单元闯关 · 有趣的故事（11关）",
-    "file": "apps/eddey_unit8_review.html",
-    "added": "2026-06-13"
-  },
-  {
     "child": "kenton",
     "subject": "综合",
     "title": "默写助手 · 语文+英语（全自动报默）",
@@ -67,6 +53,13 @@
     "subject": "英语",
     "title": "英语练习 · 三下（错词重做+单元默写+句子）",
     "file": "apps/eddey_english.html",
+    "added": "2026-06-14"
+  },
+  {
+    "child": "eddey",
+    "subject": "语文",
+    "title": "语文练习 · 三下（口说作答+纸上默写，10关）",
+    "file": "apps/eddey_chinese.html",
     "added": "2026-06-14"
   }
 ]
