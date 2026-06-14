@@ -579,7 +579,7 @@ function speakOnce(text, lang, onEnd) {
   const speakText = (lang === 'en') ? numbersToEnglishWords(text) : text;
   const u = new SpeechSynthesisUtterance(speakText);
   u.lang = lang === 'en' ? 'en-US' : 'zh-CN';
-  u.rate = lang === 'en' ? 0.85 : 0.95;
+  u.rate = lang === 'en' ? 0.85 : 1.15;
   u.pitch = 1.05;
   if (lang === 'en' && enVoice) u.voice = enVoice;
   if (lang === 'zh' && cnVoice) u.voice = cnVoice;
