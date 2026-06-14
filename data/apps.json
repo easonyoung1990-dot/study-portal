@@ -68,5 +68,19 @@
     "title": "小小世界播报 6.15",
     "file": "apps/news_20260615.html",
     "added": "2026-06-15"
+  },
+  {
+    "child": "kenton",
+    "subject": "数学",
+    "title": "数学冲刺软件 · 四下（刷题48题·错题自动归档）",
+    "file": "apps/kenton_math_sprint.html",
+    "added": "2026-06-15"
+  },
+  {
+    "child": "eddey",
+    "subject": "数学",
+    "title": "数学冲刺软件 · 三下（刷题56题·错题自动归档）",
+    "file": "apps/eddey_math_sprint.html",
+    "added": "2026-06-15"
   }
 ]

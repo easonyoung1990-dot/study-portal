@@ -1,4 +1,10 @@
 {
-  "kenton": [],
-  "eddey": []
+  "kenton": [
+    { "type": "app", "subject": "数学", "title": "数学冲刺软件 · 刷题（四下）", "link": "apps/kenton_math_sprint.html" },
+    { "type": "pdf", "subject": "数学", "title": "数学冲刺卷 · 第1天（做完对答案）", "link": "papers/k_d1_math.html" }
+  ],
+  "eddey": [
+    { "type": "app", "subject": "数学", "title": "数学冲刺软件 · 刷题（三下）", "link": "apps/eddey_math_sprint.html" },
+    { "type": "pdf", "subject": "数学", "title": "数学冲刺卷 · 第1天（做完对答案）", "link": "papers/e_d1_math.html" }
+  ]
 }
