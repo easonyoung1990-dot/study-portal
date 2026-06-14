@@ -1,0 +1,874 @@
+{
+ "items": [
+  {
+   "lang": "zh",
+   "text": "你好哥哥，我们来冲刺语文期末。",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "荷花",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "负荷",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "引吭高歌",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "鲜为人知",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "倔强",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "刹那",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "蔚蓝",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "尉蓝",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "慰蓝",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "蔚兰",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "茂盛",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "茂胜",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "貌盛",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "茂剩",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "坚不可摧",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "摧",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "催",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "崔",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "璀",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "拒绝",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "拒",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "距",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "矩",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "炬",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "规矩",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "胳膊",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "膊",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "搏",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "博",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "缚",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "拼搏",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "干燥",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "燥",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "躁",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "澡",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "噪",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "急躁",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "向日葵",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "葵",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "癸",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "睽",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "奎",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "囊萤夜读",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "悬梁刺股",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "凿壁偷光",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "程门立雪",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "手不释卷",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "铁杵成针",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "临危不惧",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "彬彬有礼",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "焦躁不安",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "心急如焚",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "著名",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "闻名",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "陌生",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "普通",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "奇怪",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "慷慨",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "吝啬",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "大方",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "热情",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "勇敢",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "千钧一发",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "钧",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "均",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "军",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "君",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "树头新绿未成阴",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "麦花雪白菜花稀",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "飞入菜花无处寻",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "桃花流水鳜鱼肥",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "斜风细雨不须归",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "君子以自强不息",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "自胜者强",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "死于安乐",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "不尤人",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "学海无涯苦作舟",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "老来方知读书迟",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "一日不读十日空",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "海上日出的作者是谁",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "巴金",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "叶圣陶",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "老舍",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "冰心",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "记金华的双龙洞的作者是谁",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "曹文轩",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "冯骥才",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "海的女儿的作者是谁",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "丹麦·安徒生",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "英国·王尔德",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "法国·雨果",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "巨人的花园的作者是谁",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "张天翼",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "诺曼底号遇难记里船长是怎样的人",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "临危不乱、忠于职守",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "淘气爱幻想",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "洁身自好",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "贪玩好奇",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "墨梅是一首什么诗",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "咏物诗，借梅花写为人清白",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "送别诗，写离别",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "边塞诗，写打仗",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "劝学诗",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "芙蓉楼送辛渐是一首什么诗",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "送别诗，写自己清白",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "咏物诗，写梅花",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "边塞诗，写英勇",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "写景诗",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "巨人的花园告诉我们什么道理",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "和大家一起分享才有真正的快乐",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "幸福要靠自己努力",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "要勇敢面对危险",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "要保护环境",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "家贫不常得油的贫是什么意思",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "贫穷",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "贫嘴",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "缺少",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "贫瘠",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "胤恭勤不倦的倦是什么意思",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "疲倦",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "勤勉",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "通晓",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "博学多通的通是什么意思",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "通晓、明白",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "通过",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "通道",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "选关联词填空",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "只要……就……",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "虽然……但是……",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "因为……所以……",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "不但……而且……",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "既……又……",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "不是……就是……",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "即使……也……",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "修改病句",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "删去「红」字",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "删去「五颜六色」",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "把「开满」改成「长满」",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "把「公园」改成「花园」",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "给句子加标点",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "冒号和前引号 ：\"",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "逗号 ，",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "句号 。",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  },
+  {
+   "lang": "zh",
+   "text": "问号 ？",
+   "enRate": "-10%",
+   "zhRate": "-10%"
+  }
+ ]
+}

@@ -1,0 +1,66 @@
+{
+  "enRate": "-10%",
+  "zhRate": "-10%",
+  "items": [
+    {
+      "lang": "zh",
+      "text": "你好弟弟，我们一起冲刺语文期末。",
+      "enRate": "-10%",
+      "zhRate": "-10%"
+    },
+    {
+      "lang": "zh",
+      "text": "答对了",
+      "enRate": "-10%",
+      "zhRate": "-10%"
+    },
+    {
+      "lang": "zh",
+      "text": "美丽",
+      "enRate": "-10%",
+      "zhRate": "-10%"
+    },
+    {
+      "lang": "zh",
+      "text": "欢快",
+      "enRate": "-10%",
+      "zhRate": "-10%"
+    },
+    {
+      "lang": "zh",
+      "text": "附近",
+      "enRate": "-10%",
+      "zhRate": "-10%"
+    },
+    {
+      "lang": "zh",
+      "text": "守护",
+      "enRate": "-10%",
+      "zhRate": "-10%"
+    },
+    {
+      "lang": "zh",
+      "text": "突然",
+      "enRate": "-10%",
+      "zhRate": "-10%"
+    },
+    {
+      "lang": "zh",
+      "text": "整齐",
+      "enRate": "-10%",
+      "zhRate": "-10%"
+    },
+    {
+      "lang": "zh",
+      "text": "花园",
+      "enRate": "-10%",
+      "zhRate": "-10%"
+    },
+    {
+      "lang": "zh",
+      "text": "快乐",
+      "enRate": "-10%",
+      "zhRate": "-10%"
+    }
+  ]
+}

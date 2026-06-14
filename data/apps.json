@@ -82,5 +82,33 @@
     "title": "数学冲刺软件 · 三下（刷题56题·错题自动归档）",
     "file": "apps/eddey_math_sprint.html",
     "added": "2026-06-15"
+  },
+  {
+    "child": "kenton",
+    "subject": "英语",
+    "title": "英语冲刺软件 · 四下（刷题48题·真人朗读·错题归档）",
+    "file": "apps/kenton_english_sprint.html",
+    "added": "2026-06-15"
+  },
+  {
+    "child": "kenton",
+    "subject": "语文",
+    "title": "语文冲刺软件 · 四下5-8单元（刷题48题·真人朗读·错题归档）",
+    "file": "apps/kenton_chinese_sprint.html",
+    "added": "2026-06-15"
+  },
+  {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "英语冲刺软件 · 三下（刷题45题·真人朗读·错题归档）",
+    "file": "apps/eddey_english_sprint.html",
+    "added": "2026-06-15"
+  },
+  {
+    "child": "eddey",
+    "subject": "语文",
+    "title": "语文冲刺软件 · 三下（刷题48题·真人朗读·错题归档）",
+    "file": "apps/eddey_chinese_sprint.html",
+    "added": "2026-06-15"
   }
 ]
