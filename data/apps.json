@@ -68,5 +68,19 @@
     "title": "语文听写 · 三下（限时报读·听词写字·拼音中文双读·错词本）",
     "file": "apps/eddey_chinese_dictation.html",
     "added": "2026-06-14"
+  },
+  {
+    "child": "kenton",
+    "subject": "英语",
+    "title": "英语新闻速递 6.14",
+    "file": "apps/news_20260614.html",
+    "added": "2026-06-14"
+  },
+  {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "英语新闻速递 6.14",
+    "file": "apps/news_20260614.html",
+    "added": "2026-06-14"
   }
 ]

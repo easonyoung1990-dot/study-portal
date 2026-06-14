@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>英语探险乐园 · Three Planets in the Sky</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sun:#FFD23F; --sky:#7EC8E3; --grass:#7BD389; --berry:#FF6FB5;
+    --grape:#9B7EDE; --cream:#FFF7E6; --ink:#2B2B3A; --stroke:#2B2B3A;
+    --orange:#FF9F43; --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{max-width:100%;overflow-x:hidden;}
+  body{
+    font-family:'Baloo 2','Fredoka',sans-serif;
+    background:linear-gradient(160deg,#FFF7E6 0%,#FFE9C7 40%,#D7F0FF 100%);
+    color:var(--ink); padding:10px; line-height:1.5;
+  }
+  .wrap{max-width:560px;margin:0 auto;}
+  h1,h2,h3{font-family:'Fredoka',sans-serif;}
+  .stroke{border:4px solid var(--stroke);border-radius:22px;}
+  /* ---- Top bar ---- */
+  .topbar{display:flex;flex-direction:column;gap:8px;background:var(--card);
+    padding:10px;margin-bottom:10px;box-shadow:0 4px 0 var(--stroke);}
+  .kid-switch{display:flex;gap:8px;}
+  .kid-btn{flex:1;font-family:'Fredoka';font-weight:700;font-size:16px;padding:8px;
+    border:4px solid var(--stroke);border-radius:16px;background:#fff;cursor:pointer;}
+  .kid-btn.on{background:var(--sun);transform:scale(1.03);}
+  .score-row{display:flex;align-items:center;justify-content:space-between;
+    font-family:'Fredoka';font-weight:600;}
+  .score-pill{background:var(--grass);border:3px solid var(--stroke);border-radius:14px;
+    padding:4px 12px;font-size:15px;}
+  .cn-toggle{background:var(--berry);color:#fff;border:3px solid var(--stroke);
+    border-radius:14px;padding:5px 10px;font-weight:700;font-size:13px;cursor:pointer;}
+  .cn-toggle.on{background:var(--grape);}
+  /* ---- Tabs ---- */
+  .tabs{display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;padding-bottom:2px;}
+  .tab{flex:0 0 auto;font-family:'Fredoka';font-weight:600;font-size:14px;
+    padding:8px 12px;border:4px solid var(--stroke);border-radius:16px;background:#fff;cursor:pointer;white-space:nowrap;}
+  .tab.on{background:var(--sky);transform:scale(1.04);}
+  .panel{display:none;} .panel.on{display:block;}
+  .card{background:var(--card);padding:14px;margin-bottom:12px;box-shadow:0 5px 0 var(--stroke);}
+  /* ---- Scene ---- */
+  .scene{width:100%;max-width:100%;border-radius:18px;display:block;}
+  /* ---- Article ---- */
+  .article{font-size:19px;line-height:1.85;}
+  .sent{cursor:pointer;padding:2px 3px;border-radius:8px;transition:.15s;}
+  .sent.done::after{content:" ✓";color:var(--grass);font-weight:800;}
+  .speaking{background:var(--sun)!important;color:var(--ink)!important;
+    font-weight:800;display:inline-block;transform:scale(1.15);border-radius:8px;padding:1px 5px;}
+  .word{cursor:pointer;position:relative;border-bottom:2px dotted transparent;}
+  .word:hover{border-bottom:2px dotted var(--orange);}
+  .bubble{position:absolute;bottom:130%;left:50%;transform:translateX(-50%);
+    background:var(--ink);color:#fff;font-family:'Baloo 2';font-size:13px;font-weight:600;
+    padding:5px 9px;border-radius:12px;white-space:nowrap;z-index:30;
+    box-shadow:0 3px 0 rgba(0,0,0,.3);}
+  .bubble .ph{color:var(--sun);font-size:12px;}
+  .cn-on .cnword{color:var(--grape);font-size:.7em;font-family:'Baloo 2';margin-left:2px;}
+  .cnword{display:none;}
+  /* ---- Controls ---- */
+  .ctrl{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}
+  .btn{font-family:'Fredoka';font-weight:600;font-size:14px;padding:9px 12px;
+    border:4px solid var(--stroke);border-radius:16px;background:#fff;cursor:pointer;}
+  .btn.main{background:var(--sun);} .btn.sky{background:var(--sky);}
+  .btn.grass{background:var(--grass);} .btn.berry{background:var(--berry);color:#fff;}
+  .speeds{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin:8px 0;}
+  .speed-btn{font-family:'Fredoka';font-weight:600;font-size:13px;padding:6px 9px;
+    border:3px solid var(--stroke);border-radius:13px;background:#fff;cursor:pointer;}
+  .speed-btn.on{background:var(--orange);color:#fff;transform:scale(1.05);}
+  /* ---- Sentence cards ---- */
+  .scard{border:4px solid var(--stroke);border-radius:18px;padding:12px;margin-bottom:12px;background:#fff;}
+  .aihint{background:#E8F2FF;border:3px solid var(--sky);border-radius:14px;padding:8px 10px;
+    font-family:'Baloo 2';font-size:14px;margin-bottom:8px;}
+  .aihint b{color:#1E6FB8;}
+  .kw{background:var(--berry);color:#fff;border-radius:8px;padding:1px 7px;font-weight:700;
+    font-size:13px;display:inline-block;margin:2px;}
+  .scard .en{font-size:19px;margin:6px 0;}
+  .scard-btns{display:flex;gap:6px;flex-wrap:wrap;}
+  /* ---- Quiz ---- */
+  .q{font-size:18px;font-weight:700;margin-bottom:4px;font-family:'Fredoka';}
+  .qcn{font-size:14px;color:var(--grape);margin-bottom:8px;display:none;}
+  .cn-on .qcn{display:block;}
+  .opt{display:block;width:100%;text-align:left;font-family:'Baloo 2';font-weight:600;
+    font-size:16px;padding:10px 12px;margin-bottom:7px;border:4px solid var(--stroke);
+    border-radius:14px;background:#fff;cursor:pointer;}
+  .opt .ocn{color:var(--grape);font-size:.78em;margin-left:6px;display:none;}
+  .cn-on .opt .ocn{display:inline;}
+  .opt.right{background:var(--grass);} .opt.wrong{background:#FFC9C9;}
+  .hintbtn{background:var(--sun);border:3px solid var(--stroke);border-radius:12px;
+    font-family:'Fredoka';font-weight:600;padding:5px 10px;cursor:pointer;font-size:13px;margin-bottom:8px;}
+  .hintbox{background:#FFF6D6;border:3px dashed var(--orange);border-radius:12px;
+    padding:7px 10px;margin-bottom:8px;font-family:'Baloo 2';font-size:14px;display:none;}
+  .stars{font-size:22px;}
+  /* ---- Floating stop & toast ---- */
+  .stopball{position:fixed;right:16px;bottom:16px;width:62px;height:62px;border-radius:50%;
+    background:var(--berry);border:4px solid var(--stroke);color:#fff;font-family:'Fredoka';
+    font-weight:700;font-size:13px;display:none;align-items:center;justify-content:center;
+    cursor:pointer;z-index:90;box-shadow:0 4px 0 var(--stroke);}
+  .toast{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-80px);
+    background:var(--ink);color:#fff;font-family:'Fredoka';font-weight:600;padding:10px 18px;
+    border-radius:20px;z-index:120;transition:.3s;font-size:15px;max-width:90%;text-align:center;}
+  .toast.show{transform:translateX(-50%) translateY(0);}
+  .progwrap{height:14px;background:#fff;border:3px solid var(--stroke);border-radius:10px;overflow:hidden;margin:8px 0;}
+  .progbar{height:100%;width:0;background:var(--grass);transition:.3s;}
+  .hand{font-family:'Caveat';font-size:20px;color:var(--grape);}
+  .conf{position:fixed;width:11px;height:11px;z-index:130;pointer-events:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- TOP BAR -->
+  <div class="topbar stroke">
+    <div class="kid-switch">
+      <button class="kid-btn on" data-kid="kenton" onclick="setKid('kenton')">🦖 Kenton宝贝</button>
+      <button class="kid-btn" data-kid="eddey" onclick="setKid('eddey')">🐯 Eddey宝贝</button>
+    </div>
+    <div class="score-row">
+      <span class="score-pill">⭐ <span id="score">0</span> 颗星</span>
+      <button class="cn-toggle" id="cnToggle" onclick="toggleCN()">🇨🇳 显示全部中文</button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab on" onclick="showTab(0,this)">1·整体感知</button>
+    <button class="tab" onclick="showTab(1,this)">2·分句精学</button>
+    <button class="tab" onclick="showTab(2,this)">3·做题打分</button>
+  </div>
+
+  <!-- ===== PANEL 0: 整体感知 ===== -->
+  <div class="panel on">
+    <div class="card">
+      <svg class="scene" viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg">
+        <rect width="560" height="220" rx="18" fill="#1B2A4A"/>
+        <circle cx="120" cy="60" r="20" fill="#FFD23F"/>
+        <text x="120" y="100" font-size="13" fill="#FFD23F" text-anchor="middle" font-family="Fredoka">Venus</text>
+        <circle cx="250" cy="95" r="16" fill="#FF9F43"/>
+        <ellipse cx="250" cy="95" rx="26" ry="7" fill="none" stroke="#FFE0A3" stroke-width="2"/>
+        <text x="250" y="135" font-size="13" fill="#FF9F43" text-anchor="middle" font-family="Fredoka">Jupiter</text>
+        <circle cx="370" cy="150" r="11" fill="#C0C8D0"/>
+        <text x="370" y="180" font-size="13" fill="#C0C8D0" text-anchor="middle" font-family="Fredoka">Mercury</text>
+        <path d="M470 60 a18 18 0 1 0 8 30 a14 14 0 1 1 -8 -30" fill="#FFF3C4"/>
+        <g fill="#fff"><circle cx="60" cy="40" r="1.6"/><circle cx="200" cy="30" r="1.4"/><circle cx="330" cy="55" r="1.6"/><circle cx="430" cy="120" r="1.4"/><circle cx="510" cy="150" r="1.6"/><circle cx="90" cy="150" r="1.4"/><circle cx="290" cy="180" r="1.5"/></g>
+        <rect y="195" width="560" height="25" fill="#0E1830"/>
+      </svg>
+      <p style="text-align:center;font-family:Caveat;font-size:24px;color:var(--grape);margin-top:8px;">
+        🌌 Look up after sunset this week!</p>
+    </div>
+
+    <div class="card">
+      <div class="progwrap"><div class="progbar" id="prog0"></div></div>
+      <div class="ctrl">
+        <button class="btn main" onclick="readAll()">👂 听整篇</button>
+        <button class="btn sky" onclick="echoAll()">🔁 跟我读全文</button>
+        <button class="btn grass" onclick="readKeywords()">🔑 只读关键词</button>
+      </div>
+      <div class="speeds">
+        <span style="font-family:Fredoka;font-weight:600;font-size:13px;">语速:</span>
+        <button class="speed-btn" data-r="0.5" onclick="setSpeed(0.5)">🐌超慢</button>
+        <button class="speed-btn" data-r="0.7" onclick="setSpeed(0.7)">🐢慢</button>
+        <button class="speed-btn on" data-r="0.85" onclick="setSpeed(0.85)">🚶适中</button>
+        <button class="speed-btn" data-r="1.0" onclick="setSpeed(1.0)">🏃正常</button>
+      </div>
+      <div class="article" id="article"></div>
+    </div>
+  </div>
+
+  <!-- ===== PANEL 1: 分句精学 ===== -->
+  <div class="panel">
+    <div class="card">
+      <p class="hand">🤖 一句一句来，跟着 AI 读读看~</p>
+      <div class="speeds">
+        <span style="font-family:Fredoka;font-weight:600;font-size:13px;">语速:</span>
+        <button class="speed-btn" data-r="0.5" onclick="setSpeed(0.5)">🐌超慢</button>
+        <button class="speed-btn" data-r="0.7" onclick="setSpeed(0.7)">🐢慢</button>
+        <button class="speed-btn on" data-r="0.85" onclick="setSpeed(0.85)">🚶适中</button>
+        <button class="speed-btn" data-r="1.0" onclick="setSpeed(1.0)">🏃正常</button>
+      </div>
+    </div>
+    <div id="scards"></div>
+  </div>
+
+  <!-- ===== PANEL 2: 做题打分 ===== -->
+  <div class="panel">
+    <div class="card">
+      <h2 style="font-size:20px;margin-bottom:4px;">🎯 小测验 Quiz</h2>
+      <p style="font-family:Caveat;font-size:20px;color:var(--grape);">提示只给关键词，答案要自己想哦！</p>
+    </div>
+    <div id="quiz"></div>
+    <div class="card" id="resultCard" style="display:none;text-align:center;">
+      <h2 id="resultMsg" style="font-size:22px;"></h2>
+      <div class="stars" id="resultStars"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="stopball" id="stopball" onclick="stopAll()">⏹<br>停</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== DATA ===================== */
+const SENTENCES = [
+  {en:"This week, look up at the sky after sunset!", cn:"这个星期，太阳下山后抬头看看天空吧！",
+   kws:["look up","after sunset"], kwcn:["抬头看","日落后"]},
+  {en:"Three bright planets are saying hello to us.", cn:"三颗明亮的行星正在跟我们打招呼。",
+   kws:["Three","bright planets"], kwcn:["三（颗）","明亮的行星"]},
+  {en:"They are Venus, Jupiter, and Mercury.", cn:"它们是金星、木星和水星。",
+   kws:["Venus","Jupiter","Mercury"], kwcn:["金星","木星","水星"]},
+  {en:"Venus is the brightest one. It shines like a big lamp.", cn:"金星是最亮的一颗。它像一盏大灯一样闪闪发光。",
+   kws:["brightest","shines"], kwcn:["最亮的","发光"]},
+  {en:"Jupiter is the biggest planet, but it looks a little less bright than Venus.", cn:"木星是最大的行星，但它看起来比金星稍微暗一点。",
+   kws:["biggest","less bright"], kwcn:["最大的","没那么亮"]},
+  {en:"Mercury is small and hard to see. It hides low near the ground.", cn:"水星又小又难看见。它藏在靠近地面的低处。",
+   kws:["hard to see","low"], kwcn:["难看见","低"]},
+  {en:"Look to the west about 30 minutes after the sun goes down.", cn:"在太阳落下后大约30分钟，朝西边看。",
+   kws:["west","30 minutes"], kwcn:["西边","30分钟"]},
+  {en:"On June 16, a thin moon will come to play, hanging near Venus and Jupiter.", cn:"6月16日，一弯细细的月亮也会来玩，挂在金星和木星旁边。",
+   kws:["June 16","thin moon"], kwcn:["6月16日","细月亮"]},
+  {en:"You do not need a telescope. Just use your own eyes!", cn:"你不需要望远镜。用自己的眼睛就行啦！",
+   kws:["not","telescope","eyes"], kwcn:["不","望远镜","眼睛"]},
+  {en:"People call this a planet parade. How cool is that?", cn:"人们把这叫做“行星大游行”。是不是超酷？",
+   kws:["planet parade"], kwcn:["行星大游行"]}
+];
+
+const DICT = {
+  "week":["星期","wiːk"],"sky":["天空","skaɪ"],"sunset":["日落","ˈsʌnset"],
+  "bright":["明亮的","braɪt"],"planets":["行星","ˈplænɪts"],"planet":["行星","ˈplænɪt"],
+  "Venus":["金星","ˈviːnəs"],"Jupiter":["木星","ˈdʒuːpɪtər"],"Mercury":["水星","ˈmɜːrkjəri"],
+  "brightest":["最亮的","ˈbraɪtɪst"],"shines":["发光","ʃaɪnz"],"lamp":["灯","læmp"],
+  "biggest":["最大的","ˈbɪɡɪst"],"less":["更少","les"],"small":["小的","smɔːl"],
+  "hard":["难的","hɑːrd"],"hides":["躲藏","haɪdz"],"low":["低的","loʊ"],"ground":["地面","ɡraʊnd"],
+  "west":["西边","west"],"minutes":["分钟","ˈmɪnɪts"],"moon":["月亮","muːn"],"thin":["薄的/细的","θɪn"],
+  "telescope":["望远镜","ˈtelɪskoʊp"],"eyes":["眼睛","aɪz"],"parade":["游行","pəˈreɪd"],"cool":["酷的","kuːl"]
+};
+
+const QUIZ = [
+  {q:"How many bright planets can we see this week?", cn:"这周我们能看到几颗明亮的行星？",
+   options:[{l:"A",t:"Three",cn:"三颗"},{l:"B",t:"Five",cn:"五颗"},{l:"C",t:"One",cn:"一颗"}], ans:0,
+   hint:"关键词：Three"},
+  {q:"Which planet is the brightest?", cn:"哪颗行星最亮？",
+   options:[{l:"A",t:"Mercury",cn:"水星"},{l:"B",t:"Venus",cn:"金星"},{l:"C",t:"Jupiter",cn:"木星"}], ans:1,
+   hint:"关键词：brightest one"},
+  {q:"When is the best time to look?", cn:"什么时候看最好？",
+   options:[{l:"A",t:"After sunset",cn:"日落后"},{l:"B",t:"At noon",cn:"中午"},{l:"C",t:"Early morning",cn:"清晨"}], ans:0,
+   hint:"关键词：after sunset"},
+  {q:"Do we need a telescope to see them?", cn:"我们需要望远镜才能看到吗？",
+   options:[{l:"A",t:"Yes, a big one",cn:"需要，一个大的"},{l:"B",t:"No, just our eyes",cn:"不需要，用眼睛就行"},{l:"C",t:"We cannot see them",cn:"我们看不到"}], ans:1,
+   hint:"关键词：not need, eyes"},
+  {q:"What do people call this event?", cn:"人们把这件事叫做什么？",
+   options:[{l:"A",t:"A planet parade",cn:"行星大游行"},{l:"B",t:"A rainstorm",cn:"暴风雨"},{l:"C",t:"A football game",cn:"足球比赛"}], ans:0,
+   hint:"关键词：planet parade"}
+];
+
+/* ===================== NUMBERS TO ENGLISH ===================== */
+const ONES=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+const TENS=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+const ORD={"1":"first","2":"second","3":"third","5":"fifth","8":"eighth","9":"ninth","12":"twelfth"};
+function twoDigit(n){ // 0-99
+  if(n<20) return ONES[n];
+  let t=Math.floor(n/10), o=n%10;
+  return TENS[t]+(o?"-"+ONES[o]:"");
+}
+function threeDigit(n){ // 0-999
+  if(n<100) return twoDigit(n);
+  let h=Math.floor(n/100), r=n%100;
+  return ONES[h]+" hundred"+(r?" "+twoDigit(r):"");
+}
+function intToWords(n){
+  n=parseInt(n,10);
+  if(isNaN(n)) return "";
+  if(n<1000) return threeDigit(n);
+  if(n<1000000){let th=Math.floor(n/1000),r=n%1000;return threeDigit(th)+" thousand"+(r?" "+threeDigit(r):"");}
+  return ""+n;
+}
+function yearToWords(y){
+  y=parseInt(y,10);
+  if(y>=2000 && y<=2099){
+    let r=y-2000;
+    if(r===0) return "two thousand";
+    if(r<10) return "two thousand "+twoDigit(r);
+    return "twenty "+twoDigit(r);
+  }
+  if(y>=1000 && y<=1999){
+    let hi=Math.floor(y/100), lo=y%100;
+    if(lo===0) return twoDigit(hi)+" hundred";
+    return twoDigit(hi)+" "+(lo<10?"oh "+ONES[lo]:twoDigit(lo));
+  }
+  return intToWords(y);
+}
+function ordinalWords(numStr){
+  if(ORD[numStr]) return ORD[numStr];
+  let n=parseInt(numStr,10);
+  if(n%10===1 && n!==11) return twoDigit(n).replace(/one$/,"first");
+  if(n%10===2 && n!==12) return twoDigit(n).replace(/two$/,"second");
+  if(n%10===3 && n!==13) return twoDigit(n).replace(/three$/,"third");
+  let w=twoDigit(n);
+  if(w.endsWith("y")) return w.slice(0,-1)+"ieth";
+  return w+"th";
+}
+function numbersToEnglishWords(text){
+  // ordinals: 21st, 16th, 3rd, 2nd
+  text=text.replace(/\b(\d+)(st|nd|rd|th)\b/gi,(m,n)=>ordinalWords(n));
+  // decimals: 1.5 -> one point five
+  text=text.replace(/\b(\d+)\.(\d+)\b/g,(m,a,b)=>intToWords(a)+" point "+b.split("").map(d=>ONES[+d]).join(" "));
+  // years 1000-2099
+  text=text.replace(/\b(1\d{3}|20\d{2})\b/g,(m,y)=>yearToWords(y));
+  // remaining integers
+  text=text.replace(/\b(\d+)\b/g,(m,n)=>intToWords(n));
+  return text;
+}
+
+/* ===================== STATE ===================== */
+let kid="kenton", rate=0.85, cnOn=false, queue=[], qi=0, echoMode=false;
+const synth=window.speechSynthesis;
+
+function scoreKey(){return "news20260614_score_"+kid;}
+function getScore(){return parseInt(localStorage.getItem(scoreKey())||"0",10);}
+function setScore(v){localStorage.setItem(scoreKey(),v);document.getElementById('score').textContent=v;}
+function addScore(n){setScore(getScore()+n);}
+
+function setKid(k){
+  kid=k;
+  document.querySelectorAll('.kid-btn').forEach(b=>b.classList.toggle('on',b.dataset.kid===k));
+  setScore(getScore());
+  toast((k==='kenton'?'🦖 Kenton':'🐯 Eddey')+'宝贝，开始啦！');
+}
+
+/* ===================== TTS ===================== */
+function pickVoice(){
+  let vs=synth.getVoices();
+  return vs.find(v=>/en-GB/i.test(v.lang))||vs.find(v=>/en-US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null;
+}
+function speak(text,onend){
+  let u=new SpeechSynthesisUtterance(numbersToEnglishWords(text));
+  u.lang="en-US"; u.rate=rate; u.pitch=1.05;
+  let v=pickVoice(); if(v)u.voice=v;
+  u.onend=onend||null;
+  synth.speak(u);
+  document.getElementById('stopball').style.display='flex';
+}
+function stopAll(){
+  synth.cancel(); queue=[]; echoMode=false;
+  document.querySelectorAll('.speaking').forEach(e=>e.classList.remove('speaking'));
+  document.getElementById('stopball').style.display='none';
+}
+function setSpeed(r){
+  rate=r;
+  document.querySelectorAll('.speed-btn').forEach(b=>b.classList.toggle('on',parseFloat(b.dataset.r)===r));
+  // 立即打断并用新速度重读当前句
+  if(synth.speaking||queue.length){
+    let cur=queue.length?queue[0]:lastSpokenIdx;
+    synth.cancel();
+    if(queue.length){ playQueue(); }
+    else if(lastSpokenIdx>=0){ highlightAndRead(lastSpokenIdx); }
+  }
+  toast("语速："+r+"×");
+}
+let lastSpokenIdx=-1;
+
+/* ===================== PANEL 0 RENDER ===================== */
+function renderArticle(){
+  let html="";
+  SENTENCES.forEach((s,i)=>{
+    html+=`<span class="sent" id="sent${i}" onclick="highlightAndRead(${i})">${wordify(s.en)}</span> `;
+  });
+  document.getElementById('article').innerHTML=html;
+}
+function wordify(sentence){
+  return sentence.split(/(\s+)/).map(tok=>{
+    let clean=tok.replace(/[.,!?;:"]/g,'');
+    if(DICT[clean]){
+      let d=DICT[clean];
+      return `<span class="word" onclick="event.stopPropagation();bubbleWord(this,'${clean}')">${tok}<span class="cnword">${d[0]}</span></span>`;
+    }
+    return tok;
+  }).join('');
+}
+function bubbleWord(el,key){
+  let old=el.querySelector('.bubble'); if(old){old.remove();return;}
+  let d=DICT[key];
+  let b=document.createElement('span');
+  b.className='bubble';
+  b.innerHTML=`${d[0]} <span class="ph">/${d[1]}/</span>`;
+  el.appendChild(b);
+  setTimeout(()=>{if(b.parentNode)b.remove();},2500);
+}
+
+function clearHL(){document.querySelectorAll('.speaking').forEach(e=>e.classList.remove('speaking'));}
+function highlightAndRead(i){
+  stopAll(); lastSpokenIdx=i;
+  let el=document.getElementById('sent'+i);
+  if(el)el.classList.add('speaking');
+  speak(SENTENCES[i].en,()=>{
+    if(el){el.classList.remove('speaking');el.classList.add('done');}
+    updateProg();
+  });
+}
+function readAll(){
+  stopAll(); queue=SENTENCES.map((s,i)=>i); echoMode=false; playQueue();
+}
+function playQueue(){
+  if(!queue.length){document.getElementById('stopball').style.display='none';confetti();toast('🎉 整篇读完啦！');return;}
+  let i=queue[0]; lastSpokenIdx=i; clearHL();
+  let el=document.getElementById('sent'+i); if(el)el.classList.add('speaking');
+  speak(SENTENCES[i].en,()=>{
+    if(el){el.classList.remove('speaking');el.classList.add('done');}
+    updateProg();
+    queue.shift();
+    if(echoMode && queue.length){
+      toast('🎤 该你读啦！读完点「继续」');
+      showContinue();
+    }else{
+      playQueue();
+    }
+  });
+}
+function showContinue(){
+  let s=document.getElementById('stopball');
+  s.innerHTML='▶<br>继续'; s.style.background='var(--grass)';
+  s.onclick=function(){ s.innerHTML='⏹<br>停'; s.style.background='var(--berry)'; s.onclick=stopAll; playQueue(); };
+}
+function echoAll(){
+  stopAll(); queue=SENTENCES.map((s,i)=>i); echoMode=true;
+  toast('🔁 AI读一句，你跟一句~'); playQueue();
+}
+function readKeywords(){
+  stopAll();
+  let kws=[]; SENTENCES.forEach(s=>kws.push(...s.kws));
+  let j=0;
+  function next(){
+    if(j>=kws.length){document.getElementById('stopball').style.display='none';toast('🔑 关键词过完啦！');return;}
+    speak(kws[j],()=>{j++;next();});
+  }
+  toast('🔑 只读关键词，考前快速过！'); next();
+}
+function updateProg(){
+  let done=document.querySelectorAll('.sent.done').length;
+  let pct=Math.round(done/SENTENCES.length*100);
+  let p=document.getElementById('prog0'); if(p)p.style.width=pct+'%';
+}
+
+/* ===================== PANEL 1 RENDER ===================== */
+function renderCards(){
+  let html="";
+  SENTENCES.forEach((s,i)=>{
+    let kwTags=s.kws.map(k=>`<span class="kw">${k}</span>`).join('');
+    html+=`<div class="scard">
+      <div class="aihint">🤖 <b>AI关键词提示：</b>${kwTags}</div>
+      <div class="en" id="cen${i}">${wordify(s.en)}</div>
+      <div class="qcn" style="font-size:14px;color:var(--grape);">${s.cn}</div>
+      <div class="scard-btns">
+        <button class="btn sky" onclick="readCard(${i},rate)">🔊 听</button>
+        <button class="btn grass" onclick="readCard(${i},0.5)">🐢 慢速听</button>
+        <button class="btn berry" onclick="echoCard(${i})">🎤 跟读</button>
+      </div>
+    </div>`;
+  });
+  document.getElementById('scards').innerHTML=html;
+}
+function readCard(i,r){
+  stopAll(); let old=rate; rate=r; lastSpokenIdx=i;
+  let el=document.getElementById('cen'+i); if(el)el.classList.add('speaking');
+  speak(SENTENCES[i].en,()=>{if(el)el.classList.remove('speaking');rate=old;});
+}
+function echoCard(i){
+  stopAll();
+  let el=document.getElementById('cen'+i); if(el)el.classList.add('speaking');
+  speak(SENTENCES[i].en,()=>{if(el)el.classList.remove('speaking');toast('🎤 现在轮到你大声读一遍！');});
+}
+
+/* ===================== PANEL 2 RENDER ===================== */
+let answered=[];
+function renderQuiz(){
+  answered=new Array(QUIZ.length).fill(false);
+  let html="";
+  QUIZ.forEach((qz,i)=>{
+    let opts=qz.options.map((o,j)=>
+      `<button class="opt" id="opt${i}_${j}" onclick="answer(${i},${j})">${o.l}. ${o.t}<span class="ocn">${o.cn}</span></button>`).join('');
+    html+=`<div class="card">
+      <div class="q">${i+1}. ${qz.q}</div>
+      <div class="qcn">${qz.cn}</div>
+      <button class="hintbtn" onclick="toggleHint(${i})">💡 提示</button>
+      <div class="hintbox" id="hint${i}">${qz.hint}</div>
+      ${opts}
+    </div>`;
+  });
+  document.getElementById('quiz').innerHTML=html;
+}
+function toggleHint(i){let h=document.getElementById('hint'+i);h.style.display=h.style.display==='block'?'none':'block';}
+function answer(i,j){
+  if(answered[i])return;
+  let qz=QUIZ[i];
+  if(j===qz.ans){
+    answered[i]=true;
+    document.getElementById('opt'+i+'_'+j).classList.add('right');
+    addScore(1); toast('✅ 答对啦！+1⭐'); confetti();
+    checkDone();
+  }else{
+    document.getElementById('opt'+i+'_'+j).classList.add('wrong');
+    toast('再想想~ 看看💡提示里的关键词');
+    setTimeout(()=>{document.getElementById('opt'+i+'_'+j).classList.remove('wrong');},800);
+  }
+}
+function checkDone(){
+  if(answered.every(a=>a)){
+    let card=document.getElementById('resultCard');
+    card.style.display='block';
+    document.getElementById('resultMsg').textContent='🏆 全部答对！太棒了！';
+    document.getElementById('resultStars').textContent='⭐⭐⭐⭐⭐';
+    confetti();
+  }
+}
+
+/* ===================== UI HELPERS ===================== */
+function showTab(n,btn){
+  stopAll();
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('on',i===n));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleCN(){
+  cnOn=!cnOn;
+  document.body.classList.toggle('cn-on',cnOn);
+  let b=document.getElementById('cnToggle');
+  b.classList.toggle('on',cnOn);
+  b.textContent=cnOn?'🇬🇧 只看英文':'🇨🇳 显示全部中文';
+}
+let toastT;
+function toast(msg){
+  let t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),1800);
+}
+function confetti(){
+  const cols=['#FFD23F','#FF6FB5','#7BD389','#7EC8E3','#9B7EDE','#FF9F43'];
+  for(let i=0;i<24;i++){
+    let c=document.createElement('div'); c.className='conf';
+    c.style.left=(Math.random()*100)+'vw'; c.style.top='-20px';
+    c.style.background=cols[i%cols.length];
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c);
+    let dy=window.innerHeight+40, dx=(Math.random()-.5)*160, rot=Math.random()*720;
+    c.animate([{transform:'translate(0,0) rotate(0)',opacity:1},
+      {transform:`translate(${dx}px,${dy}px) rotate(${rot}deg)`,opacity:0}],
+      {duration:1600+Math.random()*800,easing:'ease-in'}).onfinish=()=>c.remove();
+  }
+}
+
+/* ===================== ATTENTION / IDLE ===================== */
+let idleT;
+function resetIdle(){
+  clearTimeout(idleT);
+  idleT=setTimeout(()=>toast('👋 还在吗？点一句话继续读读看~'),45000);
+}
+['click','touchstart','keydown'].forEach(e=>document.addEventListener(e,resetIdle));
+setTimeout(()=>toast('⏰ 已经学了15分钟啦，记得让眼睛休息一下哦~'),15*60*1000);
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) toast('👋 欢迎回来，继续加油！'); });
+
+/* ===================== KEYBOARD ===================== */
+document.addEventListener('keydown',e=>{
+  if(e.key==='1')setSpeed(0.5); if(e.key==='2')setSpeed(0.7);
+  if(e.key==='3')setSpeed(0.85); if(e.key==='4')setSpeed(1.0);
+  if(e.code==='Space'){e.preventDefault();stopAll();}
+});
+
+/* ===================== INIT ===================== */
+renderArticle(); renderCards(); renderQuiz();
+setScore(getScore()); resetIdle();
+if(synth.onvoiceschanged!==undefined){synth.onvoiceschanged=pickVoice;}
+setTimeout(()=>toast('🌟 欢迎来到英语探险乐园！'),600);
+</script>
+</body>
+</html>
