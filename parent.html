@@ -29,19 +29,82 @@
   </div>
 
   <div class="card">
-    <h2 style="margin:0 0 6px;font-size:18px">📈 错题趋势（匿名化）</h2>
-    <p style="color:var(--muted);font-size:14px;margin:0 0 12px">仅展示匿名统计，题目原文与批改只存本地</p>
-    <svg viewBox="0 0 320 160" width="100%" role="img" aria-label="示例趋势图">
-      <polyline points="10,120 70,110 130,90 190,70 250,52 310,40"
-                fill="none" stroke="var(--kenton)" stroke-width="4" stroke-linecap="round"/>
-      <polyline points="10,135 70,128 130,118 190,108 250,92 310,84"
-                fill="none" stroke="var(--eddey)" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 7"/>
-      <text x="10" y="155" font-size="11" fill="#8a7e91">示例：小数除法正确率 62% → 85%</text>
-    </svg>
-    <div class="empty" style="padding:12px 0">真实趋势图将在错题库上线后自动生成 <span class="badge-soon">P2</span></div>
+    <h2 style="margin:0 0 6px;font-size:18px">📈 错题库 & 正确率（云端汇总）</h2>
+    <p style="color:var(--muted);font-size:13px;margin:0 0 12px">题目原文只存你的私有云端表格；本页只读你这台设备已连接的云端，地址不写进网站。</p>
+    <div id="ebSetup" style="display:none">
+      <input id="ebUrl" type="text" placeholder="粘贴云端地址 https://script.google.com/macros/s/.../exec"
+             style="width:100%;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,.2);font-size:13px;box-sizing:border-box">
+      <button onclick="ebSave()" style="margin-top:8px;padding:9px 18px;border:none;border-radius:100px;background:var(--kenton,#3170B5);color:#fff;font-weight:700;cursor:pointer">保存并连接</button>
+      <div class="footer-note" style="text-align:left;margin-top:8px">每台要查看的设备粘贴一次即可（只存在本机，不上传）。</div>
+    </div>
+    <div id="ebStatus" class="footer-note" style="text-align:left;margin:0"></div>
+    <div id="ebStats"></div>
+    <div id="ebErrors"></div>
+    <div id="ebReset" style="display:none;margin-top:10px">
+      <button onclick="ebForget()" style="padding:6px 14px;border:1px solid rgba(0,0,0,.2);border-radius:100px;background:#fff;font-size:12px;color:var(--muted);cursor:pointer">更换云端地址</button>
+    </div>
   </div>
 
-  <div class="footer-note">本页不保存任何账号密码 · 敏感数据只在本地 local-data/</div>
+  <div class="footer-note">本页不保存任何账号密码 · 题目原文只在你的私有云端</div>
 </div>
+
+<script>
+const EB_KEY = 'eb_endpoint';
+const KIDS = { kenton: '🦁 Kenton', eddey: '🐯 Eddey' };
+function ebGet(){ return (localStorage.getItem(EB_KEY) || '').trim(); }
+function ebSave(){
+  const v = document.getElementById('ebUrl').value.trim();
+  if(!/^https:\/\/script\.google\.com\/.+\/exec$/.test(v)){ alert('地址格式不对，应形如 https://script.google.com/macros/s/.../exec'); return; }
+  localStorage.setItem(EB_KEY, v); ebInit();
+}
+function ebForget(){ localStorage.removeItem(EB_KEY); ebInit(); }
+async function ebFetch(mode){ const r = await fetch(ebGet() + '?mode=' + mode, { cache:'no-store' }); return await r.json(); }
+async function ebInit(){
+  const ep = ebGet();
+  const setup = document.getElementById('ebSetup'), reset = document.getElementById('ebReset');
+  const status = document.getElementById('ebStatus'), statsEl = document.getElementById('ebStats'), errEl = document.getElementById('ebErrors');
+  statsEl.innerHTML = ''; errEl.innerHTML = '';
+  if(!ep){ setup.style.display='block'; reset.style.display='none'; status.textContent='还没连接云端 —— 粘贴上面那个云端地址即可看真实错题与正确率。'; return; }
+  setup.style.display='none'; reset.style.display='block'; status.textContent='正在从云端读取…';
+  try{
+    const st = await ebFetch('stats'), er = await ebFetch('errors');
+    const stats = (st.stats || []).filter(s => KIDS[s.kid]);
+    const errs = (er.errors || []).filter(e => KIDS[e.kid]);
+    if(!stats.length && !errs.length){ status.textContent='已连接 ✓ 云端还没有数据 —— 孩子做几次默写/听写后，这里会自动出现真实统计。'; return; }
+    status.textContent='已连接 ✓ 数据来自你的私有云端';
+    let html = '';
+    Object.keys(KIDS).forEach(k => {
+      const rows = stats.filter(s => s.kid === k); if(!rows.length) return;
+      let att=0, cor=0; rows.forEach(r => { att += r.attempts; cor += r.correct; });
+      const acc = att ? Math.round(cor/att*100) : 0;
+      const weak = rows.filter(r => r.attempts >= 2)
+        .map(r => ({ t: r.topic || r.subject || '其他', acc: r.attempts ? Math.round(r.correct/r.attempts*100) : 0 }))
+        .sort((a,b) => a.acc - b.acc).slice(0,5);
+      html += '<div class="card" style="margin:10px 0;padding:14px">'
+        + '<div style="font-weight:800;font-size:16px">' + KIDS[k] + '</div>'
+        + '<div style="margin:6px 0">总正确率 <b style="font-size:20px">' + acc + '%</b> <span style="color:var(--muted)">(' + cor + '/' + att + ')</span></div>';
+      if(weak.length){ html += '<div style="color:var(--muted);font-size:13px;margin-top:4px">最需要加强：</div>'
+        + weak.map(w => '<div style="display:flex;justify-content:space-between;font-size:13px;margin-top:3px"><span>' + w.t + '</span><b style="color:' + (w.acc<60?'#e35':'inherit') + '">' + w.acc + '%</b></div>').join(''); }
+      html += '</div>';
+    });
+    statsEl.innerHTML = html;
+    if(errs.length){
+      let eh = '<div style="font-weight:800;margin:14px 0 6px">📝 错题库（最近）</div>';
+      Object.keys(KIDS).forEach(k => {
+        const items = errs.filter(e => e.kid === k).slice(-40).reverse();
+        if(!items.length) return;
+        eh += '<div style="margin:8px 0 4px;font-size:13px;color:var(--muted)">' + KIDS[k] + '（' + items.length + ' 条）</div>';
+        eh += items.map(e => '<div style="display:flex;gap:8px;font-size:13px;padding:4px 0;border-bottom:1px dashed rgba(0,0,0,.08)"><b>' + (e.item||'') + '</b><span style="color:var(--muted)">' + (e.hint||'') + '</span><span style="margin-left:auto;color:var(--muted)">' + (e.subject||'') + '</span></div>').join('');
+      });
+      errEl.innerHTML = eh;
+    }
+  }catch(e){
+    status.textContent = '读取云端失败（地址有误，或网络/跨域问题）。可点"更换云端地址"重填。';
+    reset.style.display = 'block';
+  }
+}
+(function(){ const i = document.getElementById('ebUrl'); if(i) i.value = ebGet(); })();
+ebInit();
+</script>
 </body>
 </html>
