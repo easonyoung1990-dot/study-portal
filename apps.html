@@ -25,14 +25,11 @@
 </div>
 
 <script>
-  const SUBJECT_META = {
-    "英语": { cls: "eng", ico: "📖", color: "#36c5d6" },
-    "语文": { cls: "chi", ico: "📜", color: "#ff8a5b" },
-    "古诗": { cls: "chi", ico: "🏯", color: "#ff8a5b" },
-    "数学": { cls: "math", ico: "🔢", color: "#8ce99a" }
-  };
+  const SUBJECT_META = { "语文":{ico:"📜",color:"#ff8a5b"}, "数学":{ico:"🔢",color:"#8ce99a"}, "英语":{ico:"📖",color:"#36c5d6"} };
+  const SUBJECT_ORDER = ["语文","数学","英语"];
+  const SUBJECT_MAP = { "古诗":"语文", "综合":"语文" }; // 折叠到三类
   const CHILD_NAME = { kenton: "Kenton", eddey: "Eddey" };
-
+  function norm(s){ return SUBJECT_MAP[s] || s || "英语"; }
   function getParam(k){ return new URLSearchParams(location.search).get(k); }
 
   async function load() {
@@ -44,24 +41,27 @@
       let apps = await res.json();
       if (who) {
         apps = apps.filter(a => a.child === who);
-        note.textContent = "只显示 " + (CHILD_NAME[who] || who) + " 的软件";
+        note.textContent = "只显示 " + (CHILD_NAME[who] || who) + " 的软件（按学科）";
       } else {
-        note.textContent = "全部学习软件";
+        note.textContent = "全部学习软件（按学科）";
       }
       if (!apps.length) {
         list.innerHTML = '<div class="empty">还没有软件，等爸爸添加 ✨</div>';
         return;
       }
-      list.innerHTML = apps.map(a => {
-        const m = SUBJECT_META[a.subject] || { cls:"", ico:"🧩", color:"#b39ddb" };
-        return `<a class="app-card" style="border-left-color:${m.color}" href="${a.file}">
+      let html = "";
+      SUBJECT_ORDER.forEach(subj => {
+        let items = apps.filter(a => norm(a.subject) === subj);
+        if (!who) { const seen={}, uniq=[]; items.forEach(a=>{ if(!seen[a.file]){seen[a.file]=1;uniq.push(a);} }); items = uniq; }
+        if (!items.length) return;
+        const m = SUBJECT_META[subj];
+        html += `<div style="margin:18px 0 8px;font-weight:800;font-size:16px;color:${m.color}">${m.ico} ${subj}</div>`;
+        html += items.map(a => `<a class="app-card" style="border-left-color:${m.color}" href="${a.file}">
           <span class="ico">${m.ico}</span>
-          <span>
-            <div class="t">${a.title}</div>
-            <div class="meta"><span class="tag ${m.cls}">${a.subject}</span> · ${CHILD_NAME[a.child]||a.child} · 加入于 ${a.added}</div>
-          </span>
-        </a>`;
-      }).join("");
+          <span><div class="t">${a.title}</div><div class="meta">${CHILD_NAME[a.child]||a.child} · 加入于 ${a.added}</div></span>
+        </a>`).join("");
+      });
+      list.innerHTML = html || '<div class="empty">还没有软件 ✨</div>';
     } catch (e) {
       list.innerHTML = '<div class="empty">软件清单读取失败，请稍后再试</div>';
     }

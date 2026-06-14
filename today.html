@@ -35,56 +35,64 @@
     </a>
   </div>
 
-  <div class="footer-note">完成一个任务，就能拿到星星 🌟</div>
+  <div class="footer-note">选一个开始今天的学习吧 ✨</div>
 </div>
 
 <script>
   const CHILD_NAME = { kenton: "Kenton", eddey: "Eddey" };
   const CHILD_ICON = { kenton: "🦁", eddey: "🐯" };
+  const SUBJECT_META = { "语文":{ico:"📜",color:"#ff8a5b"}, "数学":{ico:"🔢",color:"#8ce99a"}, "英语":{ico:"📖",color:"#36c5d6"} };
+  const SUBJECT_ORDER = ["语文","数学","英语"];
+  const SUBJECT_MAP = { "古诗":"语文", "综合":"语文" }; // 折叠到三类
+  function norm(s){ return SUBJECT_MAP[s] || s || "英语"; }
   function getParam(k){ return new URLSearchParams(location.search).get(k); }
+  function todayStr(){ const d=new Date(), p=n=>(n<10?'0':'')+n; return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
 
   async function load() {
     const who = getParam("who") || "kenton";
     document.title = CHILD_NAME[who] + " 的今日任务";
     document.getElementById("title").textContent =
       (CHILD_ICON[who]||"") + " " + (CHILD_NAME[who]||who) + " 的今日任务";
-    // 软件库链接带上 who，进去只看自己的软件
     document.getElementById("appsLink").href = "apps.html?who=" + who;
+    document.getElementById("dateText").textContent = todayStr();
 
     const list = document.getElementById("list");
     try {
       const res = await fetch("data/tasks.json", { cache: "no-store" });
       const data = await res.json();
-      document.getElementById("dateText").textContent = data.date || "—";
       const tasks = data[who] || [];
       if (!tasks.length) {
-        list.innerHTML = '<div class="empty">今天没有安排任务，去软件库自由探索吧 ✨</div>';
+        list.innerHTML = '<div class="empty">今天还没安排任务，去软件库自由探索吧 ✨</div>';
       } else {
-        list.innerHTML = tasks.map(t => {
-          const ico = t.type === "pdf" ? "📄" : "📖";
-          const star = "⭐".repeat(t.stars || 0);
-          return `<a class="app-card" href="${t.link}" style="border-left-color:var(--candy-green)">
-            <span class="ico">${ico}</span>
-            <span>
-              <div class="t">${t.title}</div>
-              <div class="meta"><span class="stars">${star}</span> 完成可得 ${t.stars||0} 颗星</div>
-            </span>
-          </a>`;
-        }).join("");
+        let html = "";
+        SUBJECT_ORDER.forEach(subj => {
+          const items = tasks.filter(t => norm(t.subject) === subj);
+          if (!items.length) return;
+          const m = SUBJECT_META[subj];
+          html += `<div style="margin:14px 0 6px;font-weight:800;font-size:16px;color:${m.color}">${m.ico} ${subj}</div>`;
+          html += items.map(t => {
+            const ico = t.type === "pdf" ? "📄" : m.ico;
+            return `<a class="app-card" href="${t.link}" style="border-left-color:${m.color}">
+              <span class="ico">${ico}</span>
+              <span><div class="t">${t.title}</div><div class="meta">${subj}</div></span>
+            </a>`;
+          }).join("");
+        });
+        list.innerHTML = html;
       }
     } catch (e) {
       list.innerHTML = '<div class="empty">今日任务读取失败，请稍后再试</div>';
     }
 
-    // 播报入口（取最新一期）
+    // 今日播报：指向真实最新一期 news_（来自 apps.json）
     try {
-      const pres = await fetch("data/podcast.json", { cache: "no-store" });
-      const pods = await pres.json();
-      if (pods && pods.length) {
-        const latest = pods[pods.length - 1];
-        document.getElementById("podcastLink").href = latest.file;
-        document.getElementById("podMeta").textContent =
-          latest.date + " · " + (latest.topics||[]).join(" / ");
+      const ares = await fetch("data/apps.json", { cache: "no-store" });
+      const apps = await ares.json();
+      const news = apps.filter(a => /news_\d{8}\.html$/.test(a.file||''));
+      if (news.length) {
+        news.sort((a,b)=> (a.file < b.file ? 1 : -1));
+        document.getElementById("podcastLink").href = news[0].file;
+        document.getElementById("podMeta").textContent = news[0].title || "点这里听今天的播报";
       } else {
         document.getElementById("podMeta").textContent = "播报即将上线";
       }
