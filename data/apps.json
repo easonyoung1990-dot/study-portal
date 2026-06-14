@@ -33,5 +33,12 @@
     "title": "语文期末闯关王 · 三下（15关）",
     "file": "apps/eddey_chinese_review.html",
     "added": "2026-06-13"
+  },
+  {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "英语 Module 4 闯关王 · 复习（5关）",
+    "file": "apps/eddey_english_review.html",
+    "added": "2026-06-14"
   }
 ]

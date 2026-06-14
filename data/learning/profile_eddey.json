@@ -42,6 +42,10 @@
         "单词拼写：合成长词 skateboard、see 误拼 cee"
       ],
       "knowledge_points": {
+        "名词复数(身体部位)": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-14" },
+        "a/an用法": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-14" },
+        "描述句型(I have/My...are)": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-14" },
+        "一般现在时(含三单)": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-14" },
         "物主代词": { "mastery": 50, "trend": "flat", "last_seen": "2026-06-13" },
         "句型转换": { "mastery": 50, "trend": "flat", "last_seen": "2026-06-13" },
         "一般疑问句应答": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-13" },
@@ -54,7 +58,8 @@
   },
   "milestones": [
     { "date": "2026-06-13", "text": "建立三下语文期末复习主线，上线15关'语文期末闯关王'。掌握度为基于历史错题的初估，待真实练习数据回填。" },
-    { "date": "2026-06-13", "text": "归档英语期末冲刺卷（四）错题，建立英语学情画像。9 个错题组，重点薄弱：物主代词、句型转换、一般疑问句应答、like+doing。已生成可打印错题重做卷私发家长。" }
+    { "date": "2026-06-13", "text": "归档英语期末冲刺卷（四）错题，建立英语学情画像。9 个错题组，重点薄弱：物主代词、句型转换、一般疑问句应答、like+doing。已生成可打印错题重做卷私发家长。" },
+    { "date": "2026-06-14", "text": "存档 6.12 课堂 Module 4 复习内容（身体部位复数/I have描述句型/一般现在时含三单），并上线『英语 Module 4 闯关王』复习软件（5关+错题回炉，含输入自动判分与英语朗读）。" }
   ],
   "_schema": {
     "knowledge_points": "形如 { \"小数除法\": { \"mastery\": 85, \"trend\": \"up|flat|down\", \"last_seen\": \"YYYY-MM-DD\" } }，mastery 为 0-100 的掌握度估计",

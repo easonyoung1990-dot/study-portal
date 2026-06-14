@@ -29,5 +29,28 @@
     "format": "A4 可打印 PDF + HTML（错因分析 + 原题重现 + 每题两道类似题 + 家长核对答案页）",
     "delivery": "依隐私红线未入公开仓库，已于 2026-06-13 通过会话私发家长。",
     "groups": 9
-  }
+  },
+  "learning_log": [
+    {
+      "date": "2026-06-12",
+      "module": "Module 4 复习",
+      "title": "Module 4 重点语法句型（课堂学习内容存档）",
+      "points": [
+        {
+          "name": "身体部位名词的复数变化",
+          "detail": "通常以复数出现的身体部位：eyes, ears, shoulders, legs, knees。特殊变化：foot → feet。例：My feet are big."
+        },
+        {
+          "name": "描述身体部位的句型",
+          "detail": "I have + a/an + 形容词 + 单数身体部位（I have a big head. / I have a small nose.）；I have + 形容词 + 复数身体部位（I have big hands. / I have long legs.）；或 My hands are big. 句型。"
+        },
+        {
+          "name": "一般现在时（含三单切换）",
+          "detail": "I go to the park/cinema/zoo. / Do you go…? / What do you do? 切换到三单：Alice goes to the park. / Does she go…? / What does she do?"
+        }
+      ],
+      "app": "apps/eddey_english_review.html",
+      "note": "本条为 6.12 课堂复习内容存档，并据此做出『英语 Module 4 闯关王』复习软件（5 关 + 错题回炉，含输入自动判分/英语朗读/计时/记录导出）。"
+    }
+  ]
 }

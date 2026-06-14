@@ -73,6 +73,19 @@
       "difficulty": "medium",
       "result": "9 个错题组；薄弱：she/her、句型转换、Do you 应答、like+doing。重做卷已交付，等弟弟重做后回填掌握度。",
       "notes": "来源为老师批改的纸质期末冲刺卷扫描件。错题原文/批改属敏感明细未入公开仓库，仅归档匿名化知识点统计；重做卷（错因分析+原题+每题两道类似题+答案页）通过会话私发家长。阅读判断/作文部分手写红批字迹较糊，已尽力对照核对。"
+    },
+    {
+      "id": "eddey_english_module4_review",
+      "date": "2026-06-14",
+      "child": "eddey",
+      "subject": "英语",
+      "title": "英语 Module 4 复习闯关王（5关 + 错题回炉）",
+      "app_file": "apps/eddey_english_review.html",
+      "content_source": "data/learning/english_errors_eddey_2026-06-13.json (learning_log · 2026-06-12)",
+      "knowledge_points": ["身体部位名词复数(foot→feet/tooth→teeth)", "a/an用法", "I have描述句型(单/复数)", "My...is/are", "一般现在时(I/you)", "三单变化(goes/Does/What does)"],
+      "difficulty": "easy-medium",
+      "result": "题库已上线，等弟弟练习后导出成绩回填掌握度",
+      "notes": "依据 6.12 课堂 Module 4 复习内容做的复习软件。内置标准模板：输入自动判分(fill)+选择+自评、答对/答错音效、英语 TTS 朗读(en-US)、计时、localStorage 记录面板与兼容导出({child:'弟弟',subject:'英语Module4复习',events:[]})、家长检查页。内容均为通用英语语法，无身份信息。"
     }
   ]
 }
