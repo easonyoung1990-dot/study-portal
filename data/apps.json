@@ -61,5 +61,12 @@
     "title": "语文练习 · 三下（口说作答+纸上默写，10关）",
     "file": "apps/eddey_chinese.html",
     "added": "2026-06-14"
+  },
+  {
+    "child": "eddey",
+    "subject": "语文",
+    "title": "语文听写 · 三下（限时报读·听词写字·拼音中文双读·错词本）",
+    "file": "apps/eddey_chinese_dictation.html",
+    "added": "2026-06-14"
   }
 ]
