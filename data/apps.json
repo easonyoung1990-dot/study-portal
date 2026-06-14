@@ -68,5 +68,12 @@
     "title": "默写错词重做 · 昨天错的词（中英）",
     "file": "apps/kenton_dictation_redo.html",
     "added": "2026-06-14"
+  },
+  {
+    "child": "kenton",
+    "subject": "英语",
+    "title": "英语单元默写 · 四下（教材12单元·全自动报默）",
+    "file": "apps/kenton_english_textbook.html",
+    "added": "2026-06-14"
   }
 ]
