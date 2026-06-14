@@ -1,0 +1,80 @@
+{
+  "updated": "2026-06-14",
+  "purpose": "教材对齐总纲：今后两娃的英语（及找得到的语文/数学）复习、出题、做软件，都以这套同步教材的方向、单元结构、栏目和题型为准。",
+  "series": {
+    "name": "上海《尖子生笔记·同步教材》",
+    "brand": "钟书金牌（丛书主编：钟书）",
+    "publisher": "天津人民出版社 / 天津出版传媒集团",
+    "slogan": "紧跟新考向",
+    "edition": "沪教版（上海 N版/牛津上海版方向）",
+    "subjects_available": ["英语", "语文", "数学"],
+    "note": "钟书金牌为上海沪教版正规教辅品牌（同品牌另有『钟书新教材全练 语文+数学+英语 N版』）。本系列同时出语文/数学，待拿到其目录后补录到本文件 subjects 下。"
+  },
+  "five_columns": [
+    { "栏目": "思维导图", "作用": "理知识", "用途": "每单元先用思维导图梳理知识框架" },
+    { "栏目": "单元词汇", "作用": "巧预习", "用途": "单词解析+记忆法（谐音/象形/联想），做软件的词表来源" },
+    { "栏目": "解析教材", "作用": "划重点", "用途": "逐课讲解课文与重点（一课一练教法对齐这一栏）" },
+    { "栏目": "单元复习", "作用": "抓考点", "用途": "单元复习与考点，出复习题/卷对齐这一栏" },
+    { "栏目": "拓展阅读", "作用": "提素养", "用途": "课外拓展阅读，做阅读软件/材料的方向" }
+  ],
+  "child_grade_map": {
+    "kenton": "英语 四年级下（4下）",
+    "eddey": "英语 三年级下（3下）"
+  },
+  "subjects": {
+    "英语": {
+      "structure": "每册 4 个 Module，每 Module 3 个 Unit；每 Unit 五栏目（思维导图/单元词汇/解析教材/单元复习/拓展阅读）；书末 INDEX 索引（核心词汇 + 重点句型/语法）。",
+      "grades": {
+        "三年级下": {
+          "child": "eddey",
+          "主编": "沈怡雯",
+          "index": { "核心词汇": 67, "重点句型语法": 41 },
+          "modules": [
+            { "module": "Module 1 Using my five senses", "units": ["U1 Seeing and hearing", "U2 Touching and feeling", "U3 Tasting and smelling"] },
+            { "module": "Module 2 My favourite things", "units": ["U1 Animals", "U2 Toys", "U3 Clothes"] },
+            { "module": "Module 3 Things around us", "units": ["U1 Shapes", "U2 Colours", "U3 Seasons"] },
+            { "module": "Module 4 More things to learn", "units": ["U1 My body", "U2 Children's Day", "U3 Story time"] }
+          ],
+          "句型语法要点": {
+            "M1": ["询问看到什么的句型及回答", "表达'(某地)有某物/某人'(There is/are)", "询问数量(名词复数)", "并列连词 and/but", "询问某物摸/尝起来怎么样", "Do型祈使句(动词原形+其他)", "询问物品价格", "Me too. 的用法"],
+            "M2": ["询问对方是否喜欢某物(Do you like…?)", "表达'我(不)喜欢某物'", "询问对方喜欢什么", "一般现在时 like", "表达歉意交际用语", "want 的用法"],
+            "M3": ["表达'我有某物'", "一般现在时 have/has", "'它是什么形状?'句型", "颜色/季节相关句型", "Be 型祈使句"],
+            "M4": ["描述身体部位(I have a/an+形容词+部位；I have+形容词+复数部位；My…is/are)", "Children's Day 节日表达", "Story time 一般现在时叙述"]
+          }
+        },
+        "四年级下": {
+          "child": "kenton",
+          "主编": "蒋超健、王志勤",
+          "index": { "核心词汇": 99, "重点句型语法": 36 },
+          "modules": [
+            { "module": "Module 1 Using my five senses", "units": ["U1 What can you smell and taste?", "U2 How does it feel?", "U3 Look at the shadow!"] },
+            { "module": "Module 2 My favourite things", "units": ["U1 Sports", "U2 Cute animals", "U3 Home life"] },
+            { "module": "Module 3 Things around us", "units": ["U1 Sounds", "U2 Time", "U3 Days of the week"] },
+            { "module": "Module 4 More things to learn", "units": ["U1 A Music class", "U2 Festivals in China", "U3 Story time"] }
+          ],
+          "句型语法要点": {
+            "M1": ["对某物进行确认的句型及回答", "表达'我认为…'", "询问单个物品名称及回答", "right 的用法", "询问某物尝起来怎么样及回答", "What 引导的感叹句"],
+            "M2": ["询问/表达喜欢某物", "询问对方喜欢什么", "Do 型祈使句", "询问动物吃什么", "询问对方在做什么(现在进行时)", "一般现在时"],
+            "M3": ["询问某人是否正在做某事(现在进行时)", "表达某地有某物", "Be 型祈使句", "几点了/时间表达法", "频度副词的用法", "对方周末通常做什么"],
+            "M4": ["询问会演奏什么乐器(can)", "确认/询问物品归属", "询问物品位置", "询问对方喜欢什么节日及回答", "询问节日通常做什么"]
+          }
+        }
+      }
+    },
+    "语文": {
+      "status": "待补录",
+      "note": "同系列语文（沪教版）目录拿到后补录到此处。已有弟弟三下/哥哥四下语文复习数据在 chinese_review_*_sessions.json，可与本教材单元对齐。"
+    },
+    "数学": {
+      "status": "待补录",
+      "note": "同系列数学（沪教版）目录拿到后补录到此处。"
+    }
+  },
+  "alignment_rules": [
+    "英语出题/复习/做软件：按 Module→Unit 组织，词表取自『单元词汇』，讲解对齐『解析教材』，复习题对齐『单元复习』考点，阅读对齐『拓展阅读』。",
+    "题型对齐：参照各册 INDEX『重点句型/语法』清单（3下41条、4下36条）逐条覆盖。",
+    "一课一练教法：按『解析教材划重点 → 单元复习抓考点』的节奏，一个 Unit 一练。",
+    "默写/单词软件词表：优先取自对应年级『单元词汇』与 INDEX 核心词汇。",
+    "随孩子升学，年级/教材升级由家长告知后在 child_grade_map 与 subjects 下更新。"
+  ]
+}

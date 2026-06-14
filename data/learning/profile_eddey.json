@@ -1,7 +1,8 @@
 {
   "child": "eddey",
   "name": "Eddey",
-  "updated": "2026-06-13",
+  "updated": "2026-06-14",
+  "教材": { "英语": "上海《尖子生笔记·同步教材》英语 三年级下（沪教版/钟书金牌）", "参考": "data/learning/textbook_reference.json" },
   "summary": "2026-06-13 建立语文期末复习主线（三下，以期末复习索引为总骨架）；同日归档英语期末冲刺卷（四）错题，建立英语学情画像。各知识点掌握度待孩子练习/重做后回填。",
   "语文复习主线": {
     "index": "data/learning/chinese_review_eddey_grade3b.json",
