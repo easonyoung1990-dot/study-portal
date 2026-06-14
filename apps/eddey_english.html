@@ -262,7 +262,26 @@ const CHILD='弟弟';
 const AKEY='mx_archive_'+CHILD+'_eng3b';
 function loadArchive(){try{return JSON.parse(localStorage.getItem(AKEY))||{child:CHILD,events:[]};}catch(e){return{child:CHILD,events:[]};}}
 function saveArchive(a){try{localStorage.setItem(AKEY,JSON.stringify(a));}catch(e){}}
-function logEvent(ev){const a=loadArchive();a.events.push(ev);saveArchive(a);}
+function logEvent(ev){const a=loadArchive();a.events.push(ev);saveArchive(a);
+  /* ===== 云端上传(错题→家长云端):fire-and-forget,端点缺失/断网完全不影响使用 ===== */
+  try{
+    var __ep=localStorage.getItem('eb_endpoint');
+    if(__ep){
+      var __kid=(CHILD==='哥哥')?'kenton':'eddey';
+      var __subjMap={cn:'语文',en:'英语'};
+      var __subject=__subjMap[ev.subject]||ev.subject||'英语';
+      var __topic=ev.lesson||'';
+      var __payload=(ev.items||[]).map(function(it){
+        return {kid:__kid,subject:__subject,topic:__topic,
+          item:(it&&(it.word||it.t))||'',ok:!!(it&&it.ok),hint:(it&&it.hint)||''};
+      });
+      if(__payload.length){
+        fetch(__ep,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(__payload)})
+          .then(function(){}).catch(function(){});
+      }
+    }
+  }catch(e){}
+}
 function fmtDate(ts){const d=new Date(ts);const p=n=>(n<10?'0':'')+n;return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;}
 /* 聚合:统计每个词的累计对错次数,找反复错 */
 function aggregateWords(events){

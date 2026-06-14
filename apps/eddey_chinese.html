@@ -302,8 +302,35 @@ function tone(freq,dur,delay,type){
 }
 function playRight(){initAudio();tone(880,0.13,0,"triangle");tone(1320,0.18,0.1,"triangle");}
 function playWrong(){initAudio();tone(196,0.3,0,"sawtooth");}
-function speak(text){try{if(!soundOn||!window.speechSynthesis)return;window.speechSynthesis.cancel();try{window.speechSynthesis.resume();}catch(e){}
+/* ===== 神经真人配音层(edge-tts 预合成),失败回退浏览器TTS ===== */
+/* 预合成目录:每条音频按 fnv(lang+"|"+text) 命名,与 gen_audio.py 一致 */
+var AUDIO_DIR="audio/eddey_chinese/";
+var exAudio=null;   // 单个复用音频元素:首次手势解锁,之后每段复用(移动端更兼容)
+var audioTok=0;     // 打断/超时保护:自增令牌让过期回调失效
+/* 必须与 gen_audio.py 的 fnv() 一致:对 (lang+"|"+text) 的 UTF-8 字节做 FNV-1a */
+function audioHash(s){var b=new TextEncoder().encode(s);var x=0x811c9dc5>>>0;for(var i=0;i<b.length;i++){x^=b[i];x=Math.imul(x,0x01000193)>>>0;}return ('0000000'+x.toString(16)).slice(-8);}
+function getExAudio(){if(!exAudio){exAudio=new Audio();exAudio.setAttribute('playsinline','');exAudio.preload='auto';try{document.body.appendChild(exAudio);}catch(e){}}return exAudio;}
+function haltAudio(){audioTok++;if(exAudio){try{exAudio.pause();}catch(e){}}}
+
+/* 浏览器TTS:原有逻辑,作为回退 */
+function ttsSpeak(text){try{if(!window.speechSynthesis)return;window.speechSynthesis.cancel();try{window.speechSynthesis.resume();}catch(e){}
   var u=new SpeechSynthesisUtterance(text);u.lang="zh-CN";u.rate=0.8;window.speechSynthesis.speak(u);}catch(e){}}
+/* 朗读一次:优先播预合成神经语音,失败回退TTS(本App只读中文) */
+function speak(text){
+  if(!soundOn||!text)return;
+  try{if(window.speechSynthesis)window.speechSynthesis.cancel();}catch(e){}
+  audioTok++;var myTok=audioTok;
+  var a=getExAudio();var done=false;
+  function stale(){return done||myTok!==audioTok;}
+  function fb(){if(stale())return;done=true;ttsSpeak(text);}
+  a.onended=function(){if(stale())return;done=true;};
+  a.onerror=fb;
+  try{a.pause();}catch(e){}
+  a.src=AUDIO_DIR+audioHash("zh|"+text)+".mp3";
+  try{a.currentTime=0;}catch(e){}
+  var p=a.play();
+  if(p&&typeof p.catch==='function')p.catch(fb);
+}
 
 var timerInt=null;
 function startTimer(){stopTimer();timerInt=setInterval(function(){
@@ -315,7 +342,7 @@ function pad(n){return n<10?"0"+n:""+n;}
 function fmt(ts){var d=new Date(ts);return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())+" "+pad(d.getHours())+":"+pad(d.getMinutes());}
 function stamp(){var d=new Date();return ""+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+"_"+pad(d.getHours())+pad(d.getMinutes());}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
-function show(id){["map","intro","quiz","report","parent"].forEach(function(x){document.getElementById(x).classList.add("hide");});document.getElementById(id).classList.remove("hide");window.scrollTo(0,0);}
+function show(id){haltAudio();try{if(window.speechSynthesis)window.speechSynthesis.cancel();}catch(e){}["map","intro","quiz","report","parent"].forEach(function(x){document.getElementById(x).classList.add("hide");});document.getElementById(id).classList.remove("hide");window.scrollTo(0,0);}
 
 /* ===================== 闯关地图 ===================== */
 function lessonDone(name){var s=loadStore();for(var i=s.events.length-1;i>=0;i--){if(s.events[i].lesson===name)return s.events[i];}return null;}
@@ -476,7 +503,7 @@ function renderSpeak(q,area){
   mic.onclick=function(){
     if(done)return;
     if(recognizing&&recog){try{recog.stop();}catch(e){}return;}
-    try{window.speechSynthesis&&window.speechSynthesis.cancel();}catch(e){}
+    haltAudio();try{window.speechSynthesis&&window.speechSynthesis.cancel();}catch(e){}
     var SRC=window.SpeechRecognition||window.webkitSpeechRecognition;
     recog=new SRC();recog.lang="zh-CN";recog.interimResults=false;recog.maxAlternatives=5;
     var hit=false,best="";
@@ -502,6 +529,21 @@ function finish(){
   stopTimer();
   var dur=Math.round((Date.now()-cur.t0)/1000),total=cur.qs.length;
   saveEvent({ts:Date.now(),type:"review",subject:"cn3b",lesson:cur.name,total:total,wrong:cur.wrong,durationSec:dur,items:cur.items});
+  /* === 云端上传(fire-and-forget,断网/无端点完全不影响使用) === */
+  try{
+    var EB_ENDPOINT=localStorage.getItem("eb_endpoint");
+    if(EB_ENDPOINT){
+      var EB_KID="eddey"; /* 本App为「弟弟」→ eddey */
+      var EB_SUBJECT="语文"; /* 全语文App,内部 cn → 语文 */
+      var EB_TOPIC=cur.name||"";
+      var EB_PAYLOAD=(cur.items||[]).map(function(it){
+        return {kid:EB_KID,subject:EB_SUBJECT,topic:EB_TOPIC,item:(it.word||it.t||""),ok:!!it.ok,hint:it.hint||""};
+      });
+      if(EB_PAYLOAD.length){
+        fetch(EB_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(EB_PAYLOAD)}).then(function(){},function(){}).catch(function(){});
+      }
+    }
+  }catch(e){}
   var pct=total?Math.round(cur.right/total*100):0;
   document.getElementById("rScore").textContent=pct+"%";
   document.getElementById("rSub").textContent="「"+cur.name+"」答对 "+cur.right+" / "+total+" 题 · 用时 "+dur+" 秒 · 平均每题 "+(total?Math.round(dur/total*10)/10:0)+" 秒"+(pct>=90?" 🌟太棒了！":pct>=70?" 👍不错！":" 加油，多练几遍！");
@@ -573,7 +615,7 @@ function downloadText(txt){try{var blob=new Blob([txt],{type:"text/plain;charset
   setTimeout(function(){a.remove();URL.revokeObjectURL(url);},500);return true;}catch(e){return false;}}
 document.getElementById("menuExport").onclick=function(){copyToClipboard(buildExport(loadStore()),"menuExportBox",this);};
 document.getElementById("menuDownload").onclick=function(){this.textContent=downloadText(buildExport(loadStore()))?"✅ 已存成文件":"用上面的复制按钮试试";};
-document.getElementById("soundBtn").onclick=function(){soundOn=!soundOn;this.textContent=soundOn?"🔔":"🔕";if(soundOn)initAudio();else{try{window.speechSynthesis&&window.speechSynthesis.cancel();try{window.speechSynthesis.resume();}catch(e){}}catch(e){}}};
+document.getElementById("soundBtn").onclick=function(){soundOn=!soundOn;this.textContent=soundOn?"🔔":"🔕";if(soundOn)initAudio();else{haltAudio();try{window.speechSynthesis&&window.speechSynthesis.cancel();try{window.speechSynthesis.resume();}catch(e){}}catch(e){}}};
 
 renderMap();
 </script>

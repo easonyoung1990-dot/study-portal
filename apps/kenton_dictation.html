@@ -235,7 +235,7 @@ if('speechSynthesis'in window){loadVoices();speechSynthesis.onvoiceschanged=load
 let warmed=false;function warm(){if(!('speechSynthesis'in window))return;try{speechSynthesis.resume();}catch(e){}if(warmed)return;loadVoices();try{var wu=new SpeechSynthesisUtterance('ok');wu.volume=0.02;speechSynthesis.speak(wu);}catch(e){}warmed=true;}
 document.body.addEventListener('touchstart',warm,{once:true});
 document.body.addEventListener('click',warm,{once:true});
-document.addEventListener('visibilitychange',()=>{if(document.hidden){try{speechSynthesis.cancel();}catch(e){}stopTimer();}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){haltAudio();try{speechSynthesis.cancel();}catch(e){}stopTimer();}});
 setInterval(()=>{if('speechSynthesis'in window&&speechSynthesis.speaking){try{speechSynthesis.pause();speechSynthesis.resume();}catch(e){}}},9000);
 function mkUtter(t,lang){
   const u=new SpeechSynthesisUtterance(t);
@@ -243,13 +243,39 @@ function mkUtter(t,lang){
   else{const v=voices.find(v=>/zh|cmn|Chinese/i.test(v.lang));if(v)u.voice=v;u.lang='zh-CN';u.rate=0.95;}
   u.pitch=1.0;return u;
 }
-function speakOnce(t,lang){try{speechSynthesis.cancel();speechSynthesis.resume();}catch(e){}try{speechSynthesis.speak(mkUtter(t,lang));}catch(e){}}
+/* ===== 神经真人配音层(edge-tts 预合成),失败回退浏览器TTS ===== */
+/* 预合成目录:每条音频按 fnv(lang+"|"+text) 命名,与 gen_audio.py 一致 */
+const AUDIO_DIR="audio/kenton_dictation/";
+let exAudio=null;   // 单个复用音频元素:首次手势(warm)解锁,之后每段复用(移动端更兼容)
+let audioTok=0;     // 打断/超时保护:自增令牌让过期回调失效
+/* 必须与 gen_audio.py 的 fnv() 一致:对 (lang+"|"+text) 的 UTF-8 字节做 FNV-1a */
+function audioHash(s){const b=new TextEncoder().encode(s);let x=0x811c9dc5>>>0;for(let i=0;i<b.length;i++){x^=b[i];x=Math.imul(x,0x01000193)>>>0;}return ('0000000'+x.toString(16)).slice(-8);}
+function getExAudio(){if(!exAudio){exAudio=new Audio();exAudio.setAttribute('playsinline','');exAudio.preload='auto';try{document.body.appendChild(exAudio);}catch(e){}}return exAudio;}
+function haltAudio(){audioTok++;if(exAudio){try{exAudio.pause();}catch(e){}}}
+
+/* 浏览器TTS:原有逻辑,作为回退 */
+function ttsSpeakOnce(t,lang){try{speechSynthesis.cancel();speechSynthesis.resume();}catch(e){}try{speechSynthesis.speak(mkUtter(t,lang));}catch(e){}}
+/* 朗读一次:优先播预合成神经语音,失败回退TTS */
+function speakOnce(t,lang){
+  try{speechSynthesis.cancel();}catch(e){}
+  audioTok++;const myTok=audioTok;
+  const a=getExAudio();let done=false;
+  const stale=()=>done||myTok!==audioTok;
+  const fb=()=>{if(stale())return;done=true;ttsSpeakOnce(t,lang);};
+  a.onended=()=>{if(stale())return;done=true;};
+  a.onerror=fb;
+  try{a.pause();}catch(e){}
+  a.src=AUDIO_DIR+audioHash(lang+"|"+t)+".mp3";
+  try{a.currentTime=0;}catch(e){}
+  const p=a.play();
+  if(p&&typeof p.catch==='function')p.catch(fb);
+}
 function testVoice(){if(!('speechSynthesis'in window)){var k=document.querySelector('.kou');if(k)k.textContent='这个浏览器不支持朗读，请用 Safari 或 Chrome 打开';return;}warm();speakOnce('你好哥哥,我是默写助手。','zh');setTimeout(()=>speakOnce('Hello, I can speak English too.','en'),2600);}
 
 /* 读 N 遍,读完回调(带超时保护) */
 let speakSession=0;
-function speakTimes(t,lang,times,onDone){
-  const sid=++speakSession;
+/* 浏览器TTS版:原有逻辑,作为回退。复用 sid 取消语义 */
+function ttsSpeakTimes(t,lang,times,sid,onDone){
   try{speechSynthesis.cancel();}catch(e){}
   let count=0,fired=false;
   function fire(){if(fired||sid!==speakSession)return;fired=true;onDone&&onDone();}
@@ -266,6 +292,37 @@ function speakTimes(t,lang,times,onDone){
   const est=(t.length*(lang==='en'?90:380)+1600)*times+2500;
   setTimeout(fire,Math.min(est,40000));
 }
+/* 读 N 遍:优先播预合成神经语音(每遍间隔~900ms),失败回退TTS。
+   保留 speakSession/sid 取消语义 + audioTok 取代保护 */
+function speakTimes(t,lang,times,onDone){
+  const sid=++speakSession;
+  const myTok=++audioTok;
+  try{speechSynthesis.cancel();}catch(e){}
+  let count=0,fired=false;
+  const dead=()=>sid!==speakSession||myTok!==audioTok;
+  function fire(){if(fired||dead())return;fired=true;onDone&&onDone();}
+  const a=getExAudio();
+  const src=AUDIO_DIR+audioHash(lang+"|"+t)+".mp3";
+  let fellBack=false;
+  function toTTS(){ if(fellBack||dead())return; fellBack=true;
+    try{a.pause();}catch(e){} a.onended=null;a.onerror=null;
+    ttsSpeakTimes(t,lang,times-count,sid,onDone); }
+  function playOne(){
+    if(dead())return;
+    a.onended=()=>{ if(dead())return; count++;
+      if(count<times){ setTimeout(playOne,900); } else { setTimeout(fire,400); } };
+    a.onerror=toTTS;
+    try{a.pause();}catch(e){}
+    a.src=src;
+    try{a.currentTime=0;}catch(e){}
+    const p=a.play();
+    if(p&&typeof p.catch==='function')p.catch(toTTS);
+  }
+  playOne();
+  /* 超时保护: 估算每遍时长 */
+  const est=(t.length*(lang==='en'?90:380)+1600)*times+2500;
+  setTimeout(fire,Math.min(est,40000));
+}
 
 /* ===================== 状态与导航 ===================== */
 const S={mode:null,key:null,items:[],idx:0,miss:new Set(),lang:'zh',paused:false,
@@ -274,7 +331,7 @@ let timerH=null,timerLeft=0;
 function stopTimer(){if(timerH){clearInterval(timerH);timerH=null;}}
 function show(id){['home','cnlist','enlist','dict','ans','quiz','archive'].forEach(x=>document.getElementById(x).classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');window.scrollTo(0,0);}
-function goHome(){speakSession++;try{speechSynthesis.cancel();}catch(e){}stopTimer();refreshHomeStat();show('home');}
+function goHome(){speakSession++;haltAudio();try{speechSynthesis.cancel();}catch(e){}stopTimer();refreshHomeStat();show('home');}
 
 /* ===================== 归档引擎 ===================== */
 /* localStorage key: mx_archive_哥哥 。结构:
@@ -284,7 +341,26 @@ const CHILD='哥哥';
 const AKEY='mx_archive_'+CHILD;
 function loadArchive(){try{return JSON.parse(localStorage.getItem(AKEY))||{child:CHILD,events:[]};}catch(e){return{child:CHILD,events:[]};}}
 function saveArchive(a){try{localStorage.setItem(AKEY,JSON.stringify(a));}catch(e){}}
-function logEvent(ev){const a=loadArchive();a.events.push(ev);saveArchive(a);}
+function logEvent(ev){const a=loadArchive();a.events.push(ev);saveArchive(a);cloudUpload(ev);}
+/* ===== 云端上传(只加,不改原逻辑;端点缺失/断网/出错都静默,绝不影响使用) ===== */
+function cloudUpload(ev){
+  try{
+    var endpoint=null;
+    try{endpoint=localStorage.getItem('eb_endpoint');}catch(e){}
+    if(!endpoint)return; /* 没配端点,直接跳过 */
+    var kid=(CHILD==='哥哥')?'kenton':(CHILD==='弟弟')?'eddey':'';
+    var subject=(ev.subject==='cn')?'语文':(ev.subject==='en')?'英语':(ev.subject||'');
+    var topic=ev.lesson||'';
+    var items=(ev.items||[]).map(function(it){
+      return {kid:kid,subject:subject,topic:topic,
+        item:(it.word!=null?it.word:(it.t!=null?it.t:'')),
+        ok:!!it.ok,hint:it.hint||''};
+    });
+    if(!items.length)return;
+    fetch(endpoint,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(items)})
+      .then(function(){}).catch(function(){});
+  }catch(e){}
+}
 function fmtDate(ts){const d=new Date(ts);const p=n=>(n<10?'0':'')+n;return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;}
 /* 聚合:统计每个词的累计对错次数,找反复错 */
 function aggregateWords(events){
@@ -411,10 +487,10 @@ function togglePause(){
   S.paused=!S.paused;
   const pb=document.getElementById('pbtn');
   if(pb)pb.textContent=S.paused?'▶ 继续':'⏸ 暂停';
-  if(S.paused){try{speechSynthesis.cancel();}catch(e){}}
+  if(S.paused){haltAudio();try{speechSynthesis.cancel();}catch(e){}}
 }
 function nextWord(){
-  speakSession++;try{speechSynthesis.cancel();}catch(e){}stopTimer();
+  speakSession++;haltAudio();try{speechSynthesis.cancel();}catch(e){}stopTimer();
   // 记录刚写完这个词的用时
   const it=S.items[S.idx];
   S.perItem.push({word:it.t,hint:it.hint||'',ms:Date.now()-(S.itemStart||Date.now())});
@@ -422,7 +498,7 @@ function nextWord(){
   else{showAnswers();}
 }
 function confirmQuit(){
-  speakSession++;try{speechSynthesis.cancel();}catch(e){}stopTimer();
+  speakSession++;haltAudio();try{speechSynthesis.cancel();}catch(e){}stopTimer();
   if(S.mode==='cn')showCnList();else showEnList();
 }
 
@@ -531,7 +607,7 @@ function finishQuiz(){
   show('quiz');
   speakOnce(wrong===0?'全对!这些词你真的懂了。':'做完了,错的词已经记下来。','zh');
 }
-function quitQuiz(){speakSession++;try{speechSynthesis.cancel();}catch(e){}if(Q.mode==='enq')showEnList();else showCnList();}
+function quitQuiz(){speakSession++;haltAudio();try{speechSynthesis.cancel();}catch(e){}if(Q.mode==='enq')showEnList();else showCnList();}
 function ding(){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=880;g.gain.setValueAtTime(0.15,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3);o.start();o.stop(ctx.currentTime+0.3);}catch(e){}}
 
 /* ===================== 归档视图 ===================== */

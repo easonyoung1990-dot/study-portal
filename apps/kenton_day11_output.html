@@ -105,10 +105,35 @@ body{font-family:'LXGW WenKai Screen','Baloo 2','PingFang SC','Microsoft YaHei',
 let voices=[];function loadVoices(){voices=speechSynthesis.getVoices();}
 if('speechSynthesis'in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices;}
 let warmed=false;function warm(){if(!('speechSynthesis'in window))return;try{speechSynthesis.resume();}catch(e){}if(warmed)return;loadVoices();try{var wu=new SpeechSynthesisUtterance('ok');wu.volume=0.02;speechSynthesis.speak(wu);}catch(e){}warmed=true;}
-function speak(t,rate){if(!('speechSynthesis'in window))return;try{speechSynthesis.cancel();speechSynthesis.resume();}catch(e){}const u=new SpeechSynthesisUtterance(t);const zh=voices.find(v=>/zh|cmn|Chinese/i.test(v.lang));if(zh)u.voice=zh;u.lang='zh-CN';u.rate=rate||0.85;u.pitch=1.04;speechSynthesis.speak(u);}
+/* ===== 神经真人配音层(edge-tts 预合成),失败回退浏览器TTS ===== */
+/* 预合成目录:每条音频按 fnv(lang+"|"+text) 命名,与 gen_audio.py / eddey_english 一致。本App只发中文。 */
+const AUDIO_DIR="audio/kenton_day11_output/";
+let exAudio=null;   // 单个复用音频元素:首次手势(warm)解锁,之后每段复用(移动端更兼容)
+let audioTok=0;     // 打断/超时保护:自增令牌让过期回调失效
+/* 必须与 gen_audio.py 的 fnv() 一致:对 (lang+"|"+text) 的 UTF-8 字节做 FNV-1a */
+function audioHash(s){const b=new TextEncoder().encode(s);let x=0x811c9dc5>>>0;for(let i=0;i<b.length;i++){x^=b[i];x=Math.imul(x,0x01000193)>>>0;}return ('0000000'+x.toString(16)).slice(-8);}
+function getExAudio(){if(!exAudio){exAudio=new Audio();exAudio.setAttribute('playsinline','');exAudio.preload='auto';try{document.body.appendChild(exAudio);}catch(e){}}return exAudio;}
+function haltAudio(){audioTok++;if(exAudio){try{exAudio.pause();}catch(e){}}}
+/* 浏览器TTS:原有逻辑,作为回退(本App只有中文) */
+function ttsSpeak(t,rate){if(!('speechSynthesis'in window))return;try{speechSynthesis.cancel();speechSynthesis.resume();}catch(e){}const u=new SpeechSynthesisUtterance(t);const zh=voices.find(v=>/zh|cmn|Chinese/i.test(v.lang));if(zh)u.voice=zh;u.lang='zh-CN';u.rate=rate||0.85;u.pitch=1.04;speechSynthesis.speak(u);}
+/* 朗读一句:优先播预合成神经语音,失败回退TTS。保留原 speak(t,rate) 签名 */
+function speak(t,rate){
+  try{speechSynthesis.cancel();}catch(e){}
+  audioTok++;const myTok=audioTok;
+  const a=getExAudio();let done=false;
+  const stale=()=>done||myTok!==audioTok;
+  const fb=()=>{if(stale())return;done=true;ttsSpeak(t,rate);};
+  a.onended=()=>{if(stale())return;done=true;};
+  a.onerror=fb;
+  try{a.pause();}catch(e){}
+  a.src=AUDIO_DIR+audioHash('zh|'+t)+'.mp3';
+  try{a.currentTime=0;}catch(e){}
+  const p=a.play();
+  if(p&&typeof p.catch==='function')p.catch(fb);
+}
 function testVoice(){warm();speak('你好哥哥，第7天三科一起加油！');}
 document.body.addEventListener('touchstart',warm,{once:true});document.body.addEventListener('click',warm,{once:true});
-document.addEventListener('visibilitychange',()=>{if(document.hidden){try{speechSynthesis.cancel();}catch(e){}}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){haltAudio();try{speechSynthesis.cancel();}catch(e){}}});
 setInterval(()=>{if('speechSynthesis'in window&&speechSynthesis.speaking){try{speechSynthesis.pause();speechSynthesis.resume();}catch(e){}}},9000);
 /* 路由 */
 const MENU=[
@@ -128,7 +153,7 @@ function openMod(id){curMod=id;document.getElementById('home').classList.add('hi
   const s=document.getElementById('stage');s.classList.remove('hidden');s.innerHTML='';MOD[id].render(s);
   document.getElementById('tnote').textContent='跟着小狮子一步步来 👀';document.getElementById('tbtn').textContent='返回菜单';window.scrollTo(0,0);}
 function goHome(){curMod=null;document.getElementById('stage').classList.add('hidden');document.getElementById('home').classList.remove('hidden');
-  document.getElementById('tnote').textContent='👆 选一关开始';document.getElementById('tbtn').textContent='开始';try{speechSynthesis.cancel();}catch(e){}window.scrollTo(0,0);}
+  document.getElementById('tnote').textContent='👆 选一关开始';document.getElementById('tbtn').textContent='开始';haltAudio();try{speechSynthesis.cancel();}catch(e){}window.scrollTo(0,0);}
 function topAction(){if(curMod)goHome();}
 function lion(t){return `<div class="lion"><div class="face">🦁</div><div class="bubble">${t}</div></div>`;}
 function burst(){const cv=document.getElementById('cv');cv.classList.remove('hidden');const ctx=cv.getContext('2d');cv.width=innerWidth;cv.height=innerHeight;
@@ -137,9 +162,42 @@ function burst(){const cv=document.getElementById('cv');cv.classList.remove('hid
   let t=0;(function an(){ctx.clearRect(0,0,cv.width,cv.height);P.forEach(p=>{p.vy+=.32;p.x+=p.vx;p.y+=p.vy;p.r+=.2;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s);ctx.restore();});t++;if(t<90)requestAnimationFrame(an);else cv.classList.add('hidden');})();}
 function ding(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=880;g.gain.setValueAtTime(.0001,a.currentTime);g.gain.exponentialRampToValueAtTime(.25,a.currentTime+.02);g.gain.exponentialRampToValueAtTime(.0001,a.currentTime+.3);o.start();o.stop(a.currentTime+.32);}catch(e){}}
 const MOD={};
+/* ===== 错题云端上传（fire-and-forget，端点缺失/失败完全不影响使用） ===== */
+const EB_KID='kenton';                                  // 本App=哥哥→kenton
+const EB_SUBMAP={math:'数学',cn:'语文',en:'英语'};        // 内部学科→中文学科名
+function ebSubject(sub){ return EB_SUBMAP[sub]||sub||''; }
+/* 尝试从当前模块抓本题文字(被默写/做错的题)，抓不到就空串 */
+function ebCurItem(sub){
+  try{
+    const id=curMod, Q=Qz[id];
+    if(Q&&typeof Q.q==='number'&&Q.bank&&Q.bank[Q.q]){
+      const it=Q.bank[Q.q];
+      return it.t||it.ask||it.word||(it.words?it.words.join(' '):'')||'';
+    }
+  }catch(e){}
+  return '';
+}
+function ebCurTopic(sub){
+  try{ const x=(MENU||[]).find(m=>m.id===curMod); return x?x.nm:''; }catch(e){ return ''; }
+}
+/* 上传一批 item（数组）到家长云端：text/plain 避免 CORS 预检，.then/.catch 全吞 */
+function ebUpload(items){
+  try{
+    const ep=localStorage.getItem('eb_endpoint');
+    if(!ep||!items||!items.length) return;               // 没端点直接跳过
+    fetch(ep,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(items)})
+      .then(function(){}).catch(function(){});           // fire-and-forget
+  }catch(e){}
+}
 /* ===== 错因统计（全局） ===== */
 const DIAG={math:{},cn:{},en:{}};
-function tally(sub,cause){ DIAG[sub][cause]=(DIAG[sub][cause]||0)+1; }
+function tally(sub,cause){ DIAG[sub][cause]=(DIAG[sub][cause]||0)+1;
+  /* —— 本地记录完成后，追加一次云端上传（错题：ok=false）—— */
+  try{
+    ebUpload([{ kid:EB_KID, subject:ebSubject(sub), topic:ebCurTopic(sub),
+      item:ebCurItem(sub), ok:false, hint:(cause||'')+'' }]);
+  }catch(e){}
+}
 function diagReport(sub){
   const m=DIAG[sub]; const ks=Object.keys(m);
   if(!ks.length) return '没有错因记录——全对，太棒了！';
