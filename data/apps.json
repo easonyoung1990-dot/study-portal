@@ -42,27 +42,6 @@
     "added": "2026-06-13"
   },
   {
-    "child": "eddey",
-    "subject": "英语",
-    "title": "英语 Module 4 闯关王 · 复习（5关）",
-    "file": "apps/eddey_english_review.html",
-    "added": "2026-06-14"
-  },
-  {
-    "child": "eddey",
-    "subject": "英语",
-    "title": "英语单元默写 · 三下（教材12单元·全自动报默）",
-    "file": "apps/eddey_english_textbook.html",
-    "added": "2026-06-14"
-  },
-  {
-    "child": "eddey",
-    "subject": "英语",
-    "title": "英语错词重做（错词本·连续答对2次才掌握）",
-    "file": "apps/eddey_english_redo.html",
-    "added": "2026-06-14"
-  },
-  {
     "child": "kenton",
     "subject": "综合",
     "title": "默写助手 · 语文+英语（全自动报默）",
@@ -81,6 +60,13 @@
     "subject": "英语",
     "title": "英语单元默写 · 四下（教材12单元·全自动报默）",
     "file": "apps/kenton_english_textbook.html",
+    "added": "2026-06-14"
+  },
+  {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "英语练习 · 三下（错词重做+单元默写+句子）",
+    "file": "apps/eddey_english.html",
     "added": "2026-06-14"
   }
 ]
