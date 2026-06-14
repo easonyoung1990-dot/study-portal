@@ -51,6 +51,11 @@ body{font-family:'LXGW WenKai Screen','PingFang SC','Microsoft YaHei',system-ui,
 .opt.dim{opacity:.5;}
 .trybox{width:100%;font-family:inherit;font-size:18px;border:2px dashed var(--line);border-radius:12px;padding:12px;margin-bottom:12px;min-height:54px;}
 input.trybox{min-height:0;}
+.mic{width:100%;font-family:inherit;font-size:18px;font-weight:800;background:#fff;border:2px solid var(--eddey);color:var(--eddeyd);border-radius:14px;padding:15px;cursor:pointer;box-shadow:0 5px 0 #f3e2d6;margin-bottom:10px;}
+.mic:active{transform:translateY(2px);box-shadow:0 3px 0 #f3e2d6;}
+.mic.listening{background:var(--redbg);border-color:var(--red);color:var(--red);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.55;}}
+.micnote{font-size:12px;color:var(--muted);margin:-4px 0 10px;}
 .answer{background:var(--greenbg);border-radius:12px;padding:14px 16px;font-size:18px;line-height:1.7;margin:6px 0 12px;}
 .answer .lab{font-size:13px;color:var(--green);font-weight:800;display:block;margin-bottom:4px;}
 .explain{background:#fff7ef;border-radius:12px;padding:11px 14px;font-size:15px;color:#8a6d4f;line-height:1.6;margin-bottom:12px;}
@@ -92,7 +97,7 @@ textarea.exp{width:100%;height:150px;font-size:12px;border:2px solid var(--line)
   <div id="map">
     <div class="card" style="padding:14px 16px">
       <div style="font-weight:800;font-size:16px">英语 Module 4 复习闯关 🦖</div>
-      <div style="font-size:13px;color:var(--muted);margin-top:4px">6.12 学的三个语法点：身体部位复数、I have… 描述句型、一般现在时(含三单)。一关一关闯，错了会讲为什么，还能听英语发音。</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px">6.12 学的三个语法点：身体部位复数、I have… 描述句型、一般现在时(含三单)。一关一关闯，错了会讲为什么，能听英语发音。<b>填空题不用打字——点 🎤 说出答案就行！</b></div>
     </div>
     <button class="lvl parent" id="parentEntry">
       <span class="ico">👨‍👩‍👦</span><span><div class="t">家长检查页</div><div class="meta">看今日错点、要复习什么</div></span>
@@ -386,24 +391,58 @@ function renderChoice(q,area){
   area.appendChild(o);
 }
 
+var SR_OK = !!(window.SpeechRecognition||window.webkitSpeechRecognition);
+var recog=null, recognizing=false;
 function renderFill(q,area){
+  var accepts=[norm(q.a)].concat((q.accept||[]).map(norm));
   var inp=document.createElement("input");inp.className="trybox";inp.type="text";
   inp.setAttribute("autocomplete","off");inp.setAttribute("autocorrect","off");
   inp.setAttribute("autocapitalize","off");inp.setAttribute("spellcheck","false");
-  inp.placeholder="在这里输入英文答案…";
-  area.appendChild(inp);
+  inp.placeholder="点上面 🎤 说答案，或在这里打字…";
   var sub=document.createElement("button");sub.className="bigbtn primary";sub.textContent="提交答案 ✔";sub.style.marginTop="0";
-  area.appendChild(sub);
+
   function submit(){
     if(inp.getAttribute("readonly"))return;
+    if(recognizing&&recog){try{recog.stop();}catch(e){}}
     var ms=Date.now()-cur.qt0;
-    var ans=norm(inp.value);
-    var accepts=[norm(q.a)].concat((q.accept||[]).map(norm));
-    var ok=(ans!=="" && accepts.indexOf(ans)>=0);
+    var ok=(norm(inp.value)!=="" && accepts.indexOf(norm(inp.value))>=0);
     if(ok)playRight();else playWrong();
-    inp.setAttribute("readonly","readonly");sub.style.display="none";
+    inp.setAttribute("readonly","readonly");sub.style.display="none";if(mic)mic.style.display="none";
     feedback(ok,q);record(q,ok,inp.value,ms);showNext();
   }
+
+  // 🎤 口述识别（避免打字）：说出答案 → 自动填入；听对了自动判分
+  var mic=null;
+  if(SR_OK){
+    mic=document.createElement("button");mic.className="mic";mic.type="button";
+    mic.innerHTML="🎤 点我，说出答案";
+    mic.onclick=function(){
+      if(inp.getAttribute("readonly"))return;
+      if(recognizing&&recog){try{recog.stop();}catch(e){}return;}
+      try{window.speechSynthesis&&window.speechSynthesis.cancel();}catch(e){}
+      var SRC=window.SpeechRecognition||window.webkitSpeechRecognition;
+      recog=new SRC();recog.lang="en-US";recog.interimResults=false;recog.maxAlternatives=5;
+      var matched=false,heard="";
+      recog.onresult=function(ev){
+        var res=ev.results[0];
+        for(var i=0;i<res.length;i++){var t=norm(res[i].transcript);if(i===0)heard=res[i].transcript;
+          if(accepts.indexOf(t)>=0){matched=true;break;}}
+        inp.value=matched?q.a:(heard||"");
+      };
+      recog.onerror=function(){};
+      recog.onend=function(){
+        recognizing=false;mic.classList.remove("listening");mic.innerHTML="🎤 再说一次（或打字）";
+        if(matched){setTimeout(submit,450);}            // 听对了：自动判分
+        else if(inp.value.trim()!==""){inp.focus();}     // 没把准：填进去让孩子确认/重说/改
+      };
+      recognizing=true;mic.classList.add("listening");mic.innerHTML="🔴 在听…（说完会自动停）";
+      try{recog.start();}catch(e){recognizing=false;mic.classList.remove("listening");mic.innerHTML="🎤 点我，说出答案";}
+    };
+    area.appendChild(mic);
+  }
+  area.appendChild(inp);
+  if(SR_OK){var n=document.createElement("div");n.className="micnote";n.textContent="不想打字？点 🎤 说出英文答案就行。说对了会自动判分～";area.appendChild(n);}
+  area.appendChild(sub);
   sub.onclick=submit;
   inp.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();submit();}});
 }
