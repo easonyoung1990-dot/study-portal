@@ -72,15 +72,15 @@
   {
     "child": "kenton",
     "subject": "英语",
-    "title": "英语新闻速递 6.14",
-    "file": "apps/news_20260614.html",
-    "added": "2026-06-14"
+    "title": "小小世界播报 6.15",
+    "file": "apps/news_20260615.html",
+    "added": "2026-06-15"
   },
   {
     "child": "eddey",
     "subject": "英语",
-    "title": "英语新闻速递 6.14",
-    "file": "apps/news_20260614.html",
-    "added": "2026-06-14"
+    "title": "小小世界播报 6.15",
+    "file": "apps/news_20260615.html",
+    "added": "2026-06-15"
   }
 ]
