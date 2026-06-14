@@ -189,9 +189,9 @@ var LEVELS = [
     {kind:"choice",q:"\"脚\"的复数形式是哪个？",a:"feet",opts:["feet","foots","feets"],say:"feet",explain:"foot→feet。",tag:"名词复数"},
     {kind:"fill",q:"填空：My ______ are big.（foot 的正确形式）",a:"feet",say:"My feet are big.",explain:"两只脚用复数 feet，be 动词用 are。",tag:"名词复数"},
     {kind:"fill",q:"填复数：one hand, two ______ .",a:"hands",say:"one hand, two hands",explain:"一般直接加 s：hand→hands。",tag:"名词复数"},
-    {kind:"fill",q:"填复数：one leg, two ______ .",a:"legs",say:"one leg, two legs",tag:"名词复数"},
-    {kind:"fill",q:"填复数：one ear, two ______ .",a:"ears",say:"one ear, two ears",tag:"名词复数"},
-    {kind:"fill",q:"填复数：one knee, two ______ .",a:"knees",say:"one knee, two knees",tag:"名词复数"},
+    {kind:"fill",q:"填复数：one leg, two ______ .",a:"legs",say:"one leg, two legs",explain:"直接加 s：leg→legs。",tag:"名词复数"},
+    {kind:"fill",q:"填复数：one ear, two ______ .",a:"ears",say:"one ear, two ears",explain:"直接加 s：ear→ears。",tag:"名词复数"},
+    {kind:"fill",q:"填复数：one knee, two ______ .",a:"knees",say:"one knee, two knees",explain:"直接加 s：knee→knees。",tag:"名词复数"},
     {kind:"choice",q:"下面哪个是\"特殊变化\"(不是直接加 s)？",a:"foot → feet",opts:["foot → feet","hand → hands","leg → legs"],say:"foot, feet",explain:"foot→feet 和 tooth→teeth 是特殊变化，要单独记。",tag:"名词复数"},
     {kind:"choice",q:"选正确的句子：",a:"My eyes are big.",opts:["My eyes are big.","My eyes is big.","My eye are big."],say:"My eyes are big.",explain:"eyes 是复数，be 动词用 are。",tag:"名词复数"}
    ]},
@@ -203,7 +203,7 @@ var LEVELS = [
     {kind:"choice",q:"I have ______ round face.",a:"a",opts:["a","an"],say:"I have a round face.",explain:"round 以 /r/ 开头，用 a。",tag:"a/an用法"},
     {kind:"choice",q:"选 a 或 an：______ egg",a:"an",opts:["an","a"],say:"an egg",explain:"egg 以元音音 /e/ 开头，用 an。",tag:"a/an用法"},
     {kind:"choice",q:"选 a 或 an：______ orange",a:"an",opts:["an","a"],say:"an orange",explain:"orange 以元音音开头，用 an。",tag:"a/an用法"},
-    {kind:"fill",q:"I have ______ long neck.（a / an）",a:"a",say:"I have a long neck.",tag:"a/an用法"},
+    {kind:"fill",q:"I have ______ long neck.（a / an）",a:"a",say:"I have a long neck.",explain:"long 以辅音 /l/ 开头，用 a。",tag:"a/an用法"},
     {kind:"self",q:"用句型造句（big head）：I have …",a:"I have a big head.",say:"I have a big head.",tag:"描述句型"},
     {kind:"self",q:"用句型造句（small mouth）：I have …",a:"I have a small mouth.",say:"I have a small mouth.",tag:"描述句型"}
    ]},
@@ -212,7 +212,7 @@ var LEVELS = [
    qs:[
     {kind:"fill",q:"I have big ______.（hand 的正确形式）",a:"hands",say:"I have big hands.",explain:"复数部位加 s，且前面不加 a。",tag:"描述句型"},
     {kind:"choice",q:"选正确的句子：",a:"I have big eyes.",opts:["I have big eyes.","I have a big eyes.","I have big eye."],say:"I have big eyes.",explain:"复数前不加 a，部位要加 s。",tag:"描述句型"},
-    {kind:"fill",q:"I have long ______.（leg 的正确形式）",a:"legs",say:"I have long legs.",tag:"描述句型"},
+    {kind:"fill",q:"I have long ______.（leg 的正确形式）",a:"legs",say:"I have long legs.",explain:"复数部位加 s，前面不加 a。",tag:"描述句型"},
     {kind:"choice",q:"My hands ______ big.（is / are）",a:"are",opts:["are","is"],say:"My hands are big.",explain:"hands 复数，用 are。",tag:"描述句型"},
     {kind:"choice",q:"My nose ______ small.（is / are）",a:"is",opts:["is","are"],say:"My nose is small.",explain:"nose 单数，用 is。",tag:"描述句型"},
     {kind:"choice",q:"My feet ______ big.（is / are）",a:"are",opts:["are","is"],say:"My feet are big.",explain:"feet 是复数，用 are。",tag:"描述句型"},
@@ -222,23 +222,23 @@ var LEVELS = [
   {id:"present",name:"一般现在时(I / you)关",ico:"🚶",tag:"一般现在时",
    intro:'<div class="rule">主语是 I / you / we / they 时，动词用<b>原形</b>。<br>陈述：I go to the park. 　疑问：Do you go…? 　提问做什么：What do you do？<br>回答 Do you…? 用 <b>Yes, I do. / No, I don\'t.</b>（不是 I am！）</div>',
    qs:[
-    {kind:"fill",q:"I ______ to the park.（go 的正确形式）",a:"go",say:"I go to the park.",tag:"一般现在时"},
+    {kind:"fill",q:"I ______ to the park.（go 的正确形式）",a:"go",say:"I go to the park.",explain:"主语 I 用动词原形 go。",tag:"一般现在时"},
     {kind:"choice",q:"______ you go to the zoo?",a:"Do",opts:["Do","Does"],say:"Do you go to the zoo?",explain:"主语 you 用 Do。",tag:"一般现在时"},
     {kind:"fill",q:"— Do you go to school? — Yes, I ______.",a:"do",say:"Yes, I do.",explain:"Do you…? 的回答用 do。",tag:"一般现在时"},
-    {kind:"choice",q:"What ______ you do?",a:"do",opts:["do","does"],say:"What do you do?",tag:"一般现在时"},
+    {kind:"choice",q:"What ______ you do?",a:"do",opts:["do","does"],say:"What do you do?",explain:"主语 you 用 do。",tag:"一般现在时"},
     {kind:"choice",q:"— Do you like apples? — ______",a:"Yes, I do.",opts:["Yes, I do.","Yes, I am.","Yes, I like."],say:"Yes, I do.",explain:"Do you…? 用 do/don't 回答，不用 am。",tag:"一般现在时"},
     {kind:"self",q:"连词成句：cinema / I / go / to / the → ______",a:"I go to the cinema.",say:"I go to the cinema.",tag:"一般现在时"},
-    {kind:"fill",q:"I ______ to the zoo on Sunday.（go）",a:"go",say:"I go to the zoo on Sunday.",tag:"一般现在时"}
+    {kind:"fill",q:"I ______ to the zoo on Sunday.（go）",a:"go",say:"I go to the zoo on Sunday.",explain:"主语 I 用原形 go。",tag:"一般现在时"}
    ]},
   {id:"third",name:"三单 (she / he / Alice) 关",ico:"🧍",tag:"三单变化",
    intro:'<div class="rule">主语是 <b>he / she / 名字</b> 时，动词要<b>加 s</b>：go → <b>goes</b>。<br>陈述：Alice goes to the park. 　疑问：Does she go…?（后面动词回原形）<br>提问做什么：What does she do？　回答用 <b>Yes, she does. / No, he doesn\'t.</b></div>',
    qs:[
     {kind:"fill",q:"Alice ______ to the park.（go 的正确形式）",a:"goes",say:"Alice goes to the park.",explain:"三单 go→goes。",tag:"三单变化"},
     {kind:"choice",q:"______ she go to the cinema?",a:"Does",opts:["Does","Do"],say:"Does she go to the cinema?",explain:"主语 she 用 Does，后面动词回原形 go。",tag:"三单变化"},
-    {kind:"fill",q:"— Does he go to school? — Yes, he ______.",a:"does",say:"Yes, he does.",tag:"三单变化"},
-    {kind:"choice",q:"What ______ she do?",a:"does",opts:["does","do"],say:"What does she do?",tag:"三单变化"},
-    {kind:"fill",q:"He ______ to the zoo.（go）",a:"goes",say:"He goes to the zoo.",tag:"三单变化"},
-    {kind:"choice",q:"选正确的句子：",a:"Alice goes to the park.",opts:["Alice goes to the park.","Alice go to the park.","Alice going to the park."],say:"Alice goes to the park.",tag:"三单变化"},
+    {kind:"fill",q:"— Does he go to school? — Yes, he ______.",a:"does",say:"Yes, he does.",explain:"Does…? 的回答用 does。",tag:"三单变化"},
+    {kind:"choice",q:"What ______ she do?",a:"does",opts:["does","do"],say:"What does she do?",explain:"主语 she 是三单，用 does。",tag:"三单变化"},
+    {kind:"fill",q:"He ______ to the zoo.（go）",a:"goes",say:"He goes to the zoo.",explain:"主语 he 是三单，go→goes。",tag:"三单变化"},
+    {kind:"choice",q:"选正确的句子：",a:"Alice goes to the park.",opts:["Alice goes to the park.","Alice go to the park.","Alice going to the park."],say:"Alice goes to the park.",explain:"主语 Alice 是三单，动词加 s：goes。",tag:"三单变化"},
     {kind:"self",q:"改成 Alice 开头：I go to the park. → ______",a:"Alice goes to the park.",say:"Alice goes to the park.",tag:"三单变化"},
     {kind:"self",q:"改成 she 提问：Do you go to school? → ______",a:"Does she go to school?",say:"Does she go to school?",tag:"三单变化"},
     {kind:"self",q:"改成 she 提问：What do you do? → ______",a:"What does she do?",say:"What does she do?",tag:"三单变化"}
