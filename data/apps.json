@@ -49,6 +49,13 @@
     "added": "2026-06-14"
   },
   {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "英语单元默写 · 三下（教材12单元·全自动报默）",
+    "file": "apps/eddey_english_textbook.html",
+    "added": "2026-06-14"
+  },
+  {
     "child": "kenton",
     "subject": "综合",
     "title": "默写助手 · 语文+英语（全自动报默）",
