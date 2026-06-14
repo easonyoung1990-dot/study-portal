@@ -366,6 +366,7 @@ const stories = [
        {en:"How could that happen? Long, long ago, something big may have crashed into the Moon and knocked a piece of it loose.",zh:'这怎么可能呢？在很久很久以前，也许有个大东西撞到了月亮，把它的一小块撞了下来。'},
        {en:"That broken piece then went into its own orbit around the Sun, and after a very long journey, it became this near-Earth asteroid.",zh:'那块碎片后来进入了自己的轨道，绕着太阳转，经过非常漫长的旅程，就变成了这颗"近地小行星"。'},
        {en:"To find out if the guess is right, Tianwen-2 will fly up close and study the rock with its cameras and special science tools.",zh:'为了弄清这个猜想对不对，天问二号会飞到它近旁，用相机和特别的科学仪器去研究这块石头。'},
+       {en:"But here is something important, Kenton and Eddey: some other scientists are not so sure, and they think the rock may instead come from the faraway asteroid belt, not the Moon. That is exactly why Tianwen-2 must go and look up close.",zh:'但有件重要的事要告诉你们，Kenton、Eddey：也有一些科学家并不那么确定，他们觉得这块石头也许来自更远的"小行星带"，而不是月亮。所以天问二号才更要亲自飞过去，看个明白。'},
      ]},
      {scene:'a',segs:[
        {en:"And here is the most amazing plan of all. The spacecraft will try to grab a small sample, a little handful of the rock, and carry it all the way back to Earth.",zh:'而最了不起的计划是这样的：飞船会尝试"抓"一小份样本——一小把岩石，再把它一路带回地球。'},
@@ -534,10 +535,11 @@ function speakOnce(text, lang, onEnd) {
   if (curAudio) { try{curAudio.pause();}catch(e){} curAudio = null; }
   if (typeof AUDIO_DIR === 'string' && AUDIO_DIR) {
     let done = false;
-    const fb = () => { if(done) return; done = true; curAudio = null; ttsSpeak(text, lang, onEnd); };
     const a = new Audio(AUDIO_DIR + audioHash(lang + "|" + text) + ".mp3");
     curAudio = a;
-    a.onended = () => { if(done) return; done = true; if(onEnd) onEnd(); };
+    const stale = () => done || curAudio !== a;
+    const fb = () => { if(stale()) return; done = true; curAudio = null; ttsSpeak(text, lang, onEnd); };
+    a.onended = () => { if(stale()) return; done = true; if(onEnd) onEnd(); };
     a.onerror = fb;
     a.play().catch(fb);
     return;
