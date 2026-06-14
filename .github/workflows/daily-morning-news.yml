@@ -1,0 +1,36 @@
+name: 每日早新闻
+
+# 每天北京时间约 04:30 自动生成并发布当天早新闻，确保 7 点前上线。
+# GitHub 的 cron 用 UTC，且高峰期可能延迟十几分钟，这里留足提前量。
+on:
+  schedule:
+    - cron: "30 20 * * *"   # 20:30 UTC = 次日 04:30 北京时间
+  workflow_dispatch:          # 也支持在 Actions 页面手动点一次
+
+# 让本次运行可以把生成的早新闻 push 回仓库
+permissions:
+  contents: write
+
+# 同一时间只跑一个，避免重复发布
+concurrency:
+  group: daily-morning-news
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 生成并发布今日早新闻
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: "请严格按仓库中 .github/prompts/morning-news.md 的说明，生成并发布今天（北京时间）的早新闻。全程不要询问，直接做完并 git 提交推送。"
+          claude_args: >-
+            --model claude-sonnet-4-6
+            --max-turns 40
+            --allowedTools "WebSearch,Read,Write,Edit,Glob,Grep,Bash(git:*),Bash(python3:*),Bash(date:*)"

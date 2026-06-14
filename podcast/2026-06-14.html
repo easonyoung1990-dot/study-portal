@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff7f0">
+<title>今日早新闻 · 2026-06-14</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+  .news-head { text-align:center; padding:6px 0 2px; }
+  .news-head .d { font-size:14px; color:var(--muted); }
+  .news-head h1 { font-size:24px; margin:6px 0 2px; }
+  .topics { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:10px 0 2px; }
+  .topics .tag { background:var(--candy-purple); color:#3a2360; }
+  .readbar { display:flex; gap:10px; margin:14px 0 4px; }
+  .readbar button {
+    flex:1; border:none; border-radius:16px; padding:14px 10px;
+    font-size:16px; font-weight:800; box-shadow:var(--shadow); cursor:pointer; color:#fff;
+  }
+  .readbar .play { background:var(--kenton); }
+  .readbar .stop { background:var(--candy-pink); color:#7a1742; }
+  .news .h { font-size:19px; font-weight:800; line-height:1.5; }
+  .news p { font-size:16px; line-height:1.8; margin:10px 0 0; }
+  .lesson {
+    margin-top:12px; padding:12px 14px; border-radius:16px; font-size:15px; line-height:1.7;
+    background:#fff7e6; border-left:6px solid var(--candy-yellow);
+  }
+  .lesson.tech { background:#e6f9ff; border-left-color:var(--kenton); }
+  .think {
+    background:linear-gradient(135deg,#fff0e6,#ffe9f3); text-align:center;
+  }
+  .think .q { font-size:17px; font-weight:800; }
+  .sources { font-size:12px; color:var(--muted); line-height:1.9; }
+  .sources a { color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back" href="../index.html">‹</a>
+    <h1>🗞️ 今日早新闻</h1>
+  </div>
+
+  <div class="news-head">
+    <div class="d">2026年6月14日 · 星期日 · 早安 ☀️</div>
+    <div class="topics">
+      <span class="tag">🤖 人工智能</span>
+      <span class="tag">📈 财经</span>
+      <span class="tag">🔬 科技</span>
+    </div>
+  </div>
+
+  <div class="readbar">
+    <button class="play" id="playBtn">🔊 朗读全文</button>
+    <button class="stop" id="stopBtn">🔕 停止</button>
+  </div>
+
+  <div class="news">
+
+    <div class="card read">
+      <div class="h">🤖📈 AI 成了股市最大明星，但也会"坐过山车"</div>
+      <p>2026 年，人工智能（AI）是全球股市最热的话题。很多和 AI 有关的公司股价一路冲高，不过最近也出现了回调——美国纳斯达克科技股一度下跌约 5%，韩国股市更是跌了 8% 以上。</p>
+      <div class="lesson">📚 财经小课堂：再热门、再被看好的东西，价格也会有涨有跌。投资从来不是"只涨不跌"，学会平静面对波动，是很重要的本领。</div>
+    </div>
+
+    <div class="card read">
+      <div class="h">🛠️ "卖铲子的人"先赚钱：惠普企业一天大涨 16%</div>
+      <p>训练 AI 需要强大的"算力"，也就是成千上万台服务器和芯片。专门给 AI 提供这些设备的公司——惠普企业（HPE）——业绩远超预期，一天股价涨了 16%；做芯片设计的 Arm、做企业软件的 ServiceNow、老牌的 IBM 也跟着上涨。</p>
+      <div class="lesson">📚 财经小课堂：淘金热里，最先稳稳赚到钱的，常常是"卖铲子、卖牛仔裤"的人。AI 浪潮里，造芯片、建数据中心的公司，就是现代版"卖铲子的人"。</div>
+    </div>
+
+    <div class="card read">
+      <div class="h">🏦 银行也在用 AI：八成金融公司已经上手</div>
+      <p>英国剑桥大学的一份研究发现，81% 的金融公司已经用上了人工智能，其中四成用得很深入——比如识别诈骗、智能客服、分析海量数据。</p>
+      <div class="lesson tech">🔍 科技小课堂：AI 远不只是会聊天的机器人，它正悄悄帮银行更快、更安全地照看好我们的钱。</div>
+    </div>
+
+    <div class="card read">
+      <div class="h">🇨🇳 国产 AI 芯片要"上市"：燧原科技闯科创板</div>
+      <p>中国自主研发 AI 芯片（GPU）的公司之一——燧原科技——正在申请到科创板"上市（IPO）"。GPU 是训练人工智能最关键的芯片之一，谁掌握了它，谁就掌握了 AI 的"发动机"。</p>
+      <div class="lesson">📚 财经小课堂：什么是"上市 / IPO"？就是一家公司第一次把自己的股份卖给公众，换回一大笔钱去发展；从此普通人也能买它的股票，当上它的小小股东。</div>
+    </div>
+
+    <div class="card read">
+      <div class="h">⚡ 科技冷知识：把氢气存进地下"盐洞"</div>
+      <p>河南平顶山建成并投产了我国首个百万方级"盐穴储氢"示范工程。简单说，就是利用地下巨大的盐矿空洞，把清洁能源——氢气——安全地存起来，需要时再取出来用。</p>
+      <div class="lesson tech">🔍 科技小课堂：未来的清洁能源，不光要"造得出"，还要能"存得下"。地下盐洞，就是一个超大号的天然储气罐。</div>
+    </div>
+
+    <div class="card think read">
+      <div class="q">🤔 今天的小思考</div>
+      <p>这 5 条新闻里，你觉得哪一条最酷？为什么？把你的想法讲给爸爸听听看。</p>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <div class="sources">
+      新闻来源：
+      <a href="https://finance.yahoo.com/markets/article/ai-stock-mania-is-taking-over-the-markets-in-2026-123000964.html">Yahoo Finance</a> ·
+      <a href="https://www.nbcnews.com/business/markets/ai-stocks-jump-broadly-positive-outlook-2026-markets-rcna251902">NBC News</a> ·
+      <a href="https://news.10jqka.com.cn/">同花顺财经</a> ·
+      <a href="http://finance.people.com.cn/">人民网经济科技</a>
+    </div>
+  </div>
+
+  <div class="footer-note">早新闻每天一期，财经与科技热点，陪你一起看世界 🌍</div>
+</div>
+
+<script>
+  // 朗读：把所有 .read 卡片的文字拼起来，用中文 TTS 念出来（零依赖，纯前端）
+  const synth = window.speechSynthesis;
+  function buildText() {
+    const parts = [];
+    document.querySelectorAll(".news .read").forEach(c => {
+      parts.push(c.innerText.replace(/\s+/g, " ").trim());
+    });
+    return "今日早新闻，2026年6月14日。" + parts.join("。 ");
+  }
+  function speak() {
+    if (!synth) { alert("这台设备暂不支持朗读"); return; }
+    synth.cancel();
+    const u = new SpeechSynthesisUtterance(buildText());
+    u.lang = "zh-CN";
+    u.rate = 0.95;
+    synth.speak(u);
+  }
+  document.getElementById("playBtn").addEventListener("click", speak);
+  document.getElementById("stopBtn").addEventListener("click", () => synth && synth.cancel());
+  // 离开页面时停止朗读
+  window.addEventListener("pagehide", () => synth && synth.cancel());
+</script>
+</body>
+</html>
