@@ -516,10 +516,11 @@ loadVoices();
 
 // 预合成神经语音目录（每日任务设为 audio/news_YYYYMMDD/；为空则纯浏览器TTS）
 const AUDIO_DIR = "audio/news_20260615/";
-let curAudio = null;
+let bcAudio = null;       // 单个复用音频元素：首次点击时被手势解锁，之后每段复用（移动端浏览器更兼容）
+let audioToken = 0;       // 打断/超时保护：自增令牌让过期回调失效
 // 必须与 gen_audio.py 的 fnv() 一致：对 (lang+"|"+text) 的 UTF-8 字节做 FNV-1a
 function audioHash(s){const b=new TextEncoder().encode(s);let x=0x811c9dc5>>>0;for(let i=0;i<b.length;i++){x^=b[i];x=Math.imul(x,0x01000193)>>>0;}return ('0000000'+x.toString(16)).slice(-8);}
-function haltSpeech(){var ss=window.speechSynthesis;ss.cancel();if(curAudio){try{curAudio.pause();}catch(e){}curAudio=null;}}
+function haltSpeech(){var ss=window.speechSynthesis;ss.cancel();audioToken++;if(bcAudio){try{bcAudio.pause();}catch(e){}}}
 function ttsSpeak(text, lang, onEnd) {
   const speakText = (lang === 'en') ? numbersToEnglishWords(text) : text;
   const u = new SpeechSynthesisUtterance(speakText);
@@ -532,16 +533,21 @@ function ttsSpeak(text, lang, onEnd) {
   window.speechSynthesis.speak(u);
 }
 function speakOnce(text, lang, onEnd) {
-  if (curAudio) { try{curAudio.pause();}catch(e){} curAudio = null; }
+  audioToken++;
+  const myToken = audioToken;
   if (typeof AUDIO_DIR === 'string' && AUDIO_DIR) {
+    if (!bcAudio) { bcAudio = new Audio(); bcAudio.setAttribute('playsinline',''); bcAudio.preload = 'auto'; try{ document.body.appendChild(bcAudio); }catch(e){} }
+    const a = bcAudio;
     let done = false;
-    const a = new Audio(AUDIO_DIR + audioHash(lang + "|" + text) + ".mp3");
-    curAudio = a;
-    const stale = () => done || curAudio !== a;
-    const fb = () => { if(stale()) return; done = true; curAudio = null; ttsSpeak(text, lang, onEnd); };
+    const stale = () => done || myToken !== audioToken;
+    const fb = () => { if(stale()) return; done = true; ttsSpeak(text, lang, onEnd); };
     a.onended = () => { if(stale()) return; done = true; if(onEnd) onEnd(); };
     a.onerror = fb;
-    a.play().catch(fb);
+    try { a.pause(); } catch(e){}
+    a.src = AUDIO_DIR + audioHash(lang + "|" + text) + ".mp3";
+    try { a.currentTime = 0; } catch(e){}
+    const p = a.play();
+    if (p && typeof p.catch === 'function') p.catch(fb);
     return;
   }
   ttsSpeak(text, lang, onEnd);
