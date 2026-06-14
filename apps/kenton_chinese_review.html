@@ -28,6 +28,7 @@ body{font-family:'LXGW WenKai Screen','PingFang SC','Microsoft YaHei',system-ui,
 .mod .ico{font-size:30px;}
 .mod .t{font-size:18px;font-weight:800;}
 .mod .meta{font-size:13px;color:var(--muted);margin-top:2px;}
+.mod .done{margin-left:auto;font-size:13px;font-weight:800;flex-shrink:0;color:var(--teald);text-align:right;line-height:1.3;}
 .mod.allin{border-left-color:var(--gold);background:linear-gradient(180deg,#fffdf6,#fff);}
 .qhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);margin-bottom:6px;}
 .bar{height:9px;background:#e6f3f6;border-radius:6px;overflow:hidden;margin-bottom:14px;}
@@ -323,6 +324,8 @@ var cur=null; // 当前session
 
 function loadStore(){try{return JSON.parse(localStorage.getItem(STORE_KEY))||{events:[]};}catch(e){return {events:[]};}}
 function saveEvent(ev){var s=loadStore();s.events.push(ev);try{localStorage.setItem(STORE_KEY,JSON.stringify(s));}catch(e){}}
+function lessonDone(name){var s=loadStore();for(var i=s.events.length-1;i>=0;i--){if(s.events[i].lesson===name)return s.events[i];}return null;}
+function doneBadge(name){var d=lessonDone(name);return d?'<span class="done">✅'+(d.total-d.wrong)+'<br>❌'+d.wrong+'</span>':'';}
 
 /* ---- 声音：音效 + 朗读（浏览器内置，零依赖） ---- */
 var soundOn=true, actx=null;
@@ -360,12 +363,12 @@ function renderMenu(){
   var g=document.getElementById("modgrid");g.innerHTML="";
   // 综合闯关
   var all=document.createElement("button");all.className="mod allin";
-  all.innerHTML='<span class="ico">🏆</span><span><div class="t">综合闯关（随机20题）</div><div class="meta">各关混合抽题，检验整体水平</div></span>';
+  all.innerHTML='<span class="ico">🏆</span><span><div class="t">综合闯关（随机20题）</div><div class="meta">各关混合抽题，检验整体水平</div></span>'+doneBadge("综合闯关");
   all.onclick=function(){startAll();};g.appendChild(all);
   MODULES.forEach(function(m){
     var qs=m.build();
     var b=document.createElement("button");b.className="mod";
-    b.innerHTML='<span class="ico">'+m.ico+'</span><span><div class="t">'+m.name+'</div><div class="meta">'+qs.length+' 题</div></span>';
+    b.innerHTML='<span class="ico">'+m.ico+'</span><span><div class="t">'+m.name+'</div><div class="meta">'+qs.length+' 题</div></span>'+doneBadge(m.name);
     b.onclick=function(){startQuiz(m.name,qs);};
     g.appendChild(b);
   });

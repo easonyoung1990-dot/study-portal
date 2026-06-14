@@ -86,6 +86,43 @@
       "difficulty": "easy-medium",
       "result": "题库已上线，等弟弟练习后导出成绩回填掌握度",
       "notes": "依据 6.12 课堂 Module 4 复习内容做的复习软件。内置标准模板：输入自动判分(fill)+选择+自评、答对/答错音效、英语 TTS 朗读(en-US)、计时、localStorage 记录面板与兼容导出({child:'弟弟',subject:'英语Module4复习',events:[]})、家长检查页。内容均为通用英语语法，无身份信息。"
+    },
+    {
+      "id": "kenton_dictation_apps",
+      "date": "2026-06-14",
+      "child": "kenton",
+      "subject": "语文+英语",
+      "title": "默写助手（收录）+ 默写错词重做（中英双科）",
+      "app_file": "apps/kenton_dictation.html",
+      "app_file_2": "apps/kenton_dictation_redo.html",
+      "knowledge_points": ["语文词语默写", "英语单词/句子默写", "中英互译理解", "错词重做"],
+      "difficulty": "—",
+      "result": "默写助手为哥哥实测好用版本，已收录为生词默写标准机制(见CLAUDE.md第7条)；错词重做装入昨天默写错的词(语文4+英语单词4+句子2)。",
+      "notes": "默写助手机制=全自动报默(读3遍)+大倒计时+答案对照点红+只重默标红+理解小测+档案导出。错词来源 data/learning/dictation_kenton.json 的 ok:false 项。"
+    },
+    {
+      "id": "kenton_chinese_review_session_2026-06-14",
+      "date": "2026-06-14",
+      "child": "kenton",
+      "subject": "语文",
+      "title": "四下5-8单元复习 13关 成绩归档",
+      "archive_file": "data/learning/chinese_review_kenton_sessions.json",
+      "knowledge_points": ["多音字", "易错字音", "形近字", "词语意思", "成语", "古诗警句", "名句出处", "关联词", "文学常识", "课文主旨", "古文字义"],
+      "difficulty": "medium",
+      "result": "整体优秀、无反复错题；薄弱：易错字音(彬/矩/屑/矢)、名句出处(老子/周易)、近义辨析。已回填 profile_kenton。",
+      "notes": "孩子端 apps/kenton_chinese_review.html 导出归档。"
+    },
+    {
+      "id": "eddey_chinese_review_session_2026-06-14",
+      "date": "2026-06-14",
+      "child": "eddey",
+      "subject": "语文",
+      "title": "三下第八单元复习 11关 成绩归档",
+      "archive_file": "data/learning/chinese_review_eddey_sessions.json",
+      "knowledge_points": ["多音字", "课文内容/判断", "复述故事", "拟声词", "有趣题目", "转述句", "日积月累", "想象作文", "生字词"],
+      "difficulty": "medium",
+      "result": "字词/多音字/课文/作文都稳；最薄弱=复述故事『只答一点』(1/3，错2次)。已回填 profile_eddey。",
+      "notes": "孩子端 apps/eddey_chinese_review.html 导出归档。下次重点练按顺序/谁+做了什么+结果复述。"
     }
   ]
 }

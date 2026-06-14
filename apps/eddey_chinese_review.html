@@ -364,7 +364,7 @@ function renderMap(){
     var done=lessonDone(L.name);
     var cnt=L.dynamic?buildHuilu().length:L.qs.length;
     var meta=L.dynamic?(cnt?cnt+" 道错题待回炉":"暂无错题"):(cnt+" 题");
-    var doneTag=done?'<span class="done">✓ '+(done.total-done.wrong)+"/"+done.total+"</span>":"";
+    var doneTag=done?'<span class="done">✅'+(done.total-done.wrong)+' ❌'+done.wrong+'</span>':"";
     b.innerHTML='<span class="num">'+(i+1)+'</span><span class="ico">'+L.ico+'</span><span><div class="t">'+L.name+'</div><div class="meta">'+meta+'</div></span>'+doneTag;
     b.onclick=function(){openLevel(i);};
     box.appendChild(b);
