@@ -56,6 +56,13 @@
     "added": "2026-06-14"
   },
   {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "英语错词重做（错词本·连续答对2次才掌握）",
+    "file": "apps/eddey_english_redo.html",
+    "added": "2026-06-14"
+  },
+  {
     "child": "kenton",
     "subject": "综合",
     "title": "默写助手 · 语文+英语（全自动报默）",

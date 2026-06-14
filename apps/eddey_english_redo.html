@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>弟弟英语单元默写 · 三年级下</title>
+<title>弟弟英语错词重做</title>
 <style>
 :root{--red:#ff8a5b;--redd:#e8643a;--gold:#F2B632;--golddk:#D89400;--ink:#3A2A1E;--paper:#FBF3E6;--line:#EBDCC4;
 --green:#3C9D54;--greenbg:#EAF7EC;--blue:#3170B5;--bluebg:#E8F0FA;--purple:#7B3FA0;}
@@ -91,16 +91,16 @@ color:var(--ink);min-height:100vh;padding-bottom:30px;}
 <div class="wrap">
   <div class="top">
     <div class="badge">弟弟</div>
-    <div style="flex:1"><h1>英语单元默写 · 三下</h1><div class="sub">沪教版3B · 4个Module/12单元 · 全自动报默</div></div>
+    <div style="flex:1"><h1>英语错词重做</h1><div class="sub">写错的词反复练 · 连续答对2次才算掌握</div></div>
     <button class="speak" onclick="testVoice()">🔊</button>
   </div>
   <div id="home">
     <div class="card">
-      <div class="lion"><div class="face">🦁</div><div class="bubble">按教材单元默写英语！每个词/句<b>边听边写</b>(读三遍),时间到自动下一个;默完对照答案,<b>写错的点一下标红</b>。再做🧠中英互译,检查是不是真懂。</div></div>
+      <div class="lion"><div class="face">🦁</div><div class="bubble">这里把你<b>默写错过的词</b>收起来反复练。规则：写错的词会一直留着，<b>连续答对 2 次才算真掌握、移走（第一次答对不算）</b>。边听边写，默完逐词点 ✅对/❌错。</div></div>
       <div class="kou">先点右上角 🔊 试一下声音!</div>
     </div>
     <div class="bigmenu">
-      <div class="bigtile en" onclick="showEnList()" style="grid-column:1 / 3"><div class="ic">🔤</div><div class="nm">英语单元词汇 / 句子默写</div><div class="ds">三下 4个Module·12单元 + 中英互译</div></div>
+      <div class="bigtile en" onclick="startRedo()" style="grid-column:1 / 3"><div class="ic">🔁</div><div class="nm">开始错词重做</div><div class="ds" id="redoCount">待重做…</div></div>
     </div>
     <div class="card" style="margin-top:14px;cursor:pointer" onclick="showArchive()">
       <div style="display:flex;align-items:center;gap:12px">
@@ -123,26 +123,9 @@ color:var(--ink);min-height:100vh;padding-bottom:30px;}
 const CN={
 };
 /* 英语词汇: [英文, 中文] */
-const EN_VOCAB={
- "M1U1 Seeing and hearing 看与听":[["see", "看见"], ["hear", "听见"], ["look", "看"], ["listen", "听"], ["eye", "眼睛"], ["ear", "耳朵"], ["bird", "鸟"], ["plane", "飞机"], ["train", "火车"], ["loud", "响亮的"]],
- "M1U2 Touching and feeling 触摸与感觉":[["touch", "触摸"], ["feel", "感觉"], ["hard", "硬的"], ["soft", "软的"], ["rough", "粗糙的"], ["smooth", "光滑的"], ["warm", "温暖的"], ["cold", "冷的"]],
- "M1U3 Tasting and smelling 尝与闻":[["taste", "尝"], ["smell", "闻"], ["sweet", "甜的"], ["sour", "酸的"], ["salty", "咸的"], ["bitter", "苦的"], ["lemon", "柠檬"], ["sugar", "糖"], ["coffee", "咖啡"]],
- "M2U1 Animals 动物":[["animal", "动物"], ["tiger", "老虎"], ["lion", "狮子"], ["monkey", "猴子"], ["elephant", "大象"], ["panda", "熊猫"], ["zebra", "斑马"], ["giraffe", "长颈鹿"], ["tall", "高的"], ["fat", "胖的"]],
- "M2U2 Toys 玩具":[["toy", "玩具"], ["doll", "洋娃娃"], ["ball", "球"], ["kite", "风筝"], ["car", "小汽车"], ["robot", "机器人"], ["train", "火车"], ["teddy bear", "泰迪熊"], ["favourite", "最喜欢的"]],
- "M2U3 Clothes 衣服":[["clothes", "衣服"], ["shirt", "衬衫"], ["T-shirt", "T恤衫"], ["dress", "连衣裙"], ["skirt", "短裙"], ["trousers", "裤子"], ["shoes", "鞋子"], ["socks", "袜子"], ["cap", "帽子"], ["coat", "外套"]],
- "M3U1 Shapes 形状":[["shape", "形状"], ["circle", "圆形"], ["square", "正方形"], ["triangle", "三角形"], ["rectangle", "长方形"], ["star", "星形"], ["round", "圆的"]],
- "M3U2 Colours 颜色":[["colour", "颜色"], ["red", "红色"], ["yellow", "黄色"], ["blue", "蓝色"], ["green", "绿色"], ["orange", "橙色"], ["purple", "紫色"], ["pink", "粉色"], ["brown", "棕色"], ["black", "黑色"], ["white", "白色"]],
- "M3U3 Seasons 季节":[["season", "季节"], ["spring", "春天"], ["summer", "夏天"], ["autumn", "秋天"], ["winter", "冬天"], ["warm", "温暖的"], ["hot", "炎热的"], ["cool", "凉爽的"], ["cold", "寒冷的"]],
- "M4U1 My body 身体":[["body", "身体"], ["head", "头"], ["hair", "头发"], ["face", "脸"], ["mouth", "嘴"], ["neck", "脖子"], ["shoulder", "肩膀"], ["arm", "手臂"], ["hand", "手"], ["leg", "腿"], ["foot", "脚"], ["knee", "膝盖"]],
- "M4U2 Children's Day 儿童节":[["present", "礼物"], ["party", "聚会"], ["balloon", "气球"], ["card", "卡片"], ["sing", "唱歌"], ["dance", "跳舞"], ["play", "玩"], ["happy", "高兴的"]],
- "M4U3 Story time 故事时间":[["story", "故事"], ["duck", "鸭子"], ["duckling", "小鸭子"], ["swan", "天鹅"], ["nest", "鸟巢"], ["egg", "蛋"], ["ugly", "丑的"], ["beautiful", "美丽的"]],
-};
+var EN_VOCAB={};
 /* 英语句子(grammar+daily expressions): [英文, 中文] */
 const EN_SENT={
- "M1 句子(五感)":[["I can see a bird.", "我能看见一只鸟。"], ["I can hear a plane.", "我能听见一架飞机。"], ["Look! Listen!", "看！听！"], ["Touch it. How does it feel?", "摸一摸，它感觉怎么样？"], ["It is hard.", "它是硬的。"], ["It is soft and smooth.", "它又软又滑。"], ["What can you taste?", "你能尝到什么？"], ["It tastes sweet.", "它尝起来是甜的。"], ["It smells nice.", "它闻起来很香。"]],
- "M2 句子(喜好/衣物)":[["Do you like tigers?", "你喜欢老虎吗？"], ["Yes, I do. / No, I don't.", "是的我喜欢。/不，我不喜欢。"], ["It is tall and fat.", "它又高又胖。"], ["What is your favourite toy?", "你最喜欢的玩具是什么？"], ["My favourite toy is the robot.", "我最喜欢的玩具是机器人。"], ["This is my kite.", "这是我的风筝。"], ["This is her dress.", "这是她的连衣裙。"], ["I like the red T-shirt.", "我喜欢这件红色T恤。"], ["Put on your coat.", "穿上你的外套。"]],
- "M3 句子(形状/颜色/季节)":[["What shape is it?", "它是什么形状？"], ["It is a circle.", "它是一个圆形。"], ["It has four sides.", "它有四条边。"], ["What colour is it?", "它是什么颜色？"], ["It is red and yellow.", "它是红色和黄色的。"], ["What colour are they? They are blue.", "它们是什么颜色？是蓝色的。"], ["Which season do you like?", "你喜欢哪个季节？"], ["I like summer.", "我喜欢夏天。"], ["It is hot in summer.", "夏天很热。"]],
- "M4 句子(身体/节日/故事)":[["Touch your head.", "摸摸你的头。"], ["I have two hands.", "我有两只手。"], ["My feet are big.", "我的脚很大。"], ["Happy Children's Day!", "儿童节快乐！"], ["We sing and dance at the party.", "我们在聚会上又唱又跳。"], ["I like playing games.", "我喜欢玩游戏。"], ["Mother Duck has five eggs.", "鸭妈妈有五个蛋。"], ["The ugly duckling becomes a swan.", "丑小鸭变成了天鹅。"], ["It is beautiful.", "它很美丽。"]],
 };
 
 /* 语文理解题:选词填空,检查是否真懂词义 */
@@ -164,7 +147,7 @@ function mkUtter(t,lang){
   u.pitch=1.0;return u;
 }
 function speakOnce(t,lang){try{speechSynthesis.cancel();speechSynthesis.resume();}catch(e){}try{speechSynthesis.speak(mkUtter(t,lang));}catch(e){}}
-function testVoice(){if(!('speechSynthesis'in window)){var k=document.querySelector('.kou');if(k)k.textContent='这个浏览器不支持朗读，请用 Safari 或 Chrome 打开';return;}warm();speakOnce('你好弟弟,我们来默写英语单词。','zh');setTimeout(()=>speakOnce('Hello, I can speak English too.','en'),2600);}
+function testVoice(){if(!('speechSynthesis'in window)){var k=document.querySelector('.kou');if(k)k.textContent='这个浏览器不支持朗读，请用 Safari 或 Chrome 打开';return;}warm();speakOnce('你好哥哥,我是默写助手。','zh');setTimeout(()=>speakOnce('Hello, I can speak English too.','en'),2600);}
 
 /* 读 N 遍,读完回调(带超时保护) */
 let speakSession=0;
@@ -187,6 +170,21 @@ function speakTimes(t,lang,times,onDone){
   setTimeout(fire,Math.min(est,40000));
 }
 
+/* ===== 错词本：错一次就记住；连续答对2次才移除（第一次答对不算） ===== */
+var REDO_KEY="错词重做";
+var SEED=[["rough","粗糙的"],["smooth","光滑的"],["coffee","咖啡"],["giraffe","长颈鹿"],["panda","熊猫"],["teddy bear","泰迪熊"],["favourite","最喜欢的"],["trousers","裤子"],["socks","袜子"],["triangle","三角形"],["round","圆的"],["nest","鸟巢"],["swan","天鹅"],["ugly","丑的"]];
+var BOXKEY='eddey_eng_redo_box_v1';
+function loadBoxRaw(){try{var b=JSON.parse(localStorage.getItem(BOXKEY));if(b&&b.active)return b;}catch(e){}return {active:{},cleared:{},seeded:false};}
+function saveBoxRaw(b){try{localStorage.setItem(BOXKEY,JSON.stringify(b));}catch(e){}}
+function loadBox(){
+  var b=loadBoxRaw();
+  if(!b.seeded){SEED.forEach(function(p){if(!b.cleared[p[0]])b.active[p[0]]={hint:p[1],streak:0};});b.seeded=true;}
+  try{var a=JSON.parse(localStorage.getItem('mx_archive_弟弟_eng3b'));if(a&&a.events){a.events.forEach(function(ev){(ev.items||[]).forEach(function(it){if(!it.ok&&!b.cleared[it.word]&&!b.active[it.word])b.active[it.word]={hint:it.hint||'',streak:0};});});}}catch(e){}
+  saveBoxRaw(b);return b;
+}
+function boxWords(){var b=loadBox();return Object.keys(b.active).map(function(w){return [w,b.active[w].hint];});}
+function startRedo(){var w=boxWords();if(!w.length){alert('错词都掌握啦！🎉');return;}EN_VOCAB={};EN_VOCAB[REDO_KEY]=w;warm();startDict('env',REDO_KEY);}
+
 /* ===================== 状态与导航 ===================== */
 const S={mode:null,key:null,items:[],idx:0,miss:new Set(),lang:'zh',paused:false,
   startTime:0,perItem:[],marks:[]};
@@ -201,7 +199,7 @@ function goHome(){speakSession++;try{speechSynthesis.cancel();}catch(e){}stopTim
    { child:'哥哥', events:[ {ts, type:'dict'|'quiz', subject:'cn'|'en', lesson, total, wrong, durationSec,
        items:[ {word, hint, ok, ms} ] } ] } */
 const CHILD='弟弟';
-const AKEY='mx_archive_'+CHILD+'_eng3b';
+const AKEY='mx_archive_'+CHILD+'_eng3b_redo';
 function loadArchive(){try{return JSON.parse(localStorage.getItem(AKEY))||{child:CHILD,events:[]};}catch(e){return{child:CHILD,events:[]};}}
 function saveArchive(a){try{localStorage.setItem(AKEY,JSON.stringify(a));}catch(e){}}
 function logEvent(ev){const a=loadArchive();a.events.push(ev);saveArchive(a);}
@@ -217,7 +215,7 @@ function aggregateWords(events){
   });});
   return Object.values(m);
 }
-function refreshHomeStat(){
+function refreshHomeStat(){var __rc=document.getElementById('redoCount');if(__rc)__rc.textContent='待重做 '+boxWords().length+' 个（连续答对2次移除）';
   const a=loadArchive();const el=document.getElementById('homestat');if(!el)return;
   if(!a.events.length){el.textContent='还没有记录——做一次默写或小测就会自动归档';return;}
   const words=aggregateWords(a.events);
@@ -231,26 +229,24 @@ function showCnList(){
   b.innerHTML=`<button class="back" onclick="goHome()">← 返回</button>
     <div class="card"><h2>📖 语文默写 · 选一课</h2>
     <div class="lead">边听边写,每词读三遍。时间略紧,写快一点!建议一次默 1-2 课。</div>
-    <div class="list">${Object.keys(CN).map(k=>`<div class="lesson" onclick="startDict('cn','${esc(k)}')"><div class="t">${k}</div><div class="n">${CN[k].length} 个词</div></div>`).join('')}</div></div>
+    <div class="list">${Object.keys(CN).map(k=>`<div class="lesson" onclick="startDict('cn','${k}')"><div class="t">${k}</div><div class="n">${CN[k].length} 个词</div></div>`).join('')}</div></div>
     <div class="card"><h2>🧠 语文理解小测(选词填空)</h2>
     <div class="lead">默写检查"会不会写",这里检查"懂不懂意思"——把词正确用到句子里。</div>
-    <div class="list">${Object.keys(CN).filter(k=>CN_QUIZ[k]).map(k=>`<div class="lesson" style="border-color:#bcd4ee" onclick="startQuiz('cnq','${esc(k)}')"><div class="t">${k}</div><div class="n">理解 ${CN_QUIZ[k].length} 题</div></div>`).join('')}</div></div>`;
+    <div class="list">${Object.keys(CN).filter(k=>CN_QUIZ[k]).map(k=>`<div class="lesson" style="border-color:#bcd4ee" onclick="startQuiz('cnq','${k}')"><div class="t">${k}</div><div class="n">理解 ${CN_QUIZ[k].length} 题</div></div>`).join('')}</div></div>`;
   show('cnlist');
 }
-function dictBadge(lesson){var a=loadArchive();for(var i=a.events.length-1;i>=0;i--){var e=a.events[i];if(e.lesson===lesson)return '<div class="n" style="color:#1aa7b8;font-weight:700">上次 ✅'+(e.total-e.wrong)+' ❌'+e.wrong+'</div>';}return '';}
-function esc(s){return (''+s).replace(/'/g,"\\'");}
 function showEnList(){
   const b=document.getElementById('enlist');
   b.innerHTML=`<button class="back" onclick="goHome()">← 返回</button>
     <div class="card"><h2>🔤 英语默写 · 单词</h2>
     <div class="lead">听英文发音写单词(<b>不显示中文,不偷看</b>)。边听边写,时间略紧。</div>
-    <div class="list">${Object.keys(EN_VOCAB).map(k=>`<div class="lesson" onclick="startDict('env','${esc(k)}')"><div class="t">${k.split(' ')[0]}</div><div class="n">${k.split(' ')[1]||''} · ${EN_VOCAB[k].length}个</div>${dictBadge(k)}</div>`).join('')}</div></div>
+    <div class="list">${Object.keys(EN_VOCAB).map(k=>`<div class="lesson" onclick="startDict('env','${k}')"><div class="t">${k.split(' ')[0]}</div><div class="n">${k.split(' ')[1]||''} · ${EN_VOCAB[k].length}个</div></div>`).join('')}</div></div>
     <div class="card"><h2>🔤 英语默写 · 句子(语法+日常用语)</h2>
     <div class="lead">听整句写整句(<b>不显示中文</b>)。考纲 Grammar 和 Daily expressions 都在里面。</div>
-    <div class="list">${Object.keys(EN_SENT).map(k=>`<div class="lesson" onclick="startDict('ens','${esc(k)}')"><div class="t">${k.split(' ')[0]}</div><div class="n">句子 · ${EN_SENT[k].length}句</div>${dictBadge(k)}</div>`).join('')}</div></div>
+    <div class="list">${Object.keys(EN_SENT).map(k=>`<div class="lesson" onclick="startDict('ens','${k}')"><div class="t">${k.split(' ')[0]}</div><div class="n">句子 · ${EN_SENT[k].length}句</div></div>`).join('')}</div></div>
     <div class="card"><h2>🧠 英语理解小测(中英互译)</h2>
     <div class="lead">检查是真懂还是死记硬背:看中文选英文、看英文选中文,混着考。</div>
-    <div class="list">${Object.keys(EN_VOCAB).map(k=>`<div class="lesson" style="border-color:#ddc7ea" onclick="startQuiz('enq','${esc(k)}')"><div class="t">${k.split(' ')[0]}</div><div class="n">互译 ${Math.min(EN_VOCAB[k].length,8)} 题</div>${dictBadge(k)}</div>`).join('')}</div></div>`;
+    <div class="list">${Object.keys(EN_VOCAB).map(k=>`<div class="lesson" style="border-color:#ddc7ea" onclick="startQuiz('enq','${k}')"><div class="t">${k.split(' ')[0]}</div><div class="n">互译 ${Math.min(EN_VOCAB[k].length,8)} 题</div></div>`).join('')}</div></div>`;
   show('enlist');
 }
 
@@ -342,10 +338,7 @@ function nextWord(){
   if(S.idx<S.items.length-1){S.idx++;S.itemStart=Date.now();renderDict();setTimeout(()=>runWord(),300);}
   else{showAnswers();}
 }
-function confirmQuit(){
-  speakSession++;try{speechSynthesis.cancel();}catch(e){}stopTimer();
-  if(S.mode==='cn')showCnList();else showEnList();
-}
+function confirmQuit(){speakSession++;try{speechSynthesis.cancel();}catch(e){}stopTimer();goHome();}
 
 /* ===================== 答案对照（每词强制判 ✅/❌，杜绝默认全对） ===================== */
 function showAnswers(){
@@ -391,7 +384,8 @@ function finishLesson(){
   const items=S.items.map((it,i)=>{const pi=S.perItem.find(p=>p.word===it.t);return {word:it.t,hint:it.hint||'',ok:S.marks[i]===true,ms:pi?pi.ms:0};});
   const wrong=S.marks.filter(x=>x===false).length;
   logEvent({ts:Date.now(),type:'dict',subject:(S.mode==='cn'?'cn':'en'),lesson:S.key,total:S.items.length,wrong:wrong,durationSec:Math.round((Date.now()-S.startTime)/1000),items:items});
-  speakOnce(wrong?('记下了，写错 '+wrong+' 个，下次重点练。'):'全对，真棒！','zh');
+  try{var __b=loadBox();items.forEach(function(it){var e=__b.active[it.word];if(!e)return;if(it.ok){e.streak=(e.streak||0)+1;if(e.streak>=2){delete __b.active[it.word];__b.cleared[it.word]=1;}}else{e.streak=0;}});saveBoxRaw(__b);}catch(e){}
+  speakOnce(wrong?('记下了，错词留着再练。'):'连续答对就掌握啦！','zh');
   setTimeout(()=>confirmQuit(),1300);
 }
 

@@ -231,25 +231,26 @@ function showCnList(){
   b.innerHTML=`<button class="back" onclick="goHome()">← 返回</button>
     <div class="card"><h2>📖 语文默写 · 选一课</h2>
     <div class="lead">边听边写,每词读三遍。时间略紧,写快一点!建议一次默 1-2 课。</div>
-    <div class="list">${Object.keys(CN).map(k=>`<div class="lesson" onclick="startDict('cn','${k}')"><div class="t">${k}</div><div class="n">${CN[k].length} 个词</div></div>`).join('')}</div></div>
+    <div class="list">${Object.keys(CN).map(k=>`<div class="lesson" onclick="startDict('cn','${esc(k)}')"><div class="t">${k}</div><div class="n">${CN[k].length} 个词</div></div>`).join('')}</div></div>
     <div class="card"><h2>🧠 语文理解小测(选词填空)</h2>
     <div class="lead">默写检查"会不会写",这里检查"懂不懂意思"——把词正确用到句子里。</div>
-    <div class="list">${Object.keys(CN).filter(k=>CN_QUIZ[k]).map(k=>`<div class="lesson" style="border-color:#bcd4ee" onclick="startQuiz('cnq','${k}')"><div class="t">${k}</div><div class="n">理解 ${CN_QUIZ[k].length} 题</div></div>`).join('')}</div></div>`;
+    <div class="list">${Object.keys(CN).filter(k=>CN_QUIZ[k]).map(k=>`<div class="lesson" style="border-color:#bcd4ee" onclick="startQuiz('cnq','${esc(k)}')"><div class="t">${k}</div><div class="n">理解 ${CN_QUIZ[k].length} 题</div></div>`).join('')}</div></div>`;
   show('cnlist');
 }
 function dictBadge(lesson){var a=loadArchive();for(var i=a.events.length-1;i>=0;i--){var e=a.events[i];if(e.lesson===lesson)return '<div class="n" style="color:#147d8a;font-weight:700">上次 ✅'+(e.total-e.wrong)+' ❌'+e.wrong+'</div>';}return '';}
+function esc(s){return (''+s).replace(/'/g,"\\'");}
 function showEnList(){
   const b=document.getElementById('enlist');
   b.innerHTML=`<button class="back" onclick="goHome()">← 返回</button>
     <div class="card"><h2>🔤 英语默写 · 单词</h2>
     <div class="lead">听英文发音写单词(<b>不显示中文,不偷看</b>)。边听边写,时间略紧。</div>
-    <div class="list">${Object.keys(EN_VOCAB).map(k=>`<div class="lesson" onclick="startDict('env','${k}')"><div class="t">${k.split(' ')[0]}</div><div class="n">${k.split(' ')[1]||''} · ${EN_VOCAB[k].length}个</div>${dictBadge(k)}</div>`).join('')}</div></div>
+    <div class="list">${Object.keys(EN_VOCAB).map(k=>`<div class="lesson" onclick="startDict('env','${esc(k)}')"><div class="t">${k.split(' ')[0]}</div><div class="n">${k.split(' ')[1]||''} · ${EN_VOCAB[k].length}个</div>${dictBadge(k)}</div>`).join('')}</div></div>
     <div class="card"><h2>🔤 英语默写 · 句子(语法+日常用语)</h2>
     <div class="lead">听整句写整句(<b>不显示中文</b>)。考纲 Grammar 和 Daily expressions 都在里面。</div>
-    <div class="list">${Object.keys(EN_SENT).map(k=>`<div class="lesson" onclick="startDict('ens','${k}')"><div class="t">${k.split(' ')[0]}</div><div class="n">句子 · ${EN_SENT[k].length}句</div>${dictBadge(k)}</div>`).join('')}</div></div>
+    <div class="list">${Object.keys(EN_SENT).map(k=>`<div class="lesson" onclick="startDict('ens','${esc(k)}')"><div class="t">${k.split(' ')[0]}</div><div class="n">句子 · ${EN_SENT[k].length}句</div>${dictBadge(k)}</div>`).join('')}</div></div>
     <div class="card"><h2>🧠 英语理解小测(中英互译)</h2>
     <div class="lead">检查是真懂还是死记硬背:看中文选英文、看英文选中文,混着考。</div>
-    <div class="list">${Object.keys(EN_VOCAB).map(k=>`<div class="lesson" style="border-color:#ddc7ea" onclick="startQuiz('enq','${k}')"><div class="t">${k.split(' ')[0]}</div><div class="n">互译 ${Math.min(EN_VOCAB[k].length,8)} 题</div>${dictBadge(k)}</div>`).join('')}</div></div>`;
+    <div class="list">${Object.keys(EN_VOCAB).map(k=>`<div class="lesson" style="border-color:#ddc7ea" onclick="startQuiz('enq','${esc(k)}')"><div class="t">${k.split(' ')[0]}</div><div class="n">互译 ${Math.min(EN_VOCAB[k].length,8)} 题</div>${dictBadge(k)}</div>`).join('')}</div></div>`;
   show('enlist');
 }
 
