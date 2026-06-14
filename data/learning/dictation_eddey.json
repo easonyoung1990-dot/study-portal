@@ -1,0 +1,17 @@
+{
+  "child": "eddey",
+  "source": "英语单元默写软件（apps/eddey_english_textbook.html，沪教版3B）",
+  "updated": "2026-06-14",
+  "note": "孩子端平板默写后导出，爸爸端投喂归档。后续每次导出追加一个 session。",
+  "data_quality_warning": "2026-06-14 这次导出所有词 ok 均为 true、反复错词为'无'，但家长反映弟弟实际有反复写错的词。原因＝默写助手按『对答案时点红错词』判错，疑似未点红导致全部默认记为对。此 session 判分存疑，错词以家长提供为准；已计划改进判分（每词强制点 ✓对/✗错）。",
+  "sessions": [
+    {
+      "export_date": "2026-06-14 20:03",
+      "total_practices": 11,
+      "scoring": "判分存疑（见 data_quality_warning）",
+      "lessons_practiced": ["M1U1","M1U2","M1U3","M2U1","M2U2","M2U3","M3U1","M3U2 颜色","M3U3 季节","M4U1","M4U3"],
+      "reported_by_parent": "弟弟实际有反复写错的词（具体词待家长提供或重默点红后导出）",
+      "actual_wrong_words": []
+    }
+  ]
+}
