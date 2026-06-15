@@ -243,22 +243,21 @@
       "notes": "孩子端 apps/eddey_chinese_review.html 导出归档。下次重点练按顺序/谁+做了什么+结果复述。"
     },
     {
-      "id": "kenton_m4u2_review_2026-06-15",
+      "id": "kenton_m4_review_2026-06-15",
       "date": "2026-06-15",
       "child": "kenton",
       "subject": "英语",
-      "title": "英语 M4U2 中国节日 复习软件（7关24题）",
-      "app_file": "apps/kenton_m4u2_review.html",
+      "title": "英语 Module 4 总复习软件（U1/U2/U3 一个入口，11关36题）",
+      "app_file": "apps/kenton_m4_review.html",
       "knowledge_points": [
-        "四节日名the结构",
-        "at/on/during介词",
-        "look/see/watch辨析",
-        "节日问答句型",
-        "节日词默写"
+        "U1 play the+乐器/Where's/Whose",
+        "U2 the…Festival/at-on-during/look-see-watch",
+        "U3 feed…with/序数词fourth/lovely-lonely形容词/现在进行时",
+        "三单元词汇默写"
       ],
       "difficulty": "medium",
       "result": "结合老师M4U2知识梳理(PDF)+哥哥错题(I like the Spring Festival.)；待练习后回填。",
-      "notes": "题型：选择18/口说2(🎤en)/纸上默写4，每题讲解+错题回炉。"
+      "notes": "老师M4知识梳理PDF(U1/U2/U3)+哥哥错题(I like the Spring Festival.)合成一个总入口。选择25/🎤口说2/纸上默写9，每题讲解+错题回炉。"
     }
   ]
 }

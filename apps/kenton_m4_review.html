@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>哥哥英语 M4U2 复习 · Festivals in China</title>
+<title>哥哥英语 Module 4 总复习</title>
 <style>
 :root{
   --eddey:#36c5d6;--eddeyd:#1aa7b8;--eddeybg:#e3fbff;
@@ -91,15 +91,15 @@ textarea.exp{width:100%;height:150px;font-size:12px;border:2px solid var(--line)
 <div class="wrap">
   <div class="top">
     <a class="home" href="../index.html">‹</a>
-    <span class="badge">M4U2</span>
-    <h1 id="topTitle">哥哥英语 M4U2 · 中国节日</h1>
+    <span class="badge">Module 4</span>
+    <h1 id="topTitle">哥哥英语 Module 4 总复习</h1>
   </div>
 
   <!-- 闯关地图 -->
   <div id="map">
     <div class="card" style="padding:14px 16px">
-      <div style="font-weight:800;font-size:16px">M4U2 Festivals in China 复习 🏮</div>
-      <div style="font-size:13px;color:var(--muted);margin-top:4px">结合老师 M4U2 知识梳理 + 你的错题。重点：<b>节日名 the…Festival、at/on/during、look/see/watch</b>。点选或 🎤 说，每题有讲解。</div>
+      <div style="font-weight:800;font-size:16px">Module 4 总复习（U1 音乐课 · U2 中国节日 · U3 故事时间）🎒</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px">依老师 M4 知识梳理 + 你的错题。三单元一个入口：U1 演奏乐器/位置/谁的，U2 节日 the…Festival/介词/look-see-watch，U3 故事词与语法。点选或 🎤 说，每题讲解。</div>
     </div>
     <button class="lvl parent" id="parentEntry">
       <span class="ico">👨‍👩‍👦</span><span><div class="t">家长检查页</div><div class="meta">看今日错点、要复习什么</div></span>
@@ -184,53 +184,81 @@ textarea.exp{width:100%;height:150px;font-size:12px;border:2px solid var(--line)
 /* ===================== 题库（哥哥4下 M4U2：老师知识梳理 + 哥哥错题） ===================== */
 /* 题型 kind: "choice"=选择自动判分； "self"=看题→看答案→自评(默写/仿写/写作) */
 var LEVELS = [
-  {id:"cihui",name:"节日词汇关",ico:"🏮",tag:"词汇",
-   intro:'<div class="rule">中国节日和相关词。点出正确答案，记住<b>节日名前要加 the</b>。</div>',
+  {id:"u1ci",name:"M4U1 乐器词汇",ico:"🎹",tag:"U1词汇",
+   intro:'<div class="rule">A Music class 乐器与音乐词。记住<b>演奏乐器要 play the + 乐器</b>。</div>',
    qs:[
-    {kind:"choice",q:"「春节」用英语怎么说？",a:"the Spring Festival",opts:["the Spring Festival","the Dragon Boat Festival","the Mid-Autumn Festival"],explain:"春节=the Spring Festival；前面有 the，Spring、Festival 首字母大写。",tag:"词汇"},
-    {kind:"choice",q:"「端午节」用英语怎么说？",a:"the Dragon Boat Festival",opts:["the Dragon Boat Festival","the Double Ninth Festival","the Spring Festival"],explain:"端午节=the Dragon Boat Festival（龙舟节）。",tag:"词汇"},
-    {kind:"choice",q:"「中秋节」用英语怎么说？",a:"the Mid-Autumn Festival",opts:["the Mid-Autumn Festival","the Spring Festival","the Dragon Boat Festival"],explain:"中秋节=the Mid-Autumn Festival（年中之秋）。",tag:"词汇"},
-    {kind:"choice",q:"「重阳节」用英语怎么说？",a:"the Double Ninth Festival",opts:["the Double Ninth Festival","the Mid-Autumn Festival","the Spring Festival"],explain:"重阳节=the Double Ninth Festival（九月初九）。",tag:"词汇"},
-    {kind:"choice",q:"mooncake 是什么？",a:"月饼",opts:["月饼","粽子","饺子"],explain:"mooncake 月饼(中秋)；rice dumpling 粽子(端午)；dumpling 饺子。",tag:"词汇"},
-    {kind:"choice",q:"「粽子」用英语怎么说？",a:"rice dumpling",opts:["rice dumpling","mooncake","lantern"],explain:"rice dumpling 粽子(端午吃)。",tag:"词汇"},
-    {kind:"choice",q:"red envelope 是什么？",a:"红包",opts:["红包","灯笼","烟花"],explain:"red envelope 红包；lantern 灯笼；fireworks 烟花。",tag:"词汇"}
+    {kind:"choice",q:"piano 是什么？",a:"钢琴",opts:["钢琴","小提琴","鼓"],explain:"piano 钢琴；violin 小提琴；drum 鼓。",tag:"U1词汇"},
+    {kind:"choice",q:"「三角铁」用英语？",a:"triangle",opts:["triangle","violin","drum"],explain:"triangle 在音乐课里是三角铁(乐器)；在形状单元里是三角形。",tag:"U1词汇"},
+    {kind:"choice",q:"musical instrument 是什么？",a:"乐器",opts:["乐器","音乐课","橡皮筋"],explain:"musical instrument 乐器；rubber band 橡皮筋。",tag:"U1词汇"},
+    {kind:"choice",q:"beside 是什么意思？",a:"在……旁边",opts:["在……旁边","在……上面","在……里面"],explain:"beside 在…旁边：It's beside the drum.",tag:"U1词汇"}
    ]},
-  {id:"the",name:"节日名加 the 关",ico:"📝",tag:"the不能丢",
-   intro:'<div class="rule">中国传统节日是<b>固定结构：the + … + Festival，the 不能省</b>，每个词首字母大写。这是你以前容易丢分的点！</div>',
+  {id:"u1ju",name:"M4U1 句型·演奏/位置/谁的",ico:"🎵",tag:"U1句型",
+   intro:'<div class="rule">play the+乐器；问位置 Where\'s…? It\'s beside…；问归属 Whose…? It\'s …\'s。可点 🎤 说。</div>',
    qs:[
-    {kind:"choice",q:"选正确的写法：",a:"I like the Spring Festival.",opts:["I like the Spring Festival.","I like Spring Festival.","I like spring festival."],explain:"节日名前必须有 the，且 Spring、Festival 首字母大写。这正是你以前写错的地方。",tag:"the不能丢"},
-    {kind:"choice",q:"填空：We eat mooncakes at ____ Mid-Autumn Festival.",a:"the",opts:["the","a","不填"],explain:"节日名前用 the：at the Mid-Autumn Festival。",tag:"the不能丢"},
-    {kind:"speak",q:"用英语说「我喜欢春节。」（点 🎤 说）",a:"I like the Spring Festival.",accept:["i like the spring festival"],explain:"I like the Spring Festival. 别丢 the，注意大写。",tag:"the不能丢",lang:"en"}
+    {kind:"choice",q:"「演奏鼓」用英语？",a:"play the drum",opts:["play the drum","play drum","play a drum"],explain:"演奏乐器：play the + 乐器，drum 前要加 the。",tag:"U1句型"},
+    {kind:"choice",q:"问「我的鼓在哪儿?」",a:"Where's my drum?",opts:["Where's my drum?","What's my drum?","Whose my drum?"],explain:"问位置用 Where's…? 回答 It's beside the…。",tag:"U1句型"},
+    {kind:"choice",q:"「这是谁的鼓?」",a:"Whose drum is this?",opts:["Whose drum is this?","Who's drum is this?","Where drum is this?"],explain:"问归属用 Whose…? 回答 It's Danny's drum.（名词+'s）",tag:"U1句型"},
+    {kind:"speak",q:"用英语说「你会演奏什么?」（点 🎤 说）",a:"What can you play?",accept:["what can you play"],explain:"What can you play? 回答 I can play the piano.",tag:"U1句型",lang:"en"}
    ]},
-  {id:"jieci",name:"介词 at / on / during 关",ico:"🔗",tag:"介词",
-   intro:'<div class="rule">在某节日(做某事)用 <b>at the … Festival</b>；除夕等具体某天用 <b>on</b>；某段期间用 <b>during</b>。</div>',
+  {id:"u1mx",name:"M4U1 乐器默写",ico:"✍️",tag:"U1默写",
+   intro:'<div class="rule">在纸上默写英语，再点"看答案"对照拼写。</div>',
    qs:[
-    {kind:"choice",q:"We watch dragon boat races ____ the Dragon Boat Festival.",a:"at",opts:["at","on","in"],explain:"在某节日用 at the … Festival。",tag:"介词"},
-    {kind:"choice",q:"____ New Year's Eve, families have a big dinner.",a:"On",opts:["On","At","During"],explain:"除夕是具体某天，用 On New Year's Eve。",tag:"介词"},
-    {kind:"choice",q:"People are busy ____ the Spring Festival.",a:"during",opts:["during","on","in"],explain:"表示节日'期间'用 during。",tag:"介词"}
+    {kind:"write",q:"默写：钢琴",a:"piano",explain:"piano。",tag:"U1默写"},
+    {kind:"write",q:"默写：小提琴",a:"violin",explain:"violin。",tag:"U1默写"},
+    {kind:"write",q:"默写：三角铁 / 鼓",a:"triangle / drum",explain:"triangle 三角铁；drum 鼓。",tag:"U1默写"}
    ]},
-  {id:"lookwatch",name:"look / see / watch 关",ico:"👀",tag:"look/see/watch",
-   intro:'<div class="rule">老师重点：<b>look</b> 强调"看"的动作；<b>see</b> 强调"看到"的结果；<b>watch</b> 全神贯注地观看(电视/比赛/表演)。</div>',
+  {id:"u2ci",name:"M4U2 节日词汇",ico:"🏮",tag:"U2词汇",
+   intro:'<div class="rule">中国节日和相关词。记住<b>节日名前要加 the</b>。</div>',
    qs:[
-    {kind:"choice",q:"____ at the lanterns! They are beautiful.",a:"Look",opts:["Look","See","Watch"],explain:"提醒别人去看(动作)用 Look at…。",tag:"look/see/watch"},
-    {kind:"choice",q:"We ____ a dragon boat race on TV.",a:"watch",opts:["watch","look","see"],explain:"看比赛/电视/表演用 watch(全神贯注地看)。",tag:"look/see/watch"},
-    {kind:"choice",q:"I can ____ beautiful fireworks in the sky.",a:"see",opts:["see","watch","look"],explain:"看到(结果)用 see；I can see…。",tag:"look/see/watch"},
-    {kind:"choice",q:"Children like to ____ TV at the Spring Festival.",a:"watch",opts:["watch","see","look"],explain:"看电视固定用 watch TV。",tag:"look/see/watch"}
+    {kind:"choice",q:"「春节」用英语怎么说？",a:"the Spring Festival",opts:["the Spring Festival","the Dragon Boat Festival","the Mid-Autumn Festival"],explain:"春节=the Spring Festival，前有 the、首字母大写。",tag:"U2词汇"},
+    {kind:"choice",q:"「端午节」用英语怎么说？",a:"the Dragon Boat Festival",opts:["the Dragon Boat Festival","the Double Ninth Festival","the Spring Festival"],explain:"端午节=the Dragon Boat Festival。",tag:"U2词汇"},
+    {kind:"choice",q:"「中秋节」用英语怎么说？",a:"the Mid-Autumn Festival",opts:["the Mid-Autumn Festival","the Double Ninth Festival","the Spring Festival"],explain:"中秋节=the Mid-Autumn Festival。",tag:"U2词汇"},
+    {kind:"choice",q:"mooncake / rice dumpling 分别是？",a:"月饼 / 粽子",opts:["月饼 / 粽子","粽子 / 月饼","饺子 / 月饼"],explain:"mooncake 月饼(中秋)；rice dumpling 粽子(端午)。",tag:"U2词汇"}
    ]},
-  {id:"juxing",name:"问答句型关",ico:"💬",tag:"句型",
-   intro:'<div class="rule">问喜欢什么节日、节日做什么、吃什么。可点 🎤 说答案。</div>',
+  {id:"u2the",name:"M4U2 the…Festival + 介词",ico:"📝",tag:"U2语法",
+   intro:'<div class="rule">节日名固定 <b>the+…+Festival</b>，the 不能丢；在某节日用 <b>at the…Festival</b>，具体某天用 <b>On</b>，期间用 <b>during</b>。</div>',
    qs:[
-    {kind:"choice",q:"问「你喜欢什么节日?」哪句对？",a:"What festivals do you like?",opts:["What festivals do you like?","What do you like festivals?","You like what festivals?"],explain:"特殊疑问句：What festivals do you like?",tag:"句型"},
-    {kind:"choice",q:"中秋节中国人通常吃什么？",a:"Chinese people usually eat mooncakes.",opts:["Chinese people usually eat mooncakes.","Chinese people usually eat rice dumplings.","Chinese people usually eat fish."],explain:"中秋吃月饼 mooncakes；端午才吃粽子 rice dumplings。",tag:"句型"},
-    {kind:"speak",q:"回答：What do you do at the Spring Festival?（说一句你做什么）",a:"I eat dumplings.",accept:["i eat dumplings","we have a big dinner","i visit my relatives","i get red envelopes","we visit relatives"],explain:"用 I/We + 动词回答，如 I eat dumplings. / We visit relatives. / I get red envelopes.",tag:"句型",lang:"en"}
+    {kind:"choice",q:"选正确写法：",a:"I like the Spring Festival.",opts:["I like the Spring Festival.","I like Spring Festival.","I like spring festival."],explain:"节日名前必须有 the，Spring、Festival 首字母大写。这是你以前丢分的点！",tag:"U2语法"},
+    {kind:"choice",q:"We eat mooncakes ____ the Mid-Autumn Festival.",a:"at",opts:["at","on","in"],explain:"在某节日用 at the…Festival。",tag:"U2语法"},
+    {kind:"choice",q:"____ New Year's Eve, families have a big dinner.",a:"On",opts:["On","At","During"],explain:"除夕是具体某天，用 On New Year's Eve。",tag:"U2语法"},
+    {kind:"speak",q:"用英语说「我喜欢春节。」（点 🎤 说）",a:"I like the Spring Festival.",accept:["i like the spring festival"],explain:"I like the Spring Festival. 别丢 the、注意大写。",tag:"U2语法",lang:"en"}
    ]},
-  {id:"moxie",name:"节日词默写关",ico:"✍️",tag:"拼写",
-   intro:'<div class="rule">在<b>纸上默写</b>英语，再点"看答案"对照拼写（注意 the 和首字母大写）。</div>',
+  {id:"u2look",name:"M4U2 look / see / watch",ico:"👀",tag:"U2辨析",
+   intro:'<div class="rule"><b>look</b> 看的动作；<b>see</b> 看到的结果；<b>watch</b> 全神贯注地观看(电视/比赛/表演)。</div>',
    qs:[
-    {kind:"write",q:"默写：春节",a:"the Spring Festival",explain:"the Spring Festival —— 别丢 the，S、F 大写。",tag:"拼写"},
-    {kind:"write",q:"默写：端午节",a:"the Dragon Boat Festival",explain:"the Dragon Boat Festival。",tag:"拼写"},
-    {kind:"write",q:"默写：中秋节",a:"the Mid-Autumn Festival",explain:"the Mid-Autumn Festival；Mid-Autumn 有连字符。",tag:"拼写"},
-    {kind:"write",q:"默写：月饼 / 粽子 / 红包",a:"mooncake / rice dumpling / red envelope",explain:"mooncake 月饼；rice dumpling 粽子；red envelope 红包。",tag:"拼写"}
+    {kind:"choice",q:"____ at the lanterns! They are beautiful.",a:"Look",opts:["Look","See","Watch"],explain:"提醒别人去看(动作)用 Look at…。",tag:"U2辨析"},
+    {kind:"choice",q:"We ____ a dragon boat race on TV.",a:"watch",opts:["watch","look","see"],explain:"看比赛/电视/表演用 watch。",tag:"U2辨析"},
+    {kind:"choice",q:"I can ____ beautiful fireworks in the sky.",a:"see",opts:["see","watch","look"],explain:"看到(结果)用 see；I can see…。",tag:"U2辨析"}
+   ]},
+  {id:"u2mx",name:"M4U2 节日词默写",ico:"✍️",tag:"U2默写",
+   intro:'<div class="rule">纸上默写英语，注意 the 和首字母大写。</div>',
+   qs:[
+    {kind:"write",q:"默写：春节",a:"the Spring Festival",explain:"the Spring Festival —— 别丢 the。",tag:"U2默写"},
+    {kind:"write",q:"默写：端午节",a:"the Dragon Boat Festival",explain:"the Dragon Boat Festival。",tag:"U2默写"},
+    {kind:"write",q:"默写：月饼 / 粽子 / 红包",a:"mooncake / rice dumpling / red envelope",explain:"mooncake；rice dumpling；red envelope。",tag:"U2默写"}
+   ]},
+  {id:"u3ci",name:"M4U3 故事词汇",ico:"🦆",tag:"U3词汇",
+   intro:'<div class="rule">Story time（丑小鸭）的词。</div>',
+   qs:[
+    {kind:"choice",q:"duckling 是什么？",a:"小鸭子",opts:["小鸭子","天鹅","鸟巢"],explain:"duckling 小鸭子；swan 天鹅；nest 鸟巢/窝。",tag:"U3词汇"},
+    {kind:"choice",q:"「天鹅」用英语？",a:"swan",opts:["swan","duckling","worm"],explain:"swan 天鹅；worm 虫子。",tag:"U3词汇"},
+    {kind:"choice",q:"ugly 和 lovely 分别是？",a:"丑的 / 可爱的",opts:["丑的 / 可爱的","可爱的 / 丑的","灰的 / 重的"],explain:"ugly 丑的；lovely 可爱的；grey 灰色的；heavy 重的。",tag:"U3词汇"},
+    {kind:"choice",q:"feed 是什么意思？",a:"喂养",opts:["喂养","赶走","孤独"],explain:"feed 喂养；drive…away 赶走；lonely 孤独的。",tag:"U3词汇"}
+   ]},
+  {id:"u3yf",name:"M4U3 语法·feed/序数词/形容词",ico:"📘",tag:"U3语法",
+   intro:'<div class="rule">老师重点：feed…with；fourth(第四，序数词)；<b>lovely/lonely 以 -ly 结尾但是形容词</b>；现在进行时 is making。</div>',
+   qs:[
+    {kind:"choice",q:"Mother Duck feeds her babies ____ small worms.",a:"with",opts:["with","at","of"],explain:"feed … with … 用…喂养。",tag:"U3语法"},
+    {kind:"choice",q:"「第四个蛋」用英语：the ____ egg.",a:"fourth",opts:["fourth","four","fourthe"],explain:"序数词第四=fourth(four+th)，表顺序。",tag:"U3语法"},
+    {kind:"choice",q:"lovely 是什么词？",a:"形容词",opts:["形容词","副词","动词"],explain:"lovely/lonely 以 -ly 结尾，但是形容词(不是副词)。",tag:"U3语法"},
+    {kind:"choice",q:"Mother Duck ____ a nest now.（正在筑巢）",a:"is making",opts:["is making","makes","make"],explain:"now 表正在进行，用现在进行时 is making。",tag:"U3语法"}
+   ]},
+  {id:"u3mx",name:"M4U3 词汇默写",ico:"✍️",tag:"U3默写",
+   intro:'<div class="rule">纸上默写英语，再看答案对照。</div>',
+   qs:[
+    {kind:"write",q:"默写：小鸭子",a:"duckling",explain:"duckling。",tag:"U3默写"},
+    {kind:"write",q:"默写：天鹅 / 鸟巢",a:"swan / nest",explain:"swan 天鹅；nest 鸟巢。",tag:"U3默写"},
+    {kind:"write",q:"默写：丑的 / 可爱的",a:"ugly / lovely",explain:"ugly 丑的；lovely 可爱的。",tag:"U3默写"}
    ]},
   {id:"huilu",name:"错题回炉关",ico:"🔥",tag:"",dynamic:true,
    intro:'<div class="rule">这一关收集你<b>以前做错的题</b>，再练一遍。错题练熟，考试就稳了！</div>'}
@@ -247,7 +275,7 @@ var TAG_ADVICE = {
 };
 
 /* ===================== 通用：存储 / 声音 / 计时 ===================== */
-var STORE_KEY="kenton_m4u2_v1";
+var STORE_KEY="kenton_m4_v1";
 function loadStore(){try{return JSON.parse(localStorage.getItem(STORE_KEY))||{events:[]};}catch(e){return {events:[]};}}
 function saveEvent(ev){var s=loadStore();s.events.push(ev);try{localStorage.setItem(STORE_KEY,JSON.stringify(s));}catch(e){}}
 
@@ -461,7 +489,7 @@ document.getElementById("nextBtn").onclick=function(){cur.idx++;if(cur.idx>=cur.
 function finish(){
   stopTimer();
   var dur=Math.round((Date.now()-cur.t0)/1000),total=cur.qs.length;
-  saveEvent({ts:Date.now(),type:"review",subject:"en_m4u2",lesson:cur.name,total:total,wrong:cur.wrong,durationSec:dur,items:cur.items});
+  saveEvent({ts:Date.now(),type:"review",subject:"en_m4",lesson:cur.name,total:total,wrong:cur.wrong,durationSec:dur,items:cur.items});
   var pct=total?Math.round(cur.right/total*100):0;
   document.getElementById("rScore").textContent=pct+"%";
   document.getElementById("rSub").textContent="「"+cur.name+"」答对 "+cur.right+" / "+total+" 题 · 用时 "+dur+" 秒 · 平均每题 "+(total?Math.round(dur/total*10)/10:0)+" 秒"+(pct>=90?" 🌟太棒了！":pct>=70?" 👍不错！":" 加油，多练几遍！");
@@ -506,7 +534,7 @@ function renderParent(){
 /* ===================== 导出（兼容默写软件格式） ===================== */
 function buildExport(s){
   var lines=[];
-  lines.push("【哥哥英语M4U2复习档案】导出时间:"+fmt(Date.now()));
+  lines.push("【哥哥英语Module4总复习档案】导出时间:"+fmt(Date.now()));
   lines.push("练习总关数:"+s.events.length);lines.push("");
   var wc={};s.events.forEach(function(e){(e.items||[]).forEach(function(it){if(!it.ok)wc[it.word]=(wc[it.word]||0)+1;});});
   var rep=Object.keys(wc).filter(function(k){return wc[k]>=2;});
@@ -519,7 +547,7 @@ function buildExport(s){
     if(w.length)lines.push("  错题:"+w.map(function(it){return (it.tag?"["+it.tag+"]":"")+it.hint.replace(/\n/g," ").slice(0,24);}).join("；"));
   });
   lines.push("");lines.push("== 原始数据(JSON,可直接投喂给Claude)==");
-  lines.push(JSON.stringify({child:"哥哥",subject:"英语4下M4U2",events:s.events}));
+  lines.push(JSON.stringify({child:"哥哥",subject:"英语4下Module4",events:s.events}));
   return lines.join("\n");
 }
 function copyToClipboard(txt,boxId,btn){
@@ -529,7 +557,7 @@ function copyToClipboard(txt,boxId,btn){
   btn.textContent=done?"✅ 已复制！发给爸爸吧":"👆 长按上面文字框全选复制";
 }
 function downloadText(txt){try{var blob=new Blob([txt],{type:"text/plain;charset=utf-8"});var url=URL.createObjectURL(blob);
-  var a=document.createElement("a");a.href=url;a.download="哥哥英语M4U2复习记录_"+stamp()+".txt";document.body.appendChild(a);a.click();
+  var a=document.createElement("a");a.href=url;a.download="哥哥英语Module4复习记录_"+stamp()+".txt";document.body.appendChild(a);a.click();
   setTimeout(function(){a.remove();URL.revokeObjectURL(url);},500);return true;}catch(e){return false;}}
 document.getElementById("menuExport").onclick=function(){copyToClipboard(buildExport(loadStore()),"menuExportBox",this);};
 document.getElementById("menuDownload").onclick=function(){this.textContent=downloadText(buildExport(loadStore()))?"✅ 已存成文件":"用上面的复制按钮试试";};
