@@ -243,12 +243,12 @@
       "notes": "孩子端 apps/eddey_chinese_review.html 导出归档。下次重点练按顺序/谁+做了什么+结果复述。"
     },
     {
-      "id": "eddey_m4_review_2026-06-15",
+      "id": "kenton_m4_review_2026-06-15",
       "date": "2026-06-15",
-      "child": "eddey",
+      "child": "kenton",
       "subject": "英语",
-      "title": "弟弟英语 Module 4 总复习软件（U1/U2/U3 一个入口，11关36题）",
-      "app_file": "apps/eddey_m4_review.html",
+      "title": "哥哥英语 Module 4 总复习软件（U1/U2/U3 一个入口，11关36题）",
+      "app_file": "apps/kenton_m4_review.html",
       "knowledge_points": [
         "U1 play the+乐器/Where's/Whose",
         "U2 the…Festival/at-on-during/look-see-watch",
@@ -257,7 +257,25 @@
       ],
       "difficulty": "medium",
       "result": "结合老师M4U2知识梳理(PDF)+哥哥错题(I like the Spring Festival.)；待练习后回填。",
-      "notes": "老师 M4 期末复习知识梳理PDF(U1 Music class/U2 Festivals/U3 Story time)合成弟弟一个总入口。选择25/🎤口说2/纸上默写9，每题讲解+错题回炉。"
+      "notes": "老师 M4 知识梳理PDF(U1 Music class/U2 Festivals/U3 Story time)合成哥哥一个总入口。选择25/🎤口说2/纸上默写9，每题讲解+错题回炉。"
+    },
+    {
+      "id": "eddey_lesson_2026-06-15",
+      "date": "2026-06-15",
+      "child": "eddey",
+      "subject": "英语",
+      "title": "老师课堂记录 · 试卷6解析 + 试卷8讲评（Eddey）",
+      "source_file": "data/learning/lesson_eddey_2026-06-15.json",
+      "knowledge_points": [
+        "听力oo短音/ʊ/",
+        "after class≠after school",
+        "名词单复数(these/are标志词)",
+        "一般现在时",
+        "作文运动动词搭配(ski/skate不+play)"
+      ],
+      "difficulty": "—",
+      "result": "进步：试卷6听力比试卷4好、试卷8单复数全对(表扬)、作文句型多元；仍弱：单复数错误率高、一般现在时(明天解析)。作业：整理试卷6错题笔记。",
+      "notes": "老师对今天 Eddey 课程内容与判断的口头记录，家长转述。"
     }
   ]
 }

@@ -1,9 +1,12 @@
 {
   "child": "eddey",
   "name": "Eddey",
-  "updated": "2026-06-14",
+  "updated": "2026-06-15",
   "学习总档案": "docs/学习记忆_弟弟.md —— 长期画像/三科错题/复习规则权威总档，出题前必读",
-  "教材": { "英语": "上海《尖子生笔记·同步教材》英语 三年级下（沪教版/钟书金牌）", "参考": "data/learning/textbook_reference.json" },
+  "教材": {
+    "英语": "上海《尖子生笔记·同步教材》英语 三年级下（沪教版/钟书金牌）",
+    "参考": "data/learning/textbook_reference.json"
+  },
   "summary": "2026-06-13 建立语文期末复习主线（三下，以期末复习索引为总骨架）；同日归档英语期末冲刺卷（四）错题，建立英语学情画像。各知识点掌握度待孩子练习/重做后回填。",
   "语文复习主线": {
     "index": "data/learning/chinese_review_eddey_grade3b.json",
@@ -23,26 +26,78 @@
         "作文：能写但不够具体"
       ],
       "knowledge_points": {
-        "字词默写": { "mastery": 80, "trend": "up", "last_seen": "2026-06-14" },
-        "多音字辨析": { "mastery": 85, "trend": "up", "last_seen": "2026-06-14" },
-        "课文判断": { "mastery": 80, "trend": "up", "last_seen": "2026-06-14" },
-        "复述/概括故事(按点说)": { "mastery": 40, "trend": "down", "last_seen": "2026-06-14" },
-        "转述句": { "mastery": 70, "trend": "up", "last_seen": "2026-06-14" },
-        "寻物启事": { "mastery": 65, "trend": "flat", "last_seen": "2026-06-13" },
-        "阅读表达": { "mastery": 50, "trend": "flat", "last_seen": "2026-06-13" },
-        "拟声词/有趣题目": { "mastery": 80, "trend": "up", "last_seen": "2026-06-14" },
-        "作文": { "mastery": 65, "trend": "up", "last_seen": "2026-06-14" }
+        "字词默写": {
+          "mastery": 80,
+          "trend": "up",
+          "last_seen": "2026-06-14"
+        },
+        "多音字辨析": {
+          "mastery": 85,
+          "trend": "up",
+          "last_seen": "2026-06-14"
+        },
+        "课文判断": {
+          "mastery": 80,
+          "trend": "up",
+          "last_seen": "2026-06-14"
+        },
+        "复述/概括故事(按点说)": {
+          "mastery": 40,
+          "trend": "down",
+          "last_seen": "2026-06-14"
+        },
+        "转述句": {
+          "mastery": 70,
+          "trend": "up",
+          "last_seen": "2026-06-14"
+        },
+        "寻物启事": {
+          "mastery": 65,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "阅读表达": {
+          "mastery": 50,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "拟声词/有趣题目": {
+          "mastery": 80,
+          "trend": "up",
+          "last_seen": "2026-06-14"
+        },
+        "作文": {
+          "mastery": 65,
+          "trend": "up",
+          "last_seen": "2026-06-14"
+        }
       }
     },
     "数学": {
       "strengths": [],
-      "weaknesses": ["计算(竖式对位/进位/漏0)", "余数单位还原(如800÷90余80元)", "脱式顺序、乱用简便", "应用题建模找中间量", "单位量感(长度/周长/面积)", "组合图形面积(拆/补/移)", "线段图(少的一份→多的量)", "分数意义", "统计图表达"],
+      "weaknesses": [
+        "计算(竖式对位/进位/漏0)",
+        "余数单位还原(如800÷90余80元)",
+        "脱式顺序、乱用简便",
+        "应用题建模找中间量",
+        "单位量感(长度/周长/面积)",
+        "组合图形面积(拆/补/移)",
+        "线段图(少的一份→多的量)",
+        "分数意义",
+        "统计图表达"
+      ],
       "note": "校内沪教版；详见 docs/学习记忆_弟弟.md",
       "knowledge_points": {}
     },
     "英语": {
       "主线": "data/learning/english_eddey.json",
-      "strengths": ["整体正确率高（95%）", "swimming 发音已熟练（练82次）"],
+      "strengths": [
+        "整体正确率高（95%）",
+        "swimming 发音已熟练（练82次）",
+        "试卷8单复数考点全对(老师表扬·进步)",
+        "试卷6听力比试卷4进步",
+        "作文句型多元化"
+      ],
       "weaknesses": [
         "名词复数 s（rooms 等）",
         "英语句子语序（如 There are lots of fun things to do. / I like swimming in the pool.）",
@@ -55,39 +110,171 @@
         "一般疑问句应答：Do you...? 误用 Yes, I am.（应 Yes, I do.）",
         "阅读理解：判断题不回原文找细节、问答题漏 is/不用完整句",
         "动词搭配：like + doing（误写 I like play football）",
-        "单词拼写：合成长词 skateboard、see 误拼 cee"
+        "单词拼写：合成长词 skateboard、see 误拼 cee",
+        "名词单复数错误率高：these/are 标志词会划但仍用单数(重点)",
+        "一般现在时仍有错(明天解析)",
+        "听力 oo 短音/ʊ/ 仅 good/look/book/foot/cook/wood",
+        "阅读 after class ≠ after school 要区分",
+        "作文运动动词搭配：ski/skate 等不+play"
       ],
       "knowledge_points": {
-        "听音判对错": { "mastery": 50, "trend": "flat", "last_seen": "2026-06-13" },
-        "英语句子语序": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-13" },
-        "名词复数s": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-13" },
-        "地道用词(take classes)": { "mastery": 45, "trend": "flat", "last_seen": "2026-06-13" },
-        "发音 rooms": { "mastery": 40, "trend": "up", "last_seen": "2026-06-13" },
-        "发音 bathroom": { "mastery": 46, "trend": "flat", "last_seen": "2026-06-13" },
-        "There is/are": { "mastery": 65, "trend": "flat", "last_seen": "2026-06-13" },
-        "房间/家具词": { "mastery": 70, "trend": "flat", "last_seen": "2026-06-13" },
-        "三下单元词汇拼写(家长指出错词)": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-14" },
-        "名词复数(身体部位)": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-14" },
-        "a/an用法": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-14" },
-        "描述句型(I have/My...are)": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-14" },
-        "一般现在时(含三单)": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-14" },
-        "物主代词": { "mastery": 50, "trend": "flat", "last_seen": "2026-06-13" },
-        "句型转换": { "mastery": 50, "trend": "flat", "last_seen": "2026-06-13" },
-        "一般疑问句应答": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-13" },
-        "阅读理解": { "mastery": 60, "trend": "flat", "last_seen": "2026-06-13" },
-        "动词搭配(like+doing)": { "mastery": 50, "trend": "flat", "last_seen": "2026-06-13" },
-        "单词拼写": { "mastery": 60, "trend": "flat", "last_seen": "2026-06-13" },
-        "写作(自我介绍)": { "mastery": 55, "trend": "flat", "last_seen": "2026-06-14" }
+        "听音判对错": {
+          "mastery": 50,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "英语句子语序": {
+          "mastery": 55,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "名词复数s": {
+          "mastery": 55,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "地道用词(take classes)": {
+          "mastery": 45,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "发音 rooms": {
+          "mastery": 40,
+          "trend": "up",
+          "last_seen": "2026-06-13"
+        },
+        "发音 bathroom": {
+          "mastery": 46,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "There is/are": {
+          "mastery": 65,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "房间/家具词": {
+          "mastery": 70,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "三下单元词汇拼写(家长指出错词)": {
+          "mastery": 55,
+          "trend": "flat",
+          "last_seen": "2026-06-14"
+        },
+        "名词复数(身体部位)": {
+          "mastery": 55,
+          "trend": "flat",
+          "last_seen": "2026-06-14"
+        },
+        "a/an用法": {
+          "mastery": 55,
+          "trend": "flat",
+          "last_seen": "2026-06-14"
+        },
+        "描述句型(I have/My...are)": {
+          "mastery": 55,
+          "trend": "flat",
+          "last_seen": "2026-06-14"
+        },
+        "一般现在时(含三单)": {
+          "mastery": 55,
+          "trend": "flat",
+          "last_seen": "2026-06-14"
+        },
+        "物主代词": {
+          "mastery": 50,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "句型转换": {
+          "mastery": 50,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "一般疑问句应答": {
+          "mastery": 55,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "阅读理解": {
+          "mastery": 60,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "动词搭配(like+doing)": {
+          "mastery": 50,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "单词拼写": {
+          "mastery": 60,
+          "trend": "flat",
+          "last_seen": "2026-06-13"
+        },
+        "写作(自我介绍)": {
+          "mastery": 55,
+          "trend": "flat",
+          "last_seen": "2026-06-14"
+        },
+        "名词单复数(标志词these/are)": {
+          "mastery": 55,
+          "trend": "down",
+          "last_seen": "2026-06-15"
+        },
+        "一般现在时": {
+          "mastery": 60,
+          "trend": "flat",
+          "last_seen": "2026-06-15"
+        },
+        "听力 oo 短音/ʊ/": {
+          "mastery": 65,
+          "trend": "up",
+          "last_seen": "2026-06-15"
+        },
+        "阅读细节(after class/school)": {
+          "mastery": 60,
+          "trend": "flat",
+          "last_seen": "2026-06-15"
+        },
+        "作文运动动词搭配(play)": {
+          "mastery": 60,
+          "trend": "flat",
+          "last_seen": "2026-06-15"
+        }
       }
     }
   },
   "milestones": [
-    { "date": "2026-06-13", "text": "建立三下语文期末复习主线，上线15关'语文期末闯关王'。掌握度为基于历史错题的初估，待真实练习数据回填。" },
-    { "date": "2026-06-13", "text": "导入首批英语练习真实数据（房间+活动主题，正确率95%）。定位薄弱：听音判对错、句子语序、名词复数s、take classes、rooms/bathroom发音。详见 english_eddey.json。" },
-    { "date": "2026-06-13", "text": "归档英语期末冲刺卷（四）错题，建立英语学情画像。9 个错题组，重点薄弱：物主代词、句型转换、一般疑问句应答、like+doing。已生成可打印错题重做卷私发家长。" },
-    { "date": "2026-06-14", "text": "存档 6.12 课堂 Module 4 复习内容（身体部位复数/I have描述句型/一般现在时含三单），并上线『英语 Module 4 闯关王』复习软件（5关+错题回炉，含输入自动判分与英语朗读）。" },
-    { "date": "2026-06-14", "text": "归档三下第八单元复习 11 关：字词/多音字/课文/拟声词/作文都稳；最薄弱=复述故事『只答一点』(1/3，错2次)。明细见 data/learning/chinese_review_eddey_sessions.json。下次重点练『按顺序/谁+做了什么+结果』复述。" },
-    { "date": "2026-06-14", "text": "英语单元默写首次导出判分存疑：导出全标'对'但家长反映实际有反复错词——默写助手原判分(只点红错词、其余默认对)不可靠。已改为对答案时每词强制点✅/❌。此次数据不计入掌握度，待用新版重默或家长提供错词后回填。" }
+    {
+      "date": "2026-06-13",
+      "text": "建立三下语文期末复习主线，上线15关'语文期末闯关王'。掌握度为基于历史错题的初估，待真实练习数据回填。"
+    },
+    {
+      "date": "2026-06-13",
+      "text": "导入首批英语练习真实数据（房间+活动主题，正确率95%）。定位薄弱：听音判对错、句子语序、名词复数s、take classes、rooms/bathroom发音。详见 english_eddey.json。"
+    },
+    {
+      "date": "2026-06-13",
+      "text": "归档英语期末冲刺卷（四）错题，建立英语学情画像。9 个错题组，重点薄弱：物主代词、句型转换、一般疑问句应答、like+doing。已生成可打印错题重做卷私发家长。"
+    },
+    {
+      "date": "2026-06-14",
+      "text": "存档 6.12 课堂 Module 4 复习内容（身体部位复数/I have描述句型/一般现在时含三单），并上线『英语 Module 4 闯关王』复习软件（5关+错题回炉，含输入自动判分与英语朗读）。"
+    },
+    {
+      "date": "2026-06-14",
+      "text": "归档三下第八单元复习 11 关：字词/多音字/课文/拟声词/作文都稳；最薄弱=复述故事『只答一点』(1/3，错2次)。明细见 data/learning/chinese_review_eddey_sessions.json。下次重点练『按顺序/谁+做了什么+结果』复述。"
+    },
+    {
+      "date": "2026-06-14",
+      "text": "英语单元默写首次导出判分存疑：导出全标'对'但家长反映实际有反复错词——默写助手原判分(只点红错词、其余默认对)不可靠。已改为对答案时每词强制点✅/❌。此次数据不计入掌握度，待用新版重默或家长提供错词后回填。"
+    },
+    {
+      "date": "2026-06-15",
+      "text": "老师课堂(试卷6解析+试卷8讲评)：进步=试卷6听力↑、试卷8单复数全对(表扬)、作文句型多元；待补=名词单复数(标志词仍用单数)、一般现在时(明天解析)、oo短音词、after class/school、运动不+play。详见 data/learning/lesson_eddey_2026-06-15.json。作业：整理试卷6错题笔记。"
+    }
   ],
   "_schema": {
     "knowledge_points": "形如 { \"小数除法\": { \"mastery\": 85, \"trend\": \"up|flat|down\", \"last_seen\": \"YYYY-MM-DD\" } }，mastery 为 0-100 的掌握度估计",
