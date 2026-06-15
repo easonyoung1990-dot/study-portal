@@ -110,5 +110,12 @@
     "title": "语文冲刺软件 · 三下（刷题48题·真人朗读·错题归档）",
     "file": "apps/eddey_chinese_sprint.html",
     "added": "2026-06-15"
+  },
+  {
+    "child": "kenton",
+    "subject": "英语",
+    "title": "英语 M4U2 复习 · 中国节日（结合错题+老师知识梳理）",
+    "file": "apps/kenton_m4u2_review.html",
+    "added": "2026-06-15"
   }
 ]

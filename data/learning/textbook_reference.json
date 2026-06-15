@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-14",
+  "updated": "2026-06-15",
   "purpose": "教材对齐总纲：今后两娃的英语（及找得到的语文/数学）复习、出题、做软件，都以这套同步教材的方向、单元结构、栏目和题型为准。",
   "series": {
     "name": "上海《尖子生笔记·同步教材》",
@@ -1378,12 +1378,43 @@
                 [
                   "rice dumpling",
                   "粽子"
+                ],
+                [
+                  "mooncake",
+                  "月饼"
+                ],
+                [
+                  "red envelope",
+                  "红包"
+                ],
+                [
+                  "lantern",
+                  "灯笼"
+                ],
+                [
+                  "fireworks",
+                  "烟花"
+                ],
+                [
+                  "dragon boat race",
+                  "龙舟赛"
+                ],
+                [
+                  "relative",
+                  "亲戚"
+                ],
+                [
+                  "New Year's Eve",
+                  "除夕"
                 ]
               ],
               "knowledge": [
-                "询问喜欢什么节日及回答",
-                "询问某节日通常做什么及回答"
-              ]
+                "节日名固定结构：the+…+Festival，the 不能省、首字母大写",
+                "介词：在某节日 at the…Festival；具体某天 On(New Year's Eve)；期间 during",
+                "look(看的动作)/see(看到的结果)/watch(全神贯注看电视、比赛、表演) 辨析",
+                "问答：What festivals do you like? / What do you do at…? 用 I/We+动词回答"
+              ],
+              "teacher_source": "老师课堂知识梳理 M4U2（2026-06-15 家长提供PDF）"
             },
             "M4U3 Story time 故事时间": {
               "words": [
