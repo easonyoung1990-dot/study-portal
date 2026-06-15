@@ -295,6 +295,25 @@
       "difficulty": "medium",
       "result": "年月日8/8全对；其余多7/8。薄弱见档案。",
       "notes": "孩子端数学冲刺软件导出。错点：周长当面积、元角分换算、竖式进位、植树两端都栽、500÷4。"
+    },
+    {
+      "id": "kenton_math_2026-06-15",
+      "date": "2026-06-15",
+      "child": "kenton",
+      "subject": "数学",
+      "title": "数学四下冲刺 7关60题 错题归档",
+      "archive_file": "data/learning/math_kenton_2026-06-15.json",
+      "knowledge_points": [
+        "小数意义与性质",
+        "小数加减法(退位/连减)",
+        "运算定律·简便计算",
+        "四则混合运算(运算顺序)",
+        "单位换算(元角分↔小数)",
+        "典型应用题"
+      ],
+      "difficulty": "medium",
+      "result": "错8/60，综合卷19/20。亮点：简便计算8/8全对(长期弱点进步)。薄弱：整数减小数退位、小数连减、小数文字转写(三十点零五反复错2次)、运算顺序、元角分↔小数、速度×时间。",
+      "notes": "孩子端 apps/kenton_math_sprint.html 导出，在另一台 iPad 离线做(未连云端)、家长手动复制投喂。profile_kenton 数学 knowledge_points 由此首次填充。云端未上传原因=那台设备 localStorage 未设 eb_endpoint(详见 docs/学习记忆.md 当日日志)。"
     }
   ]
 }
