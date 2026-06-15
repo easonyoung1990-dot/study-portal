@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>错题讲解 + 同类题重练 · 数学</title>
+<style>
+:root{--red:#3170B5;--redd:#225182;--gold:#F2B632;--golddk:#D89400;--ink:#3A2A1E;--paper:#FBF3E6;--line:#EBDCC4;
+--green:#3C9D54;--greenbg:#EAF7EC;--blue:#3170B5;--bluebg:#E8F0FA;--purple:#7B3FA0;--purplebg:#F3EAFA;--orange:#E8783C;}
+/* 两娃主题色：哥哥青蓝、弟弟珊瑚橙——切换时整页主色随之变 */
+body.kenton{--red:#3170B5;--redd:#225182;}
+body.eddey{--red:#E8783C;--redd:#C25A22;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{font-family:'LXGW WenKai Screen','PingFang SC','Microsoft YaHei',sans-serif;
+background:radial-gradient(circle at 10% 6%,#FCE6B8 0,transparent 38%),radial-gradient(circle at 92% 96%,#F6D2C0 0,transparent 42%),var(--paper);
+color:var(--ink);min-height:100vh;padding-bottom:34px;}
+.wrap{max-width:740px;margin:0 auto;padding:14px;}
+.top{display:flex;align-items:center;gap:10px;padding:12px 4px 6px;}
+.top .badge{background:var(--red);color:#fff;font-weight:700;font-size:19px;padding:6px 13px;border-radius:13px 13px 13px 4px;box-shadow:0 4px 0 var(--redd);}
+.top h1{font-size:18px;margin:0;}
+.top .sub{font-size:12px;color:#a8946f;}
+.mute{margin-left:auto;background:#fff;border:2px solid var(--line);border-radius:12px;font-size:20px;padding:6px 10px;cursor:pointer;box-shadow:0 3px 0 #efe1c8;}
+/* 选孩子 */
+.kidbar{display:flex;gap:10px;margin:4px 0 2px;}
+.kidbtn{flex:1;font-family:inherit;font-weight:700;font-size:17px;padding:12px 8px;border-radius:14px;border:3px solid var(--line);background:#fff;cursor:pointer;box-shadow:0 4px 0 #efe1c8;color:#a08d6f;transition:transform .06s;}
+.kidbtn:active{transform:translateY(2px);}
+.kidbtn .em{font-size:24px;display:block;}
+.kidbtn.on.kk{border-color:#3170B5;color:#225182;background:#E8F0FA;}
+.kidbtn.on.ee{border-color:#E8783C;color:#C25A22;background:#FDEFE6;}
+.card{background:#fff;border:2px solid var(--line);border-radius:18px;padding:18px;margin:13px 0;box-shadow:0 6px 0 #efe1c8;}
+.card h2{margin:0 0 8px;font-size:19px;color:var(--redd);}
+.lead{font-size:14px;color:#7d6a4e;line-height:1.7;margin:0 0 10px;}
+.bigmenu{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.bigtile{background:#fff;border:3px solid var(--line);border-radius:18px;padding:16px 12px 14px;cursor:pointer;box-shadow:0 6px 0 #efe1c8;text-align:center;transition:transform .08s;position:relative;}
+.bigtile:active{transform:translateY(3px);}
+.bigtile .ic{font-size:36px;}
+.bigtile .nm{font-weight:700;font-size:16px;margin-top:6px;line-height:1.3;}
+.bigtile .ds{font-size:12px;color:#a08d6f;margin-top:4px;}
+.bigtile .pg{font-size:12px;margin-top:7px;font-weight:700;}
+.bigtile.done{border-color:var(--green);background:var(--greenbg);}
+.tcolor0{border-color:#bcd4ee;} .tcolor1{border-color:#cfe3c6;} .tcolor2{border-color:#ddc7ea;}
+.tcolor3{border-color:#f3d2a0;} .tcolor4{border-color:#f0c4bc;} .tcolor5{border-color:#c9c0ee;}
+.tcolor6{border-color:#b9dad0;} .tcolor7{border-color:#e8c9a0;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--red);color:#fff;border:none;font-family:inherit;font-weight:700;font-size:16px;padding:12px 20px;border-radius:14px;box-shadow:0 4px 0 var(--redd);cursor:pointer;transition:transform .06s;}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--redd);}
+.btn.ghost{background:#fff;color:var(--redd);border:2px solid var(--red);box-shadow:0 4px 0 #f0d3cf;}
+.btn.green{background:var(--green);box-shadow:0 4px 0 #2c7a40;}
+.btn.blue{background:var(--blue);box-shadow:0 4px 0 #225182;}
+.btn.gray{background:#fff;color:#7d6a4e;border:2px solid var(--line);box-shadow:0 4px 0 #efe1c8;}
+.btn.big{font-size:19px;padding:15px 26px;}
+.btn.sm{font-size:14px;padding:9px 14px;}
+.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:12px;justify-content:center;}
+.back{background:none;border:none;color:#a08d6f;font-size:15px;font-family:inherit;cursor:pointer;padding:8px 2px;font-weight:700;}
+.hidden{display:none!important;}
+.qhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#a08d6f;font-weight:700;}
+.qhead .sc{color:var(--golddk);}
+.qhead .tm{color:var(--blue);}
+.progbar{height:14px;background:#F0E6D2;border-radius:8px;margin:8px 0 4px;overflow:hidden;border:2px solid #E5D3Ae;}
+.progbar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#F8D070);border-radius:6px;transition:width .3s;}
+.topic-chip{display:inline-block;background:var(--bluebg);color:var(--blue);font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:4px;}
+.qtext{font-size:21px;font-weight:700;line-height:1.5;margin:14px 0 6px;color:var(--ink);}
+.qsub{font-size:13px;color:#a08d6f;margin-bottom:8px;}
+.opts{display:grid;gap:10px;margin-top:6px;}
+.opts.two{grid-template-columns:1fr 1fr;}
+.opt{font-family:inherit;font-size:19px;font-weight:700;padding:15px 12px;border-radius:14px;border:2px solid var(--line);background:#fff;cursor:pointer;box-shadow:0 4px 0 #efe1c8;transition:transform .06s;color:var(--ink);text-align:center;word-break:break-word;}
+.opt:active{transform:translateY(2px);}
+.opt.right{background:var(--greenbg);border-color:var(--green);color:var(--green);box-shadow:0 4px 0 #bfe3c8;}
+.opt.wrong{background:#FBE6E2;border-color:#D63A2E;color:#A82A20;box-shadow:0 4px 0 #f0c4bc;}
+.numdisp{font-size:38px;font-weight:800;text-align:center;color:var(--redd);background:var(--bluebg);border:2px dashed var(--blue);border-radius:14px;padding:14px;margin:8px 0;min-height:66px;font-variant-numeric:tabular-nums;letter-spacing:1px;word-break:break-all;}
+.numdisp .ph{color:#9fb6d4;font-size:22px;font-weight:400;}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:6px;}
+.key{font-family:inherit;font-size:24px;font-weight:800;padding:16px 0;border-radius:14px;border:2px solid var(--line);background:#fff;cursor:pointer;box-shadow:0 4px 0 #efe1c8;color:var(--ink);transition:transform .05s;}
+.key:active{transform:translateY(2px);}
+.key.dot{color:var(--blue);}
+.key.del{color:var(--orange);font-size:20px;}
+.unitrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.unitrow button{font-family:inherit;font-size:15px;font-weight:700;padding:9px 14px;border-radius:12px;border:2px solid var(--purple);background:var(--purplebg);color:var(--purple);cursor:pointer;}
+.fb{border-radius:14px;padding:12px 14px;margin-top:12px;font-size:15px;line-height:1.7;}
+.fb.ok{background:var(--greenbg);color:#2c7a40;border:2px solid var(--green);}
+.fb.no{background:#FBE6E2;color:#A82A20;border:2px solid #D63A2E;}
+.fb .ans{font-weight:800;font-size:18px;}
+.fb .why{margin-top:5px;color:#6b5a42;font-size:14px;}
+.lion{display:flex;gap:10px;align-items:flex-start;margin:10px 0;}
+.lion .face{font-size:32px;flex-shrink:0;}
+.lion .bubble{background:#fff;border:2px solid var(--line);border-radius:14px 14px 14px 2px;padding:10px 13px;font-size:15px;line-height:1.7;box-shadow:0 3px 0 #efe1c8;text-align:left;}
+.kou{background:linear-gradient(180deg,#FCEFCF,#FBE6B0);border:2px dashed var(--golddk);border-radius:13px;padding:11px 14px;margin:11px 0;color:#7a5800;font-weight:700;font-size:14.5px;line-height:1.8;text-align:center;}
+.oldq{background:#FBE6E2;border:2px solid #f0c4bc;border-radius:13px;padding:12px 14px;margin:10px 0;}
+.oldq .lab{font-size:12px;font-weight:700;color:#A82A20;}
+.oldq .q{font-size:18px;font-weight:700;color:var(--ink);margin:5px 0;}
+.oldq .a{font-size:15px;color:var(--green);font-weight:700;}
+.scorebig{font-size:54px;font-weight:800;text-align:center;margin:10px 0 2px;font-variant-numeric:tabular-nums;}
+.stars{font-size:30px;text-align:center;letter-spacing:4px;}
+.weakrow{display:flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--line);border-radius:12px;padding:9px 12px;margin:7px 0;font-size:14px;}
+.weakrow .bar{flex:1;height:12px;background:#F0E6D2;border-radius:6px;overflow:hidden;}
+.weakrow .bar i{display:block;height:100%;border-radius:6px;}
+.wronglist{margin-top:6px;}
+.wrongitem{border-bottom:1px solid var(--line);padding:9px 2px;font-size:14px;line-height:1.6;}
+.wrongitem .q{font-weight:700;color:var(--ink);}
+.wrongitem .a{color:var(--green);font-weight:700;}
+.wrongitem .topic{font-size:11px;color:var(--blue);background:var(--bluebg);padding:1px 7px;border-radius:10px;}
+.donebadge{font-size:12px;font-weight:700;margin-top:6px;}
+.donebadge .ok{color:var(--green);} .donebadge .no{color:#D63A2E;}
+</style>
+</head>
+<body class="kenton">
+<div class="wrap">
+  <div class="top">
+    <div class="badge" id="badge">Kenton</div>
+    <div style="flex:1"><h1>错题讲解 + 同类题重练</h1><div class="sub" id="subline">把上次做错的题，先讲明白，再换几道同类题练熟</div></div>
+    <button class="mute" id="muteBtn" onclick="toggleMute()">🔔</button>
+  </div>
+
+  <div id="home">
+    <div class="kidbar">
+      <button class="kidbtn kk" id="kb-kenton" onclick="pickKid('kenton')"><span class="em">🦁</span>哥哥 Kenton<br><span style="font-size:12px;font-weight:400">数学 四下</span></button>
+      <button class="kidbtn ee" id="kb-eddey" onclick="pickKid('eddey')"><span class="em">🐯</span>弟弟 Eddey<br><span style="font-size:12px;font-weight:400">数学 三下</span></button>
+    </div>
+    <div class="card">
+      <div class="lion"><div class="face" id="homeface">🦁</div><div class="bubble" id="homehi"></div></div>
+      <div class="kou">每张卡片＝<b>先看一遍为什么会错</b>，再做 <b>2~3 道同类题</b>把它练熟。做完会显示这张卡 <b>✅对几 ❌错几</b>。</div>
+    </div>
+    <div class="bigmenu" id="menu"></div>
+    <div class="card" style="margin-top:14px;cursor:pointer" onclick="showArchive()">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="font-size:34px">📒</div>
+        <div style="flex:1"><div style="font-weight:700;font-size:18px;color:var(--redd)">重练记录 · 学习档案</div>
+        <div style="font-size:13px;color:#7d6a4e" id="homestat">查看练过的卡、还在错的知识点，可复制/下载给家长</div></div>
+        <div style="font-size:22px;color:#a08d6f">›</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="lesson" class="hidden"></div>
+  <div id="quiz" class="hidden"></div>
+  <div id="summary" class="hidden"></div>
+  <div id="archive" class="hidden"></div>
+</div>
+<script>
+/* ============================================================
+   错题讲解 + 同类题重练（两娃合一，内容按孩子分开、绝不混用）
+   数据来源：data/learning/math_kenton_2026-06-15.json
+            data/learning/math_eddey_2026-06-15.json
+   每张卡 card: {id,topic,icon,color,origQ,origA,why(讲解),kou(口诀),
+                redo:[ {t,type:'mc'|'fill',o,a(mc为索引/fill为字符串),why,unit} ]}
+   所有算式均已逐题验算。
+   ============================================================ */
+const DATA={
+ kenton:{kid:'kenton',cn:'哥哥',en:'Kenton',emoji:'🦁',grade:'四下',
+  hi:'哥哥，这是你 6/15 数学冲刺<b>做错的题</b>。简便计算你已经全对、很棒！我们把还会错的几类，<b>一题带一类题</b>练熟它 💪',
+  cards:[
+   {id:'k_write',topic:'小数文字↔数字',icon:'🔤',color:0,
+    origQ:'三十点零五，写成小数是（　）。',origA:'30.05',
+    why:'“三十点零五”＝整数三十(30) ＋ 小数点 ＋ “零五”。小数点后面<b>听到几个字就写几位</b>：“零五”是 0 和 5 两位，写成 .05，所以是 30.05。最容易错成 30.5——那是把“零”那一位漏掉了！',
+    kou:'听到几个字 → 写几位，“零”也要占一格。',
+    redo:[
+     {t:'四十点零六，写成小数是？',type:'mc',o:['40.6','40.06','40.006'],a:1,why:'“零六”是 0、6 两位 → .06，得 40.06。'},
+     {t:'二十点一五，写成小数是（　）',type:'fill',a:'20.15',why:'“一五”是 1、5 两位 → .15，得 20.15。'},
+     {t:'一百点零零八，写成小数是（　）',type:'fill',a:'100.008',why:'“零零八”是 0、0、8 三位 → .008，得 100.008。'}]},
+   {id:'k_intsub',topic:'整数减小数·退位',icon:'➖',color:1,
+    origQ:'10 − 3.65 = ?',origA:'6.35',
+    why:'整数减小数，先把整数<b>补上小数位</b>再减：10 ＝ 10.00，小数点对齐，10.00 − 3.65 ＝ 6.35。不要看成 10−3=7 那样估。',
+    kou:'整数后面补小数位（10→10.00），再对齐相减。',
+    redo:[
+     {t:'10 − 4.25 = （　）',type:'fill',a:'5.75',why:'10.00 − 4.25 = 5.75。'},
+     {t:'20 − 6.4 = （　）',type:'fill',a:'13.6',why:'20.0 − 6.4 = 13.6。'},
+     {t:'一件衣服原价 100 元，现价 78.5 元，便宜了多少元？',type:'fill',a:'21.5',unit:'money',why:'100 − 78.5 = 21.5 元（整数减小数退位）。'}]},
+   {id:'k_chain',topic:'小数连减',icon:'🔗',color:2,
+    origQ:'8.3 − 1.5 − 2.8 = ?',origA:'4',
+    why:'连减从左往右算：8.3 − 1.5 = 6.8，再 6.8 − 2.8 = 4.0 = 4。也可以<b>先把两个减数加起来</b> 1.5 + 2.8 = 4.3，再 8.3 − 4.3 = 4。末尾 .0 要化简成整数 4。',
+    kou:'连减可以“先把减掉的加起来，再一次减”。',
+    redo:[
+     {t:'9.6 − 2.3 − 1.3 = （　）',type:'fill',a:'6',why:'9.6 − 2.3 = 7.3，7.3 − 1.3 = 6。'},
+     {t:'10 − 2.5 − 3.5 = （　）',type:'fill',a:'4',why:'先 2.5 + 3.5 = 6，再 10 − 6 = 4。'},
+     {t:'7.2 − 1.2 − 2 = ？',type:'mc',o:['4','4.2','3'],a:0,why:'7.2 − 1.2 = 6，6 − 2 = 4。'}]},
+   {id:'k_order',topic:'运算顺序',icon:'🧩',color:3,
+    origQ:'200 − 56 ÷ 7 = ?',origA:'192',
+    why:'一个算式里又有减法又有除法时，<b>先算乘除、后算加减</b>。先 56 ÷ 7 = 8，再 200 − 8 = 192。错法是从左往右 200 − 56 = 144 再 ÷7——那就错了。',
+    kou:'没括号：先乘除，后加减。',
+    redo:[
+     {t:'100 − 36 ÷ 6 = （　）',type:'fill',a:'94',why:'先 36 ÷ 6 = 6，再 100 − 6 = 94。'},
+     {t:'8 + 5 × 6 = （　）',type:'fill',a:'38',why:'先 5 × 6 = 30，再 8 + 30 = 38。'},
+     {t:'90 − 48 ÷ 8，应该先算哪一步？',type:'mc',o:['先 48÷8','先 90−48'],a:0,why:'先乘除后加减，先算 48 ÷ 8 = 6。'}]},
+   {id:'k_money',topic:'元角分↔小数',icon:'💰',color:4,
+    origQ:'8 角 = （　）元（写成小数）',origA:'0.8',
+    why:'1 元 = 10 角，所以 <b>1 角 = 0.1 元</b>。8 角 = 8 个 0.1 元 = 0.8 元。角写在小数点后第一位。',
+    kou:'1 角 = 0.1 元；几角就写在小数点后第一位。',
+    redo:[
+     {t:'5 角 = （　）元',type:'fill',a:'0.5',unit:'money',why:'5 角 = 0.5 元。'},
+     {t:'3 元 6 角 = （　）元',type:'fill',a:'3.6',unit:'money',why:'6 角 = 0.6 元，3 元 6 角 = 3.6 元。'},
+     {t:'2 角 = ？元',type:'mc',o:['0.2','2.0','0.02'],a:0,why:'1 角 = 0.1 元，2 角 = 0.2 元。'}]},
+   {id:'k_speed',topic:'速度×时间',icon:'🚗',color:5,
+    origQ:'小车每小时行 60 千米，4 小时行多少千米？',origA:'240',
+    why:'<b>路程 ＝ 速度 × 时间</b>。“每小时 60 千米”是速度，4 小时是时间，60 × 4 = 240 千米。看到“每……几小时”就是乘法。',
+    kou:'路程 = 速度 × 时间。',
+    redo:[
+     {t:'每分钟走 70 米，5 分钟走多少米？',type:'fill',a:'350',why:'70 × 5 = 350 米。'},
+     {t:'每小时行 80 千米，3 小时行多少千米？',type:'fill',a:'240',why:'80 × 3 = 240 千米。'},
+     {t:'每小时做 12 个零件，6 小时做多少个？',type:'fill',a:'72',why:'12 × 6 = 72 个。'}]}
+  ]},
+ eddey:{kid:'eddey',cn:'弟弟',en:'Eddey',emoji:'🐯',grade:'三下',
+  hi:'弟弟，这是你 6/15 数学冲刺<b>做错的题</b>。年月日你全对、真棒！我们把还会绕住的几类，<b>先讲清楚，再换几道练一练</b> 🐯',
+  cards:[
+   {id:'e_peri',topic:'周长 ≠ 面积',icon:'⬛',color:0,
+    origQ:'正方形边长 6 厘米，周长是多少厘米？',origA:'24',
+    why:'<b>周长</b>＝绕一圈四条边的长＝边长 × 4 = 6 × 4 = 24 厘米。<b>面积</b>才是边长 × 边长 = 36 平方厘米。两个别搞混！周长单位是“厘米”，面积单位是“平方厘米”。',
+    kou:'周长 = 边长×4（绕一圈）；面积 = 边长×边长。',
+    redo:[
+     {t:'正方形边长 5 厘米，周长是多少厘米？',type:'fill',a:'20',why:'周长 = 5 × 4 = 20 厘米。'},
+     {t:'正方形边长 3 厘米，面积是多少？',type:'mc',o:['12平方厘米','9平方厘米','9厘米'],a:1,why:'面积 = 3 × 3 = 9 平方厘米。'},
+     {t:'求绕花坛走一圈有多长，是在求？',type:'mc',o:['周长','面积'],a:0,why:'走一圈 = 周长。'}]},
+   {id:'e_areaunit',topic:'面积单位选择',icon:'📐',color:1,
+    origQ:'量一张课桌桌面的大小，用哪个单位合适？',origA:'平方分米',
+    why:'桌面是一个“面”，量它的大小要用<b>面积单位</b>。课桌面比手掌大、比教室地面小，用<b>平方分米</b>正好。指甲盖→平方厘米；课桌面→平方分米；教室、操场→平方米。',
+    kou:'小→平方厘米，中→平方分米，大→平方米。',
+    redo:[
+     {t:'量一张邮票的大小，用哪个单位？',type:'mc',o:['平方厘米','平方分米','平方米'],a:0,why:'邮票很小 → 平方厘米。'},
+     {t:'量教室地面的大小，用哪个单位？',type:'mc',o:['平方米','平方分米','平方厘米'],a:0,why:'地面很大 → 平方米。'},
+     {t:'量数学书封面的大小，用哪个单位？',type:'mc',o:['平方分米','平方米','米'],a:0,why:'书本封面 ≈ 平方分米。'}]},
+   {id:'e_div',topic:'整百数除法',icon:'➗',color:2,
+    origQ:'500 ÷ 4 = ?',origA:'125',
+    why:'500 ÷ 4：5 ÷ 4 = 1 余 1，把余的 1 和后面的 0 合成 10，10 ÷ 4 = 2 余 2，再把 2 和 0 合成 20，20 ÷ 4 = 5，合起来 125。也可以想 400÷4=100、100÷4=25，合起来 125。',
+    kou:'除不尽：把余数和下一位合起来，接着除。',
+    redo:[
+     {t:'600 ÷ 5 = （　）',type:'fill',a:'120',why:'600 ÷ 5 = 120。'},
+     {t:'800 ÷ 4 = （　）',type:'fill',a:'200',why:'800 ÷ 4 = 200。'},
+     {t:'900 ÷ 4 = （　）',type:'fill',a:'225',why:'900 ÷ 4 = 225。'}]},
+   {id:'e_frac',topic:'分数大小比较',icon:'🍰',color:3,
+    origQ:'3/8、1/2、5/8 中，哪个最大？',origA:'5/8',
+    why:'先把 1/2 换成同分母 = 4/8。再比 3/8、4/8、5/8：分母都是 8，<b>分子越大分数越大</b> → 5/8 最大。',
+    kou:'同分母比分子，分子大的大；分母不同先通分。',
+    redo:[
+     {t:'3/7、5/7、2/7 中，哪个最大？',type:'mc',o:['3/7','5/7','2/7'],a:1,why:'同分母，分子 5 最大 → 5/7。'},
+     {t:'1/4 和 3/4 哪个大？',type:'mc',o:['3/4','1/4'],a:0,why:'同分母比分子，3 > 1 → 3/4 大。'},
+     {t:'1/2 和 1/5 哪个大？',type:'mc',o:['1/2','1/5'],a:0,why:'同分子时分母小的反而大（分的份数少，每份更大）→ 1/2 大。'}]},
+   {id:'e_tree',topic:'植树问题',icon:'🌳',color:4,
+    origQ:'路一边每隔 5 米栽 1 棵，从头到尾栽到第 6 棵，全长多少米？',origA:'25',
+    why:'两端都栽时，<b>段数 = 棵数 − 1</b>。6 棵之间有 5 段，每段 5 米，5 × 5 = 25 米。别直接 6 × 5 = 30——那是把段数数多了。画图：6 个点之间只有 5 段。',
+    kou:'两端都栽：段数 = 棵数 − 1。',
+    redo:[
+     {t:'每隔 3 米栽 1 棵，栽到第 5 棵，全长多少米？',type:'fill',a:'12',why:'段数 = 5 − 1 = 4，4 × 3 = 12 米。'},
+     {t:'每隔 2 米放 1 盆花，从头到尾放 6 盆，全长多少米？',type:'fill',a:'10',why:'段数 = 6 − 1 = 5，5 × 2 = 10 米。'},
+     {t:'一排栽 8 棵树，两端都栽，中间有几段？',type:'mc',o:['7','8','9'],a:0,why:'段数 = 棵数 − 1 = 7。'}]},
+   {id:'e_money',topic:'元角分↔小数',icon:'💰',color:5,
+    origQ:'一支笔 3 元 2 角，写成小数是多少元？',origA:'3.2',
+    why:'1 元 = 10 角，1 角 = 0.1 元。3 元 2 角 = 3 元 + 2 个 0.1 元 = 3.2 元。角写在小数点后第一位。',
+    kou:'1 角 = 0.1 元；几元几角 → 几点几元。',
+    redo:[
+     {t:'5 角 = （　）元',type:'fill',a:'0.5',unit:'money',why:'5 角 = 0.5 元。'},
+     {t:'2 元 8 角 = （　）元',type:'fill',a:'2.8',unit:'money',why:'8 角 = 0.8 元，2 元 8 角 = 2.8 元。'},
+     {t:'7 角 = ？元',type:'mc',o:['0.7','7.0','0.07'],a:0,why:'1 角 = 0.1 元，7 角 = 0.7 元。'}]},
+   {id:'e_mul',topic:'两位数乘两位数',icon:'✖️',color:6,
+    origQ:'34 × 21 = ?',origA:'714',
+    why:'竖式分两步：先 34 × 1 = 34，再 34 × 20 = 680（十位的 2，要往左<b>错一位</b>对齐），相加 34 + 680 = 714。最容易错在第二步没错位、或进位忘了。估一下 34 × 20 = 680，接近 714 才对。',
+    kou:'先乘个位，再乘十位（往左错一位），最后相加。',
+    redo:[
+     {t:'25 × 16 = （　）',type:'fill',a:'400',why:'25×6=150，25×10=250，150+250=400。'},
+     {t:'23 × 12 = （　）',type:'fill',a:'276',why:'23×2=46，23×10=230，46+230=276。'},
+     {t:'42 × 13 = （　）',type:'fill',a:'546',why:'42×3=126，42×10=420，126+420=546。'}]}
+  ]}
+};
+const UNITS={money:['元','角'],len:['米','厘米','分米','千米']};
+
+/* ===================== 状态 ===================== */
+const SUB='数学错题重练';
+let WHO='kenton';
+function curr(){return DATA[WHO];}
+function akey(){return 'mxredo_archive_'+WHO;}
+const G={cardIdx:-1,items:[],idx:0,correct:0,answered:false,startTime:0,results:[],input:'',timerId:null};
+let MUTE=false;
+
+function show(id){['home','lesson','quiz','summary','archive'].forEach(x=>document.getElementById(x).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');window.scrollTo(0,0);}
+function goHome(){stopTimer();renderMenu();refreshHomeStat();show('home');}
+
+/* ===================== 选孩子 ===================== */
+function pickKid(who){
+  WHO=who;try{localStorage.setItem('mxredo_who',who);}catch(e){}
+  const d=curr();
+  document.body.className=who;
+  document.getElementById('badge').textContent=d.en;
+  document.getElementById('kb-kenton').classList.toggle('on',who==='kenton');
+  document.getElementById('kb-eddey').classList.toggle('on',who==='eddey');
+  document.getElementById('homeface').textContent=d.emoji;
+  document.getElementById('homehi').innerHTML=d.hi;
+  document.getElementById('subline').textContent=d.cn+'（'+d.en+'）· 数学'+d.grade+' · 把做错的题讲明白再练熟';
+  renderMenu();refreshHomeStat();show('home');
+}
+
+/* ===================== 归档 + 云端 ===================== */
+function loadArchive(){try{return JSON.parse(localStorage.getItem(akey()))||{child:curr().cn,subject:SUB,events:[]};}catch(e){return{child:curr().cn,subject:SUB,events:[]};}}
+function saveArchive(a){try{localStorage.setItem(akey(),JSON.stringify(a));}catch(e){}}
+function logEvent(ev){const a=loadArchive();a.child=curr().cn;a.subject=SUB;a.events.push(ev);saveArchive(a);cloudUpload(ev);}
+/* 云端上传：端点缺失/断网/出错都静默，绝不影响使用（fire-and-forget） */
+function cloudUpload(ev){
+  try{
+    var endpoint=null;try{endpoint=localStorage.getItem('eb_endpoint');}catch(e){}
+    if(!endpoint)return;
+    var topic=ev.topic||'';
+    var items=(ev.items||[]).map(function(it){return {kid:WHO,subject:'数学',topic:topic,item:(it.word!=null?it.word:''),ok:!!it.ok,hint:(it.hint!=null?it.hint:'')};});
+    if(!items.length)return;
+    fetch(endpoint,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(items)}).then(function(){}).catch(function(){});
+  }catch(e){}
+}
+function fmtDate(ts){const d=new Date(ts);const p=n=>(n<10?'0':'')+n;return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());}
+function cardLast(topic){const a=loadArchive();let last=null;a.events.forEach(ev=>{if(ev.topic===topic)last=ev;});return last;}
+function refreshHomeStat(){
+  const a=loadArchive();const el=document.getElementById('homestat');if(!el)return;
+  if(!a.events.length){el.textContent='还没练过——点一张错题卡，先看讲解再练同类题';return;}
+  let wrong=0,total=0;a.events.forEach(ev=>{(ev.items||[]).forEach(it=>{total++;if(!it.ok)wrong++;});});
+  el.innerHTML='已重练 <b>'+a.events.length+'</b> 张卡 ｜ 共 <b>'+total+'</b> 题 ｜ 还错 <b style="color:#D63A2E">'+wrong+'</b> 题 ｜ 点这里看记录/导出';
+}
+
+/* ===================== 首页错题卡 ===================== */
+function renderMenu(){
+  const d=curr();const m=document.getElementById('menu');
+  m.innerHTML=d.cards.map((c,i)=>{
+    const last=cardLast(c.topic);
+    let badge='<div class="pg" style="color:#a08d6f">还没练过</div>';
+    let done='';
+    if(last){const ok=last.total-last.wrong;
+      badge='<div class="donebadge">上次 <span class="ok">✅对'+ok+'</span> <span class="no">❌错'+last.wrong+'</span></div>';
+      if(last.wrong===0)done=' done';}
+    return '<div class="bigtile tcolor'+c.color+done+'" onclick="openCard('+i+')">'+
+      '<div class="ic">'+c.icon+'</div>'+
+      '<div class="nm">'+c.topic+'</div>'+
+      '<div class="ds">讲解 + '+c.redo.length+' 道同类题</div>'+badge+'</div>';
+  }).join('');
+}
+
+/* ===================== 讲解页（先讲为什么错） ===================== */
+function openCard(i){
+  G.cardIdx=i;const c=curr().cards[i];
+  let html='<button class="back" onclick="goHome()">← 返回选卡</button>'+
+   '<div class="card">'+
+    '<div class="topic-chip">'+c.icon+' '+c.topic+'</div>'+
+    '<h2>先弄明白：上次为什么错</h2>'+
+    '<div class="oldq"><div class="lab">📌 上次做错的题</div><div class="q">'+c.origQ+'</div>'+
+      '<div class="a">正确答案：'+c.origA+'</div></div>'+
+    '<div class="lion"><div class="face">'+curr().emoji+'</div><div class="bubble">'+c.why+'</div></div>'+
+    '<div class="kou">🔑 '+c.kou+'</div>'+
+    '<div class="row">'+
+      '<button class="btn gray sm" onclick="speak(\'lesson\')">🔊 读一遍讲解</button>'+
+      '<button class="btn green big" onclick="startRedo()">开始重练 '+c.redo.length+' 道同类题 →</button>'+
+    '</div></div>';
+  document.getElementById('lesson').innerHTML=html;
+  show('lesson');
+}
+
+/* ===================== 重练（同类题） ===================== */
+function startRedo(){
+  const c=curr().cards[G.cardIdx];
+  G.items=c.redo.map(q=>Object.assign({},q));
+  G.idx=0;G.correct=0;G.results=[];G.startTime=Date.now();
+  renderQuiz();show('quiz');startTimer();
+}
+function startTimer(){stopTimer();G.timerId=setInterval(updateTimer,1000);updateTimer();}
+function stopTimer(){if(G.timerId){clearInterval(G.timerId);G.timerId=null;}}
+function updateTimer(){const el=document.getElementById('tmr');if(!el)return;const s=Math.round((Date.now()-G.startTime)/1000);el.textContent='⏱ '+Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60);}
+
+function renderQuiz(){
+  const c=curr().cards[G.cardIdx];
+  const b=document.getElementById('quiz');
+  const it=G.items[G.idx];
+  G.answered=false;G.input='';
+  const pct=Math.round(G.idx/G.items.length*100);
+  let html='<button class="back" onclick="confirmQuit()">← 退出</button>'+
+   '<div class="card">'+
+    '<div class="qhead"><span class="topic-chip" style="margin:0">'+c.icon+' '+c.topic+'</span>'+
+      '<span><span class="tm" id="tmr">⏱ 0:00</span> ｜ <span class="sc">⭐ 已对 '+G.correct+'</span></span></div>'+
+    '<div class="progbar"><i style="width:'+pct+'%"></i></div>'+
+    '<div class="qhead" style="margin-top:6px"><span>第 '+(G.idx+1)+' / '+G.items.length+' 题</span>'+
+      '<button class="btn gray sm" style="padding:5px 10px;font-size:13px" onclick="speak(\'q\')">🔊 读题</button></div>'+
+    '<div class="qtext">'+it.t+'</div>';
+  if(it.type==='mc'){
+    const two=it.o.length<=3&&it.o.every(x=>(''+x).length<=4);
+    html+='<div class="opts'+(two?' two':'')+'" id="opts">'+
+      it.o.map((x,i)=>'<button class="opt" onclick="answerMC('+i+')">'+x+'</button>').join('')+'</div>';
+  }else{
+    html+='<div class="qsub">用下面的小键盘打答案，打完点 ✅（不用键盘打字）</div>'+
+      '<div class="numdisp" id="disp"><span class="ph">在这里输入</span></div>'+
+      (it.unit&&UNITS[it.unit]?'<div class="unitrow">'+UNITS[it.unit].map(u=>'<button onclick="addUnit(\''+u+'\')">'+u+'</button>').join('')+'</div>':'')+
+      '<div class="keypad">'+
+       '<button class="key" onclick="kp(\'7\')">7</button><button class="key" onclick="kp(\'8\')">8</button><button class="key" onclick="kp(\'9\')">9</button>'+
+       '<button class="key" onclick="kp(\'4\')">4</button><button class="key" onclick="kp(\'5\')">5</button><button class="key" onclick="kp(\'6\')">6</button>'+
+       '<button class="key" onclick="kp(\'1\')">1</button><button class="key" onclick="kp(\'2\')">2</button><button class="key" onclick="kp(\'3\')">3</button>'+
+       '<button class="key dot" onclick="kp(\'.\')">·</button><button class="key" onclick="kp(\'0\')">0</button><button class="key del" onclick="kpDel()">⌫</button>'+
+      '</div>'+
+      '<div class="row"><button class="btn green big" style="width:100%" onclick="answerFill()">✅ 确定</button></div>';
+  }
+  html+='<div id="fb"></div></div>';
+  b.innerHTML=html;updateTimer();
+}
+function answerMC(i){
+  if(G.answered)return;G.answered=true;
+  const it=G.items[G.idx];const ok=(i===it.a);
+  const btns=document.querySelectorAll('#opts .opt');
+  btns.forEach(b=>b.style.pointerEvents='none');
+  if(btns[i])btns[i].classList.add(ok?'right':'wrong');
+  if(!ok&&btns[it.a])btns[it.a].classList.add('right');
+  recordAndFeedback(ok,it,it.o[it.a]);
+}
+function kp(c){if(G.answered)return;if(c==='.'&&G.input.indexOf('.')>=0)return;if(G.input.length>=12)return;G.input+=c;updateDisp();}
+function kpDel(){if(G.answered)return;G.input=G.input.slice(0,-1);updateDisp();}
+function addUnit(u){if(G.answered)return;G.input+=u;updateDisp();}
+function updateDisp(){const d=document.getElementById('disp');if(!d)return;d.innerHTML=G.input?G.input:'<span class="ph">在这里输入</span>';}
+function normNum(s){s=(''+s).replace(/[^0-9.\-]/g,'').trim();if(s===''||s==='.')return null;let n=Number(s);if(isNaN(n))return null;return n;}
+function answerFill(){
+  if(G.answered)return;const it=G.items[G.idx];
+  if(G.input.trim()===''){return;}
+  G.answered=true;
+  const got=normNum(G.input),exp=normNum(it.a);
+  const ok=(got!==null&&exp!==null&&Math.abs(got-exp)<1e-9);
+  recordAndFeedback(ok,it,it.a);
+}
+function recordAndFeedback(ok,it,correctShown){
+  if(ok)G.correct++;
+  G.results.push({word:it.t,hint:(''+it.a),ok:ok,topic:curr().cards[G.cardIdx].topic,why:it.why,shown:correctShown,ms:Date.now()-G.startTime});
+  const fb=document.getElementById('fb');
+  if(fb){
+    if(ok){ding();fb.innerHTML='<div class="fb ok">✅ 答对了！<div class="why">'+it.why+'</div></div>';}
+    else{buzz();fb.innerHTML='<div class="fb no">❌ 正确答案：<span class="ans">'+correctShown+'</span><div class="why">'+it.why+'</div></div>';}
+    fb.innerHTML+='<div class="row"><button class="btn '+(G.idx<G.items.length-1?'green':'blue')+' big" onclick="nextQ()">'+(G.idx<G.items.length-1?'下一题 →':'看这张卡的结果 🎉')+'</button></div>';
+  }
+}
+function nextQ(){if(G.idx<G.items.length-1){G.idx++;renderQuiz();window.scrollTo(0,0);}else{finishCard();}}
+function confirmQuit(){if(G.results.length&&!confirm('确定退出吗？这次重练还没记录。'))return;goHome();}
+
+/* ===================== 这张卡的结果 ===================== */
+function finishCard(){
+  stopTimer();
+  const c=curr().cards[G.cardIdx];
+  const total=G.items.length,wrong=total-G.correct;
+  const dur=Math.round((Date.now()-G.startTime)/1000);
+  logEvent({ts:Date.now(),topic:c.topic,cardId:c.id,total:total,wrong:wrong,durationSec:dur,
+    items:G.results.map(r=>({word:r.word,hint:r.hint,ok:r.ok,topic:r.topic,ms:r.ms}))});
+  const pct=Math.round(G.correct/total*100);
+  const stars=pct>=100?'⭐⭐⭐':pct>=67?'⭐⭐':pct>=34?'⭐':'☆';
+  const cheer=wrong===0?'全对！这一类你已经练熟了 🏆':pct>=67?'不错，把错的再看一眼讲解就更稳！':'没关系，再看一遍讲解、重练一次就会了！';
+  const avg=Math.round(dur/total);
+  const wrongs=G.results.filter(r=>!r.ok);
+  let html='<button class="back" onclick="goHome()">← 返回选卡</button>'+
+   '<div class="card" style="text-align:center">'+
+    '<div class="topic-chip">'+c.icon+' '+c.topic+'</div>'+
+    '<h2>🎉 这张卡完成</h2>'+
+    '<div class="scorebig" style="color:'+(wrong===0?'var(--green)':'#A82A20')+'">'+G.correct+' / '+total+'</div>'+
+    '<div class="stars">'+stars+'</div>'+
+    '<div class="kou">'+cheer+'（正确率 '+pct+'%）</div>'+
+    '<div style="font-size:13px;color:#a08d6f;margin-top:6px">用时 '+dur+' 秒 ｜ 平均每题 '+avg+' 秒</div></div>';
+  if(wrongs.length){
+    html+='<div class="card"><h2 style="color:#A82A20">📒 这次还错的题</h2><div class="wronglist">'+
+      wrongs.map(r=>'<div class="wrongitem"><div class="q">'+r.word+'</div>'+
+        '<div>正确答案：<span class="a">'+r.shown+'</span></div>'+
+        '<div style="color:#6b5a42;font-size:13px;margin-top:2px">'+r.why+'</div></div>').join('')+
+      '</div></div>';
+  }
+  const ni=G.cardIdx<curr().cards.length-1?G.cardIdx+1:-1;
+  html+='<div class="card" style="text-align:center"><div class="row">'+
+    '<button class="btn ghost" onclick="openCard('+G.cardIdx+')">📖 再看讲解</button>'+
+    '<button class="btn green" onclick="startRedo()">🔁 再练一遍这卡</button>'+
+    (ni>=0?'<button class="btn blue big" onclick="openCard('+ni+')">下一张错题卡 →</button>':'<button class="btn blue big" onclick="goHome()">🏠 返回选卡</button>')+
+    '</div></div>';
+  document.getElementById('summary').innerHTML=html;show('summary');
+}
+
+/* ===================== 学习档案 ===================== */
+function aggregateTopics(events){const m={};events.forEach(ev=>{(ev.items||[]).forEach(it=>{const k=ev.topic||'其它';if(!m[k])m[k]={topic:k,ok:0,wrong:0};if(it.ok)m[k].ok++;else m[k].wrong++;});});return m;}
+function showArchive(){
+  const a=loadArchive();const b=document.getElementById('archive');
+  const tagg=aggregateTopics(a.events);
+  const weak=Object.values(tagg).filter(t=>t.wrong>0).sort((x,y)=>y.wrong-x.wrong);
+  const evs=a.events.slice().reverse();const seen={};const wrongQs=[];
+  evs.forEach(ev=>{(ev.items||[]).forEach(it=>{if(!it.ok&&!seen[it.word]){seen[it.word]=1;wrongQs.push({q:it.word,a:it.hint,topic:ev.topic});}});});
+  let html='<button class="back" onclick="goHome()">← 返回</button>'+
+   '<div class="card"><h2>📒 '+curr().cn+' 数学错题重练档案</h2>'+
+    '<div class="lead">已重练 '+a.events.length+' 张卡。下面数据可<b>一键复制</b>发家长，或<b>下载</b>保存，投喂回来即可归档进化。</div>'+
+    '<div class="row" style="justify-content:flex-start">'+
+      '<button class="btn sm blue" onclick="copyArchive()">📋 一键复制</button>'+
+      '<button class="btn sm green" onclick="downloadArchive()">📥 下载存档</button>'+
+      '<button class="btn sm gray" onclick="clearArchive()">🗑 清空</button></div></div>';
+  if(weak.length){
+    html+='<div class="card"><h2 style="color:#A82A20">🔴 还在错的知识点</h2>';
+    weak.forEach(t=>{const tt=t.ok+t.wrong;const p=Math.round(t.ok/tt*100);const col=p>=90?'var(--green)':p>=60?'var(--gold)':'#D63A2E';
+      html+='<div class="weakrow"><span style="width:130px;flex-shrink:0">'+t.topic+'</span>'+
+        '<span class="bar"><i style="width:'+p+'%;background:'+col+'"></i></span>'+
+        '<span style="width:60px;text-align:right;font-weight:700;color:'+col+'">'+t.ok+'/'+tt+'</span></div>';});
+    html+='</div>';
+  }else if(a.events.length){html+='<div class="card"><div class="kou">目前重练过的都对了，没有还在错的知识点 🏆</div></div>';}
+  if(wrongQs.length){
+    html+='<div class="card"><h2>❌ 重练时做错过的题</h2><div class="wronglist">'+
+      wrongQs.map(w=>'<div class="wrongitem"><span class="topic">'+w.topic+'</span> <div class="q">'+w.q+'</div><div>正确答案：<span class="a">'+w.a+'</span></div></div>').join('')+
+      '</div></div>';
+  }
+  html+='<div class="card"><h2>📅 重练记录</h2>'+
+    (evs.length?evs.map(ev=>'<div style="border-bottom:1px solid var(--line);padding:9px 0">'+
+      '<div style="font-weight:700">📘'+ev.topic+'<span style="float:right;color:#a08d6f;font-size:12px">'+fmtDate(ev.ts)+'</span></div>'+
+      '<div style="font-size:13px;color:#7d6a4e;margin-top:3px">'+(ev.total-ev.wrong)+'/'+ev.total+' 对 ｜ 用时 '+ev.durationSec+'秒'+(ev.wrong?' ｜ 错 <span style="color:#D63A2E">'+ev.wrong+'</span> 题':' ｜ 全对 ✓')+'</div></div>'
+      ).join(''):'<div class="lead">还没有记录</div>')+'</div>';
+  html+='<div class="card hidden" id="copybox"><h2>复制下面全部文字</h2>'+
+    '<textarea id="copytext" style="width:100%;height:220px;font-size:12px;font-family:monospace;border:2px solid var(--line);border-radius:10px;padding:10px"></textarea></div>';
+  b.innerHTML=html;show('archive');
+}
+function archiveText(){
+  const a=loadArchive();const tagg=aggregateTopics(a.events);
+  const weak=Object.values(tagg).sort((x,y)=>y.wrong-x.wrong);
+  let t='【'+curr().cn+' · 数学'+curr().grade+' 错题重练档案】导出时间:'+fmtDate(Date.now())+'\n重练总卡数:'+a.events.length+'\n\n';
+  t+='== 各知识点(对/总) ==\n';
+  t+=weak.length?weak.map(w=>{const tt=w.ok+w.wrong;return w.topic+': '+w.ok+'/'+tt+' 对'+(w.wrong?' (错'+w.wrong+')':'');}).join('\n'):'(无)';
+  t+='\n\n== 重练时做错过的题 ==\n';
+  const evs=a.events.slice().reverse();const seen={};let wl=[];
+  evs.forEach(ev=>{(ev.items||[]).forEach(it=>{if(!it.ok&&!seen[it.word]){seen[it.word]=1;wl.push('['+ev.topic+'] '+it.word+' → 正确:'+it.hint);}});});
+  t+=wl.length?wl.join('\n'):'(无)';
+  t+='\n\n== 每卡明细 ==\n';
+  a.events.forEach(ev=>{t+='\n['+fmtDate(ev.ts)+'] '+ev.topic+' ｜ '+(ev.total-ev.wrong)+'/'+ev.total+'对 ｜ '+ev.durationSec+'秒';});
+  t+='\n\n== 原始数据(JSON) ==\n'+JSON.stringify(a);
+  return t;
+}
+function copyArchive(){const txt=archiveText();const box=document.getElementById('copybox');const ta=document.getElementById('copytext');
+  if(box&&ta){box.classList.remove('hidden');ta.value=txt;ta.focus();ta.select();}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){}).catch(function(){});}}
+function downloadArchive(){const txt=archiveText();const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=curr().cn+'数学错题重练档案.txt';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1000);}
+function clearArchive(){if(confirm('确定清空 '+curr().cn+' 的重练记录吗？不能撤销。')){localStorage.removeItem(akey());showArchive();}}
+
+/* ===================== 声音 ===================== */
+function ding(){if(MUTE)return;try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=880;g.gain.setValueAtTime(0.15,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3);o.start();o.stop(ctx.currentTime+0.3);}catch(e){}}
+function buzz(){if(MUTE)return;try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.type='square';o.connect(g);g.connect(ctx.destination);o.frequency.setValueAtTime(220,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(120,ctx.currentTime+0.25);g.gain.setValueAtTime(0.12,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3);o.start();o.stop(ctx.currentTime+0.3);}catch(e){}}
+function speak(what){
+  if(MUTE)return;
+  try{
+    let text='';
+    if(what==='q'){const it=G.items[G.idx];if(it)text=it.t;}
+    else if(what==='lesson'){const c=curr().cards[G.cardIdx];if(c)text=c.why.replace(/<[^>]+>/g,'')+'。口诀：'+c.kou;}
+    if(!text)return;
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text.replace(/[（）()]/g,' '));
+    u.lang='zh-CN';u.rate=0.92;window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+function toggleMute(){MUTE=!MUTE;try{localStorage.setItem('mxredo_mute',MUTE?'1':'0');}catch(e){}
+  document.getElementById('muteBtn').textContent=MUTE?'🔕':'🔔';if(MUTE)try{window.speechSynthesis.cancel();}catch(e){}}
+
+/* ===================== 启动 ===================== */
+window.addEventListener('load',function(){
+  try{MUTE=localStorage.getItem('mxredo_mute')==='1';}catch(e){}
+  document.getElementById('muteBtn').textContent=MUTE?'🔕':'🔔';
+  let who='kenton';
+  try{const q=new URLSearchParams(location.search).get('who');if(q==='kenton'||q==='eddey')who=q;
+    else{const s=localStorage.getItem('mxredo_who');if(s==='kenton'||s==='eddey')who=s;}}catch(e){}
+  pickKid(who);
+});
+</script>
+</body>
+</html>

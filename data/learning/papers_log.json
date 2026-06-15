@@ -314,6 +314,22 @@
       "difficulty": "medium",
       "result": "错8/60，综合卷19/20。亮点：简便计算8/8全对(长期弱点进步)。薄弱：整数减小数退位、小数连减、小数文字转写(三十点零五反复错2次)、运算顺序、元角分↔小数、速度×时间。",
       "notes": "孩子端 apps/kenton_math_sprint.html 导出，在另一台 iPad 离线做(未连云端)、家长手动复制投喂。profile_kenton 数学 knowledge_points 由此首次填充。云端未上传原因=那台设备 localStorage 未设 eb_endpoint(详见 docs/学习记忆.md 当日日志)。"
+    },
+    {
+      "id": "math_redo_2026-06-15",
+      "date": "2026-06-15",
+      "child": "both",
+      "subject": "数学",
+      "title": "错题讲解+同类题重练软件（两娃合一，🦁/🐯切换，内容分开）",
+      "app_file": "apps/math_redo.html",
+      "content_source": "data/learning/math_kenton_2026-06-15.json + data/learning/math_eddey_2026-06-15.json",
+      "knowledge_points": [
+        "哥哥:小数文字↔数字/整数减小数退位/小数连减/运算顺序/元角分↔小数/速度×时间",
+        "弟弟:周长≠面积/面积单位选择/整百数除法/分数比较/植树问题/元角分↔小数/两位数乘两位数竖式"
+      ],
+      "difficulty": "easy-medium",
+      "result": "软件已上线(哥哥6张卡、弟弟7张卡)，每卡=讲解(为什么错+口诀)+2~3道同类题重练；待练习后导出回填掌握度。",
+      "notes": "据两娃 6/15 数学冲刺错题归档而做。一个 HTML 用 ?who= 与页内开关切换两娃，内容/主色绝不混用(哥哥青蓝/弟弟珊瑚橙)。内置标准模板：点选+数字小键盘(零打字)、答对/答错音效+🔊读题+🔔/🔕静音、计时、每题explain、首页卡显示上次✅对X❌错Y、localStorage记录面板+兼容导出({child,subject:'数学错题重练',events})+fire-and-forget云端上传。"
     }
   ]
 }
