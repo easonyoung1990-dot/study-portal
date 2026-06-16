@@ -124,5 +124,19 @@
     "title": "数学错题专项 · 三下（6.15错题·点选少打字·讲解+回炉）",
     "file": "apps/eddey_math_redo.html",
     "added": "2026-06-15"
+  },
+  {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "英语错点专项（6.15老师讲评：单复数/一般现在时/oo短音/after/运动）",
+    "file": "apps/eddey_english_redo_grammar.html",
+    "added": "2026-06-16"
+  },
+  {
+    "child": "kenton",
+    "subject": "语文",
+    "title": "语文易错专项 · 四下（易错字音/形近字/近义/关联词/名句主旨）",
+    "file": "apps/kenton_chinese_redo.html",
+    "added": "2026-06-16"
   }
 ]

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-15",
+  "updated": "2026-06-16",
   "_schema": {
     "id": "唯一编号，建议 <child>_dayNN 或 <child>_<subject>_<date>",
     "knowledge_points": "本卷覆盖的知识点名称数组，用于和 profile 联动、避免重复、循序渐进",
@@ -314,6 +314,42 @@
       "difficulty": "medium",
       "result": "明天安排弟弟做；练完导出回填掌握度。",
       "notes": "基于 math_eddey_2026-06-15.json 的6类错点，点选为主+少量🎤说数字，每题讲解+错题回炉。"
+    },
+    {
+      "id": "eddey_english_redo_2026-06-16",
+      "date": "2026-06-16",
+      "child": "eddey",
+      "subject": "英语",
+      "title": "英语错点专项练(6.15老师讲评，6关18题)",
+      "app_file": "apps/eddey_english_redo_grammar.html",
+      "knowledge_points": [
+        "名词单复数标志词",
+        "一般现在时",
+        "oo短音/ʊ/",
+        "after class/school",
+        "运动动词搭配"
+      ],
+      "difficulty": "medium",
+      "result": "今天做；练完导出回填。",
+      "notes": "基于 lesson_eddey_2026-06-15.json 老师讲评做的针对练，点选为主+1🎤，每题讲解+错题回炉。"
+    },
+    {
+      "id": "kenton_chinese_redo_2026-06-16",
+      "date": "2026-06-16",
+      "child": "kenton",
+      "subject": "语文",
+      "title": "语文易错专项练(四下5-8单元错题，6关14题)",
+      "app_file": "apps/kenton_chinese_redo.html",
+      "knowledge_points": [
+        "易错字音(彬/屑/矢/冲/刹)",
+        "形近字(履/覆)",
+        "近义辨析",
+        "关联词",
+        "文学常识/名句/主旨"
+      ],
+      "difficulty": "medium",
+      "result": "今天做；练完导出回填。",
+      "notes": "基于 chinese_review_kenton_sessions.json 6.14错题做的针对练，点选+每题讲解+错题回炉。"
     }
   ]
 }
