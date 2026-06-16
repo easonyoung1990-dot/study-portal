@@ -1,5 +1,6 @@
 {
   "updated": "2026-06-16",
+  "_latest_note": "2026-06-16 追加：哥哥英语期末复习卷错题归档 kenton_english_errors_2026-06-16。",
   "_schema": {
     "id": "唯一编号，建议 <child>_dayNN 或 <child>_<subject>_<date>",
     "knowledge_points": "本卷覆盖的知识点名称数组，用于和 profile 联动、避免重复、循序渐进",
@@ -350,6 +351,26 @@
       "difficulty": "medium",
       "result": "今天做；练完导出回填。",
       "notes": "基于 chinese_review_kenton_sessions.json 6.14错题做的针对练，点选+每题讲解+错题回炉。"
+    },
+    {
+      "id": "kenton_english_errors_2026-06-16",
+      "date": "2026-06-16",
+      "child": "kenton",
+      "subject": "英语",
+      "title": "四下英语期末复习卷错题归档（学校卷·老师批改）",
+      "archive_file": "data/learning/english_errors_kenton_2026-06-16.json",
+      "knowledge_points": [
+        "一般现在时vs现在进行时",
+        "第三人称单数s/Does/doesn't",
+        "名词单复数(knife→knives)",
+        "对划线部分提问/改一般疑问句",
+        "短语搭配(Let's/play the/finish doing/It's time for/any)",
+        "介词on/in/at/for",
+        "作文My week(开头/介词/大小写/拼写/时态)"
+      ],
+      "difficulty": "medium",
+      "result": "15 个错题组。错点高度命中长期弱项：时态切换、三单s、单复数、句型转换、介词、作文。基础词汇/听力/阅读判断较稳。下次英语优先做针对练。",
+      "notes": "来源为老师批改的纸质四下英语期末复习卷扫描件（4页）。试卷含真实姓名等身份信息——按隐私红线一律不入仓库，本台账与归档文件只保留匿名化知识点/错因统计。部分手写批改偏糊，已尽力对照辨认，错因类别可靠。"
     }
   ]
 }

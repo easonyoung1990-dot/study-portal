@@ -1,7 +1,7 @@
 {
   "child": "kenton",
   "name": "Kenton",
-  "updated": "2026-06-14",
+  "updated": "2026-06-16",
   "学习总档案": "docs/学习记忆_哥哥.md —— 长期画像/三科错题/复习规则权威总档，出题前必读",
   "教材": { "英语": "上海《尖子生笔记·同步教材》英语 四年级下（沪教版/钟书金牌）", "参考": "data/learning/textbook_reference.json" },
   "summary": "2026-06-13 导入默写软件 37 次真实练习。英语词汇与句型整体扎实，语文默写量大且准；薄弱集中在语文第23课词语和英语个别单词。",
@@ -33,9 +33,16 @@
       "knowledge_points": {}
     },
     "英语": {
-      "strengths": ["词汇与句型整体扎实，多数单元小测满分", "Module 1-4 单词量稳固"],
-      "weaknesses": ["M4U3：nest、swan（小测 2/3 错，默写曾对，不稳定）", "M2U3：bedroom", "M3U1：sound", "句子：Would you like to join us?；I like the Spring Festival."],
+      "strengths": ["词汇与句型整体扎实，多数单元小测满分", "Module 1-4 单词量稳固", "听力、阅读判断(T/F)相对稳"],
+      "weaknesses": ["一般现在时 vs 现在进行时：标志词(usually/now/but now)切换不自动（期末卷再栽）", "第三人称单数 s 与 Does/doesn't + 动词原形(has→have)", "名词单复数：knife→knives 等不规则、this/these↔is/are 随单复数变", "对划线部分提问/改一般疑问句：选错疑问词、语序、人称乱改", "短语搭配：Let's+原形/play the+乐器/finish+doing/It's time for/否定句 any", "介词：on+星期、in the morning、at home、for+名词", "作文 My week：开头(My week is busy)、星期介词 on、首字母大写、拼写(Friday)、用一般现在时", "M4U3：nest、swan（小测 2/3 错，默写曾对，不稳定）", "M2U3：bedroom", "M3U1：sound", "句子：Would you like to join us?；I like the Spring Festival."],
       "knowledge_points": {
+        "一般现在时vs现在进行时": { "mastery": 60, "trend": "flat", "last_seen": "2026-06-16" },
+        "三单s与Does/doesn't": { "mastery": 62, "trend": "flat", "last_seen": "2026-06-16" },
+        "名词单复数(knife→knives)": { "mastery": 65, "trend": "flat", "last_seen": "2026-06-16" },
+        "对划线部分提问/改疑问句": { "mastery": 65, "trend": "flat", "last_seen": "2026-06-16" },
+        "短语搭配(Let's/play the/finish doing/any)": { "mastery": 68, "trend": "flat", "last_seen": "2026-06-16" },
+        "介词on/in/at/for": { "mastery": 66, "trend": "flat", "last_seen": "2026-06-16" },
+        "作文My week": { "mastery": 60, "trend": "flat", "last_seen": "2026-06-16" },
         "M4U3 故事时间(nest/swan)": { "mastery": 55, "trend": "down", "last_seen": "2026-06-13" },
         "M2U3 家庭生活(bedroom)": { "mastery": 80, "trend": "flat", "last_seen": "2026-06-13" },
         "M3U1 声音(sound)": { "mastery": 80, "trend": "flat", "last_seen": "2026-06-13" },
@@ -46,7 +53,8 @@
   },
   "milestones": [
     { "date": "2026-06-13", "text": "首次导入默写软件真实数据：37 次练习。英语/语文整体扎实，定位薄弱点：语文第23课词语、英语 nest/swan。" },
-    { "date": "2026-06-14", "text": "四下5-8单元复习软件 13 关导出归档：整体优秀、无反复错题。薄弱集中在易错字音(彬/矩/屑/矢)、名句出处(老子/周易)、近义辨析。明细见 data/learning/chinese_review_kenton_sessions.json。" }
+    { "date": "2026-06-14", "text": "四下5-8单元复习软件 13 关导出归档：整体优秀、无反复错题。薄弱集中在易错字音(彬/矩/屑/矢)、名句出处(老子/周易)、近义辨析。明细见 data/learning/chinese_review_kenton_sessions.json。" },
+    { "date": "2026-06-16", "text": "导入四下英语期末复习卷(学校卷·老师批改)错题：15组，高度命中长期弱项——时态切换(usually/now)、三单s/Does、名词复数(knives)、对划线提问/改疑问句、介词on/in/at/for、作文My week。基础词汇/听力/阅读判断较稳。明细见 data/learning/english_errors_kenton_2026-06-16.json。" }
   ],
   "_schema": {
     "knowledge_points": "形如 { \"小数除法\": { \"mastery\": 85, \"trend\": \"up|flat|down\", \"last_seen\": \"YYYY-MM-DD\" } }，mastery 为 0-100 的掌握度估计",
