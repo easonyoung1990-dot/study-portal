@@ -1,6 +1,6 @@
 {
   "updated": "2026-06-16",
-  "_latest_note": "2026-06-16 追加：哥哥英语期末复习卷错题 kenton_english_errors_2026-06-16；弟弟三下数学历史周练卷(四/六/八/九)错题 eddey_math_weekly_archive。",
+  "_latest_note": "2026-06-16 追加：哥哥英语期末复习卷错题 kenton_english_errors_2026-06-16；弟弟三下数学历史周练卷(四/六/八/九)错题 eddey_math_weekly_archive；考前英语——弟弟老师6.16复习总结 lesson_eddey_2026-06-16、哥哥M3/M4知识梳理 english_m3m4_kenton。",
   "_schema": {
     "id": "唯一编号，建议 <child>_dayNN 或 <child>_<subject>_<date>",
     "knowledge_points": "本卷覆盖的知识点名称数组，用于和 profile 联动、避免重复、循序渐进",
@@ -392,6 +392,31 @@
       "difficulty": "medium",
       "result": "⏳历史卷(无确切日期，弟弟『之前的』)。错点反复：多位数竖式乘法、笔算除法、脱式运算顺序、列式计算、面积↔周长、行程、铺砖归一、分数比较。与6.15冲刺卷结论一致：计算基本功+应用题建模是两大长板。仅作历史佐证，不改近期掌握度趋势。",
       "notes": "来源4张三下数学周练卷扫描件(卷四/六/八/九)。含真实姓名等身份信息——按隐私红线不入仓库，归档只保留匿名化题型/考点/错因。手写竖式批改偏糊，已尽力辨认，个别题标 confidence。"
+    },
+    {
+      "id": "lesson_eddey_2026-06-16",
+      "date": "2026-06-16",
+      "child": "eddey",
+      "subject": "英语",
+      "title": "考前老师英语复习总结（试卷8解析）",
+      "source_file": "data/learning/lesson_eddey_2026-06-16.json",
+      "knowledge_points": ["一般现在时三单(灵活/复数不加s)", "情态动词can句型(与does无关)", "句子结构(肯定/否定/一般疑问及答)", "听力填词预测+语法", "阅读细心+拼写", "作文拼写swimming pool/playground"],
+      "difficulty": "—",
+      "result": "明天(6.17)期末考。三单敏感度已高；要点：can句独立于does、句子三态、拼写、阅读细心。已据此出考前冲刺背诵文档。",
+      "notes": "老师课堂复习要点，家长转述。考前最后一练。"
+    },
+    {
+      "id": "english_m3m4_kenton",
+      "date": "2026-06-16",
+      "child": "kenton",
+      "subject": "英语",
+      "title": "老师 M3/M4 知识梳理（M3U1-U3、M4U1-U2 核心词汇/句型/语法）",
+      "source_file": "data/learning/english_m3m4_kenton.json",
+      "source_pdf": "（老师复习PDF，5页思维导图；为学习资料，未入公开仓库）",
+      "knowledge_points": ["M3U1 Shapes(What shape/a不可省/like两义)", "M3U2 Colours(is/are+单复数/like+doing)", "M3U3 Seasons(can+原形/go+doing/单数不单用)", "M4U1 My body(复数+s/foot→feet)", "M4U2 Children's Day(on+日期/with sb.)"],
+      "difficulty": "—",
+      "result": "明天(6.17)期末考。M3/M4五单元重点已结构化存档，并据此+哥哥错题出考前冲刺背诵文档。",
+      "notes": "老师知识梳理思维导图(5页)转录。M4U3不在本资料内。"
     }
   ]
 }

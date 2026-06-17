@@ -54,7 +54,8 @@
   "milestones": [
     { "date": "2026-06-13", "text": "首次导入默写软件真实数据：37 次练习。英语/语文整体扎实，定位薄弱点：语文第23课词语、英语 nest/swan。" },
     { "date": "2026-06-14", "text": "四下5-8单元复习软件 13 关导出归档：整体优秀、无反复错题。薄弱集中在易错字音(彬/矩/屑/矢)、名句出处(老子/周易)、近义辨析。明细见 data/learning/chinese_review_kenton_sessions.json。" },
-    { "date": "2026-06-16", "text": "导入四下英语期末复习卷(学校卷·老师批改)错题：15组，高度命中长期弱项——时态切换(usually/now)、三单s/Does、名词复数(knives)、对划线提问/改疑问句、介词on/in/at/for、作文My week。基础词汇/听力/阅读判断较稳。明细见 data/learning/english_errors_kenton_2026-06-16.json。" }
+    { "date": "2026-06-16", "text": "导入四下英语期末复习卷(学校卷·老师批改)错题：15组，高度命中长期弱项——时态切换(usually/now)、三单s/Does、名词复数(knives)、对划线提问/改疑问句、介词on/in/at/for、作文My week。基础词汇/听力/阅读判断较稳。明细见 data/learning/english_errors_kenton_2026-06-16.json。" },
+    { "date": "2026-06-16", "text": "英语期末考前(6.17考)存档老师 M3/M4 知识梳理(M3U1 Shapes/M3U2 Colours/M3U3 Seasons/M4U1 My body/M4U2 Children's Day)核心词汇/句型/语法，并据此+错题出考前冲刺背诵PDF。明细见 data/learning/english_m3m4_kenton.json。" }
   ],
   "_schema": {
     "knowledge_points": "形如 { \"小数除法\": { \"mastery\": 85, \"trend\": \"up|flat|down\", \"last_seen\": \"YYYY-MM-DD\" } }，mastery 为 0-100 的掌握度估计",
