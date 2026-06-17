@@ -138,5 +138,33 @@
     "title": "语文易错专项 · 四下（易错字音/形近字/近义/关联词/名句主旨）",
     "file": "apps/kenton_chinese_redo.html",
     "added": "2026-06-16"
+  },
+  {
+    "child": "kenton",
+    "subject": "英语",
+    "title": "英语单词默写 · 全册整合（★易错词+M1-M4单词句子+互译，自动报默）",
+    "file": "apps/kenton_english_dictation.html",
+    "added": "2026-06-16"
+  },
+  {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "英语单词默写 · 全册整合（★易错词+M1-M4单词句子+互译，自动报默）",
+    "file": "apps/eddey_english_dictation.html",
+    "added": "2026-06-16"
+  },
+  {
+    "child": "kenton",
+    "subject": "英语",
+    "title": "英语期末冲刺复习 · 错题闯关（冲刺卷做成点选题+讲解+回炉）",
+    "file": "apps/kenton_english_sprint_quiz.html",
+    "added": "2026-06-17"
+  },
+  {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "英语期末冲刺复习 · 错题闯关（冲刺卷做成点选题+讲解+回炉）",
+    "file": "apps/eddey_english_sprint_quiz.html",
+    "added": "2026-06-17"
   }
 ]
