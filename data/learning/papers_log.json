@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-16",
+  "updated": "2026-06-19",
   "_latest_note": "2026-06-16 追加：哥哥英语期末复习卷错题 kenton_english_errors_2026-06-16；弟弟三下数学历史周练卷(四/六/八/九)错题 eddey_math_weekly_archive；考前英语——弟弟老师6.16复习总结 lesson_eddey_2026-06-16、哥哥M3/M4知识梳理 english_m3m4_kenton。",
   "_schema": {
     "id": "唯一编号，建议 <child>_dayNN 或 <child>_<subject>_<date>",
@@ -400,7 +400,14 @@
       "subject": "英语",
       "title": "考前老师英语复习总结（试卷8解析）",
       "source_file": "data/learning/lesson_eddey_2026-06-16.json",
-      "knowledge_points": ["一般现在时三单(灵活/复数不加s)", "情态动词can句型(与does无关)", "句子结构(肯定/否定/一般疑问及答)", "听力填词预测+语法", "阅读细心+拼写", "作文拼写swimming pool/playground"],
+      "knowledge_points": [
+        "一般现在时三单(灵活/复数不加s)",
+        "情态动词can句型(与does无关)",
+        "句子结构(肯定/否定/一般疑问及答)",
+        "听力填词预测+语法",
+        "阅读细心+拼写",
+        "作文拼写swimming pool/playground"
+      ],
       "difficulty": "—",
       "result": "明天(6.17)期末考。三单敏感度已高；要点：can句独立于does、句子三态、拼写、阅读细心。已据此出考前冲刺背诵文档。",
       "notes": "老师课堂复习要点，家长转述。考前最后一练。"
@@ -413,7 +420,13 @@
       "title": "老师 M3/M4 知识梳理（M3U1-U3、M4U1-U2 核心词汇/句型/语法）",
       "source_file": "data/learning/english_m3m4_kenton.json",
       "source_pdf": "（老师复习PDF，5页思维导图；为学习资料，未入公开仓库）",
-      "knowledge_points": ["M3U1 Shapes(What shape/a不可省/like两义)", "M3U2 Colours(is/are+单复数/like+doing)", "M3U3 Seasons(can+原形/go+doing/单数不单用)", "M4U1 My body(复数+s/foot→feet)", "M4U2 Children's Day(on+日期/with sb.)"],
+      "knowledge_points": [
+        "M3U1 Shapes(What shape/a不可省/like两义)",
+        "M3U2 Colours(is/are+单复数/like+doing)",
+        "M3U3 Seasons(can+原形/go+doing/单数不单用)",
+        "M4U1 My body(复数+s/foot→feet)",
+        "M4U2 Children's Day(on+日期/with sb.)"
+      ],
       "difficulty": "—",
       "result": "明天(6.17)期末考。M3/M4五单元重点已结构化存档，并据此+哥哥错题出考前冲刺背诵文档。",
       "notes": "老师知识梳理思维导图(5页)转录。M4U3不在本资料内。"
@@ -425,7 +438,14 @@
       "subject": "语文",
       "title": "四下语文五~八单元试卷错题归档（基础补充卷+5/6单元卷+7/8单元卷，12页）",
       "archive_file": "data/learning/chinese_errors_kenton_2026-06-19.json",
-      "knowledge_points": ["默写与积累(囊萤夜读/芙蓉楼/墨梅/长歌行/塞下曲/韩愈名联/文学常识)", "转述句(人称/标点/语气/时间词)", "字音字形(颊/刹/经传/盛名/差/乾坤/谜/壮丽)", "比喻句辨析与多义字", "仿写连续动作", "阅读主观题按点答/续写概括"],
+      "knowledge_points": [
+        "默写与积累(囊萤夜读/芙蓉楼/墨梅/长歌行/塞下曲/韩愈名联/文学常识)",
+        "转述句(人称/标点/语气/时间词)",
+        "字音字形(颊/刹/经传/盛名/差/乾坤/谜/壮丽)",
+        "比喻句辨析与多义字",
+        "仿写连续动作",
+        "阅读主观题按点答/续写概括"
+      ],
       "difficulty": "medium",
       "result": "错点集中在默写积累(最多)与转述句。据此出《语文期末冲刺卷_哥哥Kenton》(默写/转述句加量+各类错题整合+参考答案)与配套错题闯关软件 apps/kenton_chinese_sprint_quiz.html。",
       "notes": "试卷含真实姓名等身份信息，按隐私红线不入仓库；归档只保留匿名化题型/考点/正确答案。"
@@ -460,6 +480,25 @@
       "difficulty": "medium",
       "result": "两个软件已上线。闯关王=讲练合一(每关方法点拨+每题讲解)+错题回炉+家长记录面板，13关81题全部校验答案唯一；听写软件CN词库从2课扩到15课(词语表P122-123按课文分组+易错回炉)。等弟弟练习后导出成绩回填掌握度。",
       "notes": "对应扫描件『一、默写』(词语表→听写软件) + 『二、要掌握的知识点(1-10)』与『三、阅读表达』(→闯关王)。两软件均零依赖纯静态，复用神经真人配音层(缺MP3自动回退浏览器TTS)，已为爸爸端预留 _manifest.json 供 edge-tts 预合成。注:用户口述称『地理』，实际扫描件全为三下语文期末复习,按语文落地。"
+    },
+    {
+      "id": "eddey_chinese_dictation_review_2026-06-19",
+      "date": "2026-06-19",
+      "child": "eddey",
+      "subject": "语文",
+      "grade": "三下",
+      "kind": "听写归档+错词重默软件",
+      "knowledge_points": [
+        "词语表默写(课11~课27+第八单元)",
+        "形近字",
+        "多音字(提防dī)",
+        "选词填空"
+      ],
+      "difficulty": "基础-巩固",
+      "app_file": "apps/eddey_chinese_dictation_redo.html",
+      "archive_file": "data/learning/dictation_eddey_review_2026-06-19.json",
+      "result": "首轮全词语表默写整体好;默写错9词(适应/淡雅/展示/沿途/陌生/想念/受刑/提防/窟窿)+小测错2词(摧毁/唠叨)。已建错词重默软件(讲解+报默+错词本)。",
+      "follow_up": "弟弟用错词重默软件掌握后,回填字词默写mastery。"
     }
   ]
 }
