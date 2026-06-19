@@ -208,5 +208,12 @@
     "title": "语文复习默写 · 报默+记录（词语5-8单元+古诗文5首+名言8句，自动报读·错词档案可导出）",
     "file": "apps/kenton_chinese_dictation_review.html",
     "added": "2026-06-19"
+  },
+  {
+    "child": "kenton",
+    "subject": "语文",
+    "title": "语文错词默写 · 四下（复习错词8+试卷易错+古诗名句·限时报默·错词本）",
+    "file": "apps/kenton_chinese_dictation_redo.html",
+    "added": "2026-06-16"
   }
 ]
