@@ -244,6 +244,16 @@ const AKEY='mx_archive_哥哥_review';
 function loadArchive(){try{return JSON.parse(localStorage.getItem(AKEY))||{child:CHILD,events:[]};}catch(e){return{child:CHILD,events:[]};}}
 function saveArchive(a){try{localStorage.setItem(AKEY,JSON.stringify(a));}catch(e){}}
 function logEvent(ev){const a=loadArchive();a.events.push(ev);saveArchive(a);cloudUpload(ev);}
+/* ===== 错词本(持久):只要错过一次就记,连续答对2次才移出 ===== */
+var WBKEY='mx_wrongbook_哥哥_review';
+function loadWB(){try{return JSON.parse(localStorage.getItem(WBKEY))||{words:{}};}catch(e){return {words:{}};}}
+function saveWB(w){try{localStorage.setItem(WBKEY,JSON.stringify(w));}catch(e){}}
+function wbAddWrong(word,hint,lesson){if(!word)return;var wb=loadWB();var w=wb.words[word]||{word:word,hint:hint||'',lesson:lesson||'',wrong:0,streak:0,mastered:false};w.wrong++;w.streak=0;w.mastered=false;if(lesson)w.lesson=lesson;if(hint)w.hint=hint;wb.words[word]=w;saveWB(wb);}
+function wbAddRight(word){var wb=loadWB();var w=wb.words[word];if(w&&!w.mastered){w.streak++;if(w.streak>=2)w.mastered=true;wb.words[word]=w;saveWB(wb);}}
+function wbAll(){var wb=loadWB();return Object.keys(wb.words).map(function(k){return wb.words[k];});}
+function wbActive(){return wbAll().filter(function(w){return !w.mastered;});}
+(function(){var seed=[['柔嫩','第27课'],['奢侈','第15课'],['贤惠','人物品质·心情词'],['悲戚','人物品质·心情词'],['临危不惧','人物品质·心情词'],['焦躁不安','人物品质·心情词'],['心急如焚','人物品质·心情词'],['维持','第24课']];var wb=loadWB();var ch=false;seed.forEach(function(s){if(!wb.words[s[0]]){wb.words[s[0]]={word:s[0],hint:'',lesson:s[1],wrong:1,streak:0,mastered:false};ch=true;}});if(ch)saveWB(wb);})();
+function startWrongbook(){var list=wbActive();if(!list.length){alert('错词本是空的，太棒了！');return;}S.mode='wb';S.key='错词重做';S.idx=0;S.miss=new Set();S.startTime=Date.now();S.perItem=[];S.times=2;S.lang='zh';S.items=list.map(function(w){return {t:w.word,hint:w.hint||w.lesson||'',say:w.word};});S.itemStart=Date.now();renderDict();show('dict');setTimeout(function(){runWord();},400);}
 /* ===== 云端上传(只加,不改原逻辑;端点缺失/断网/出错都静默,绝不影响使用) ===== */
 function cloudUpload(ev){
   try{
@@ -439,6 +449,7 @@ function finishLesson(){
   const missWords=new Set([...S.miss].map(i=>S.items[i].t));
   const items=S.items.map((it,i)=>{const pi=S.perItem.find(p=>p.word===it.t);return {word:it.t,hint:it.hint||'',ok:!missWords.has(it.t),ms:pi?pi.ms:0};});
   logEvent({ts:Date.now(),type:'dict',subject:'cn',lesson:S.key,total:S.items.length,wrong:S.miss.size,durationSec:Math.round((Date.now()-S.startTime)/1000),items:items});
+  items.forEach(function(it){ if(it.ok) wbAddRight(it.word); else wbAddWrong(it.word,it.hint,S.key); });
   speakOnce(S.miss.size?('记下了，错词留着再练。'):'真棒，这一课默完了！','zh');
   setTimeout(()=>confirmQuit(),1200);
 }
@@ -524,8 +535,7 @@ function showArchive(){
       '<button class="btn sm blue" onclick="copyArchive()">\ud83d\udccb 一键复制</button>'+
       '<button class="btn sm green" onclick="downloadArchive()">\ud83d\udce5 下载存档</button>'+
       '<button class="btn sm ghost" onclick="clearArchive()">\ud83d\uddd1 清空</button></div></div>'+
-    (repeat.length?'<div class="card"><h2 style="color:var(--red)">\ud83d\udd34 反复错的词(错\u22652次,重点复习)</h2>'+
-      '<div class="ansgrid">'+repeat.map(w=>'<div class="answord miss">'+w.word+'<span class="py">'+(w.subject==='en'?w.hint+' ':'')+'错'+w.wrong+'次</span></div>').join('')+'</div></div>':'')+
+    (function(){var aw=wbAll();if(!aw.length)return '';var act=aw.filter(function(w){return !w.mastered;});return '<div class="card"><h2 style="color:var(--red)">📕 错词本（错过就记，共'+aw.length+'个）</h2><div class="lead">只要默错过一次就在这里；<b>连续答对2次</b>才算掌握、自动移走。</div><div class="ansgrid">'+aw.map(function(w){return '<div class="answord'+(w.mastered?'':' miss')+'">'+w.word+'<span class="py">'+(w.mastered?'已掌握✓':'错'+w.wrong+'次')+'</span></div>';}).join('')+'</div>'+(act.length?'<div class="row" style="justify-content:flex-start"><button class="btn green sm" onclick="startWrongbook()">🔁 重默错词（'+act.length+'）</button></div>':'<div class="kou">错词都掌握啦，太棒了！</div>')+'</div>';})()+
     '<div class="card"><h2>\ud83d\udcc5 练习记录</h2>'+
       (evs.length?evs.map(ev=>{
         const wrongItems=(ev.items||[]).filter(it=>!it.ok).map(it=>it.word);
@@ -543,8 +553,9 @@ function archiveText(){
   const a=loadArchive();const words=aggregateWords(a.events);
   const repeat=words.filter(w=>w.wrong>=2).sort((x,y)=>y.wrong-x.wrong);
   let t='【'+CHILD+'默写学习档案】导出时间:'+fmtDate(Date.now())+'\n练习总次数:'+a.events.length+'\n\n';
-  t+='== 反复错的词(错\u22652次,优先复习)==\n';
-  t+=repeat.length?repeat.map(w=>w.word+(w.hint?'('+w.hint+')':'')+' ['+(w.subject==='en'?'英语':'语文')+w.lesson+'] 错'+w.wrong+'次/对'+w.ok+'次').join('\n'):'(无)';
+  var _wb=wbAll();
+  t+='== 错词本(只要错过一次就记;连续答对2次移出) ==\n';
+  t+=_wb.length?_wb.map(function(w){return w.word+(w.lesson?' ['+w.lesson+']':'')+' 错'+w.wrong+'次'+(w.mastered?' 已掌握':'');}).join('\n'):'(无)';
   t+='\n\n== 每次练习明细 ==\n';
   a.events.forEach(ev=>{
     const wrongItems=(ev.items||[]).filter(it=>!it.ok).map(it=>it.word+(it.hint?'('+it.hint+')':''));
