@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-16",
+  "updated": "2026-06-19",
   "_latest_note": "2026-06-16 追加：哥哥英语期末复习卷错题 kenton_english_errors_2026-06-16；弟弟三下数学历史周练卷(四/六/八/九)错题 eddey_math_weekly_archive；考前英语——弟弟老师6.16复习总结 lesson_eddey_2026-06-16、哥哥M3/M4知识梳理 english_m3m4_kenton。",
   "_schema": {
     "id": "唯一编号，建议 <child>_dayNN 或 <child>_<subject>_<date>",
@@ -515,6 +515,25 @@
       "difficulty": "medium",
       "result": "汇总弟弟所有相关错题做成专项；练完导出回填。",
       "notes": "数据源 math_eddey_2026-06-15 + math_eddey_weekly_archive + profile_eddey。最大最小=弟弟实为分数比大小；组数最大最小为标准拓展题(弟弟无该类错题记录)。"
+    },
+    {
+      "id": "eddey_chinese_dictation_review_2026-06-19",
+      "date": "2026-06-19",
+      "child": "eddey",
+      "subject": "语文",
+      "grade": "三下",
+      "kind": "听写归档+错词重默软件",
+      "knowledge_points": [
+        "词语表默写(课11~课27+第八单元)",
+        "形近字",
+        "多音字(提防dī)",
+        "选词填空"
+      ],
+      "difficulty": "基础-巩固",
+      "app_file": "apps/eddey_chinese_dictation_redo.html",
+      "archive_file": "data/learning/dictation_eddey_review_2026-06-19.json",
+      "result": "首轮全词语表默写整体好;默写错9词(适应/淡雅/展示/沿途/陌生/想念/受刑/提防/窟窿)+小测错2词(摧毁/唠叨)。已建错词重默软件(讲解+报默+错词本)。",
+      "follow_up": "弟弟用错词重默软件掌握后,回填字词默写mastery。"
     }
   ]
 }
