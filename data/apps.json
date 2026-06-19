@@ -173,5 +173,12 @@
     "title": "语文期末冲刺复习 · 错题闯关（四下五~八单元：默写/转述句/字音字形/文学常识/表达）",
     "file": "apps/kenton_chinese_sprint_quiz.html",
     "added": "2026-06-19"
+  },
+  {
+    "child": "kenton",
+    "subject": "语文",
+    "title": "语文 · 思维实验室（转述句变身动画+名家名作关系脑图+古诗记忆翻卡，不是刷题）",
+    "file": "apps/kenton_chinese_lab.html",
+    "added": "2026-06-19"
   }
 ]
