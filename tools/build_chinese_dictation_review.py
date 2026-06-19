@@ -135,6 +135,41 @@ h = h.replace('''    <div class="bigmenu">
     </div>''')
 h = h.replace("const AKEY='mx_archive_'+CHILD;", "const AKEY='mx_archive_哥哥_review';")
 
+# 8) 持久『错词本』：只要错过一次就记、连续答对2次才移出；并预置家长确认的8个错字。外观不变(仅档案页/导出新增)
+WB_FUNCS = r'''function logEvent(ev){const a=loadArchive();a.events.push(ev);saveArchive(a);cloudUpload(ev);}
+/* ===== 错词本(持久):只要错过一次就记,连续答对2次才移出 ===== */
+var WBKEY='mx_wrongbook_哥哥_review';
+function loadWB(){try{return JSON.parse(localStorage.getItem(WBKEY))||{words:{}};}catch(e){return {words:{}};}}
+function saveWB(w){try{localStorage.setItem(WBKEY,JSON.stringify(w));}catch(e){}}
+function wbAddWrong(word,hint,lesson){if(!word)return;var wb=loadWB();var w=wb.words[word]||{word:word,hint:hint||'',lesson:lesson||'',wrong:0,streak:0,mastered:false};w.wrong++;w.streak=0;w.mastered=false;if(lesson)w.lesson=lesson;if(hint)w.hint=hint;wb.words[word]=w;saveWB(wb);}
+function wbAddRight(word){var wb=loadWB();var w=wb.words[word];if(w&&!w.mastered){w.streak++;if(w.streak>=2)w.mastered=true;wb.words[word]=w;saveWB(wb);}}
+function wbAll(){var wb=loadWB();return Object.keys(wb.words).map(function(k){return wb.words[k];});}
+function wbActive(){return wbAll().filter(function(w){return !w.mastered;});}
+(function(){var seed=[['柔嫩','第27课'],['奢侈','第15课'],['贤惠','人物品质·心情词'],['悲戚','人物品质·心情词'],['临危不惧','人物品质·心情词'],['焦躁不安','人物品质·心情词'],['心急如焚','人物品质·心情词'],['维持','第24课']];var wb=loadWB();var ch=false;seed.forEach(function(s){if(!wb.words[s[0]]){wb.words[s[0]]={word:s[0],hint:'',lesson:s[1],wrong:1,streak:0,mastered:false};ch=true;}});if(ch)saveWB(wb);})();
+function startWrongbook(){var list=wbActive();if(!list.length){alert('错词本是空的，太棒了！');return;}S.mode='wb';S.key='错词重做';S.idx=0;S.miss=new Set();S.startTime=Date.now();S.perItem=[];S.times=2;S.lang='zh';S.items=list.map(function(w){return {t:w.word,hint:w.hint||w.lesson||'',say:w.word};});S.itemStart=Date.now();renderDict();show('dict');setTimeout(function(){runWord();},400);}'''
+assert "function logEvent(ev){const a=loadArchive();a.events.push(ev);saveArchive(a);cloudUpload(ev);}" in h
+h = h.replace("function logEvent(ev){const a=loadArchive();a.events.push(ev);saveArchive(a);cloudUpload(ev);}", WB_FUNCS, 1)
+
+# finishLesson：每个错词入错词本，答对累计连胜
+assert "  speakOnce(S.miss.size?('记下了，错词留着再练。'):'真棒，这一课默完了！','zh');" in h
+h = h.replace("  speakOnce(S.miss.size?('记下了，错词留着再练。'):'真棒，这一课默完了！','zh');",
+              "  items.forEach(function(it){ if(it.ok) wbAddRight(it.word); else wbAddWrong(it.word,it.hint,S.key); });\n  speakOnce(S.miss.size?('记下了，错词留着再练。'):'真棒，这一课默完了！','zh');", 1)
+
+import re as _re
+# 档案页：『反复错(≥2)』卡 → 『错词本(错≥1)』卡 + 重默按钮（正则匹配，避开源码里转义的表情/≥）
+NEW_ARCH = """(function(){var aw=wbAll();if(!aw.length)return '';var act=aw.filter(function(w){return !w.mastered;});return '<div class="card"><h2 style="color:var(--red)">📕 错词本（错过就记，共'+aw.length+'个）</h2><div class="lead">只要默错过一次就在这里；<b>连续答对2次</b>才算掌握、自动移走。</div><div class="ansgrid">'+aw.map(function(w){return '<div class="answord'+(w.mastered?'':' miss')+'">'+w.word+'<span class="py">'+(w.mastered?'已掌握✓':'错'+w.wrong+'次')+'</span></div>';}).join('')+'</div>'+(act.length?'<div class="row" style="justify-content:flex-start"><button class="btn green sm" onclick="startWrongbook()">🔁 重默错词（'+act.length+'）</button></div>':'<div class="kou">错词都掌握啦，太棒了！</div>')+'</div>';})()+"""
+arch_pat = _re.compile(r"\(repeat\.length\?'<div class=\"card\"><h2 style=\"color:var\(--red\)\">.*?</div></div>':''\)\+", _re.S)
+h, _n = arch_pat.subn(lambda m: NEW_ARCH, h, count=1)
+assert _n == 1, "showArchive 卡未匹配"
+
+# 导出文本：反复错段 → 错词本段(错≥1)
+NEW_TXT = ("  var _wb=wbAll();\n"
+ "  t+='== 错词本(只要错过一次就记;连续答对2次移出) ==\\n';\n"
+ "  t+=_wb.length?_wb.map(function(w){return w.word+(w.lesson?' ['+w.lesson+']':'')+' 错'+w.wrong+'次'+(w.mastered?' 已掌握':'');}).join('\\n'):'(无)';")
+txt_pat = _re.compile(r"  t\+='== 反复错的词.*?优先复习\)==\\n';\n  t\+=repeat\.length\?repeat\.map\(.*?:'\(无\)';", _re.S)
+h, _n = txt_pat.subn(lambda m: NEW_TXT, h, count=1)
+assert _n == 1, "archiveText 段未匹配"
+
 out = os.path.join(ROOT, "apps", "kenton_chinese_dictation_review.html")
 open(out, "w", encoding="utf-8").write(h)
 nw = sum(len(v) for v in CN.values())
