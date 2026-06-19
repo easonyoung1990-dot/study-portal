@@ -63,6 +63,13 @@
     "added": "2026-06-19"
   },
   {
+    "child": "eddey",
+    "subject": "语文",
+    "title": "语文 · 三下复习探索馆（会动的复习：多音字转盘/转述句变身机/一词多义/课文关系脑图/古诗日积月累馆/寻物启事拼装台）",
+    "file": "apps/eddey_chinese_index_lab.html",
+    "added": "2026-06-19"
+  },
+  {
     "child": "kenton",
     "subject": "英语",
     "title": "小小世界播报 6.17",
