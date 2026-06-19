@@ -496,6 +496,25 @@
       "difficulty": "medium",
       "result": "今天默写再做一遍；错词本连续答对2次才移出。",
       "notes": "数据源：dictation_kenton_review_2026-06-19.json(家长核对8真错词)+chinese_errors_kenton_2026-06-19.json(试卷默写积累错点)。语文听写引擎(限时报默+拼音/中文双读+答案对照点红+错词本)，青蓝配色。"
+    },
+    {
+      "id": "eddey_math_div_redo_2026-06-16",
+      "date": "2026-06-16",
+      "child": "eddey",
+      "subject": "数学",
+      "title": "数学试商/余数/比大小 专项练(错题汇总)",
+      "app_file": "apps/eddey_math_div_redo.html",
+      "archive_file": "data/learning/math_eddey_div_errors.json",
+      "knowledge_points": [
+        "试商与有余数除法",
+        "余数<除数/余数最大",
+        "含0整百除法(500÷4/609÷3/30000÷5)",
+        "分数比大小",
+        "组数最大最小(拓展)"
+      ],
+      "difficulty": "medium",
+      "result": "汇总弟弟所有相关错题做成专项；练完导出回填。",
+      "notes": "数据源 math_eddey_2026-06-15 + math_eddey_weekly_archive + profile_eddey。最大最小=弟弟实为分数比大小；组数最大最小为标准拓展题(弟弟无该类错题记录)。"
     }
   ]
 }

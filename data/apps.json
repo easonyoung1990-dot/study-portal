@@ -222,5 +222,12 @@
     "title": "语文错词默写 · 四下（复习错词8+试卷易错+古诗名句·限时报默·错词本）",
     "file": "apps/kenton_chinese_dictation_redo.html",
     "added": "2026-06-16"
+  },
+  {
+    "child": "eddey",
+    "subject": "数学",
+    "title": "数学专项 · 试商余数+除法含0+比大小（错题汇总·讲解+回炉）",
+    "file": "apps/eddey_math_div_redo.html",
+    "added": "2026-06-16"
   }
 ]
