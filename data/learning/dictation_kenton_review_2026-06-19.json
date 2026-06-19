@@ -25,6 +25,13 @@
     "mingyan_done": "名言警句8句(其中『不怨天，不尤人』被标错)"
   },
   "errorbook_seed": ["柔嫩", "奢侈", "贤惠", "悲戚", "临危不惧", "焦躁不安", "心急如焚", "维持"],
+  "wrong_only_app": {
+    "file": "apps/kenton_wrong_dictation.html",
+    "title": "哥哥·只默错的（错词专默）",
+    "seed_words": ["柔嫩", "奢侈", "贤惠", "悲戚", "临危不惧", "焦躁不安", "心急如焚", "维持", "悬梁刺股", "凿壁偷光"],
+    "seed_sentences": ["欲将轻骑逐，大雪满弓刀。(塞下曲)", "不怨天，不尤人。(《论语》)"],
+    "note": "在家长确认的8个词基础上，补入真实场次(慢速、可信)里错的成语『悬梁刺股/凿壁偷光』与错句『塞下曲第2句、不怨天不尤人』；误标的窟窿/爆炸未收。连续默对2次自动移出错词本(独立键 mx_wrongbook_kenton_wrong)。"
+  },
   "app_change": "kenton_chinese_dictation_review.html 增加持久『错词本』(localStorage: mx_wrongbook_哥哥_review)：finishLesson 时每个错词入册、答对累计连胜，连续答对2次才标记掌握移出；学习档案页与导出文本都列出错词本；新增『🔁重默错词』。外观(主默写界面)不变。",
   "raw_export_note": "完整 23 场原始 events 见家长投喂的导出文本；本文件保留匿名化结论与错词本种子，原始逐条不再展开。"
 }
