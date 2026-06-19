@@ -4,6 +4,8 @@
     { "type": "pdf", "subject": "数学", "title": "数学冲刺卷 · 第1天（做完对答案）", "link": "papers/k_d1_math.html" }
   ],
   "eddey": [
+    { "type": "app", "subject": "语文", "title": "语文复习探索馆 · 三下（会动的复习：转盘/变身机/脑图）", "link": "apps/eddey_chinese_index_lab.html" },
+    { "type": "app", "subject": "语文", "title": "语文默写助手 · 三下（限时报读·全词语表·真人音）", "link": "apps/eddey_chinese_dictation.html" },
     { "type": "app", "subject": "数学", "title": "数学冲刺软件 · 刷题（三下）", "link": "apps/eddey_math_sprint.html" },
     { "type": "pdf", "subject": "数学", "title": "数学冲刺卷 · 第1天（做完对答案）", "link": "papers/e_d1_math.html" }
   ]
