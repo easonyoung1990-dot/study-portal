@@ -56,6 +56,13 @@
     "added": "2026-06-14"
   },
   {
+    "child": "eddey",
+    "subject": "语文",
+    "title": "语文期末闯关王 · 三下（13关·讲练合一·每题讲解·错题回炉）",
+    "file": "apps/eddey_chinese_review.html",
+    "added": "2026-06-19"
+  },
+  {
     "child": "kenton",
     "subject": "英语",
     "title": "小小世界播报 6.17",
