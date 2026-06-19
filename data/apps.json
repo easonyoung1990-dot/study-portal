@@ -180,5 +180,12 @@
     "title": "语文 · 思维实验室（转述句变身动画+名家名作关系脑图+古诗记忆翻卡，不是刷题）",
     "file": "apps/kenton_chinese_lab.html",
     "added": "2026-06-19"
+  },
+  {
+    "child": "kenton",
+    "subject": "语文",
+    "title": "语文 · 四下复习探索馆（按期末索引：多音字转盘/形近字/关联词搭桥/句子医院/名家脑图/古诗记忆馆）",
+    "file": "apps/kenton_chinese_index_lab.html",
+    "added": "2026-06-19"
   }
 ]
