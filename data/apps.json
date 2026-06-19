@@ -215,5 +215,12 @@
     "title": "只默错的 · 错词专默（只默之前默错的词/句，连续默对2次自动消失）",
     "file": "apps/kenton_wrong_dictation.html",
     "added": "2026-06-19"
+  },
+  {
+    "child": "kenton",
+    "subject": "语文",
+    "title": "语文错词默写 · 四下（复习错词8+试卷易错+古诗名句·限时报默·错词本）",
+    "file": "apps/kenton_chinese_dictation_redo.html",
+    "added": "2026-06-16"
   }
 ]
