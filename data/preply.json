@@ -16,5 +16,17 @@
     "focus": "情态动词 should/should not · 一般过去时 · 交通词汇 · 课堂真实改错 · 发音(timetable/comfortable/destination/motorbike)",
     "file": "apps/preply-transport-and-advice.html",
     "added": "2026-06-15"
+  },
+  {
+    "title": "旅行与交通（合并版·含过去式新关卡）",
+    "en": "Travel & Transport (+ should advice + past tense)",
+    "level": "A1–B2",
+    "merged_lessons": ["Everyday Travel Vocabulary", "Transport and 'should' advice"],
+    "key_prefix": "preplyTravel_",
+    "spec": "docs/PREPLY_REVIEW_APP_SPEC.md",
+    "focus": "交通/旅行词汇 · should/shouldn't 建议 · 一般过去时(新关卡,规则+不规则) · 课堂改错 · 同义词6对 · 发音(timetable31/expensive33/destination34/comfortable34/passengers36/motorbike49)",
+    "note": "首个合并两节课、首个含过去式关卡的软件,是后续新课的范例母版。",
+    "file": "apps/preply-travel-vocabulary.html",
+    "added": "2026-06-20"
   }
 ]
