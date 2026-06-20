@@ -107,6 +107,16 @@ svg{width:100%;height:auto;display:block;touch-action:manipulation;}
 .note .filled{color:var(--ink);font-weight:400;}
 .note .lbl{display:inline-block;font-size:11px;color:var(--green);font-weight:800;background:var(--greenbg);border-radius:6px;padding:0 6px;margin-right:6px;vertical-align:middle;}
 .tipbar{font-size:12px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.6;}
+/* 记录面板 + 自测条（四条铁律：判定→记录→导出） */
+.rec{background:#fff;border:2px solid var(--line);border-radius:16px;padding:14px;margin:14px 0 4px;box-shadow:0 6px 0 #efe0cd;}
+.rec h3{margin:0 0 9px;font-size:15px;color:var(--blued);}
+.rec .nums{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:9px;}
+.rec .pill{flex:1;min-width:84px;text-align:center;background:var(--bluebg);border-radius:12px;padding:9px 6px;}
+.rec .pill b{display:block;font-size:23px;color:var(--blued);line-height:1.1;}
+.rec .pill span{font-size:11.5px;color:var(--muted);}
+.rec .weak{font-size:12.5px;color:var(--muted);line-height:1.7;margin:0 0 9px;}
+.evalbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center;background:#fffaf0;border:2px dashed var(--gold);border-radius:13px;padding:11px;margin-top:11px;font-size:14px;font-weight:800;color:var(--golddk);}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--green);color:#fff;font-weight:800;padding:11px 19px;border-radius:13px;box-shadow:0 6px 20px rgba(0,0,0,.22);z-index:30;animation:pop .3s;}
 </style>
 </head>
 <body>
@@ -132,6 +142,57 @@ function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(M
 var actx=null;
 function beep(ok){try{if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();var o=actx.createOscillator(),g=actx.createGain();o.connect(g);g.connect(actx.destination);o.type="triangle";o.frequency.value=ok?880:200;var t=actx.currentTime;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.2,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+(ok?0.25:0.3));o.start(t);o.stop(t+(ok?0.26:0.32));if(ok){var o2=actx.createOscillator(),g2=actx.createGain();o2.connect(g2);g2.connect(actx.destination);o2.type="triangle";o2.frequency.value=1320;g2.gain.setValueAtTime(0.0001,t+0.1);g2.gain.exponentialRampToValueAtTime(0.18,t+0.12);g2.gain.exponentialRampToValueAtTime(0.0001,t+0.32);o2.start(t+0.1);o2.stop(t+0.33);}}catch(e){}}
 
+/* ===== 四条铁律：判定→记录→导出（localStorage，孩子端只读架构，靠导出人工搬运） ===== */
+var LS_KEY="mx_idxlab_eddey";
+function loadEvents(){try{return JSON.parse(localStorage.getItem(LS_KEY)||"[]")||[];}catch(e){return [];}}
+function logEvent(ev){try{var a=loadEvents();ev.ts=Date.now();a.push(ev);localStorage.setItem(LS_KEY,JSON.stringify(a));}catch(e){}refreshRec();}
+function toast(msg){var t=el("div","toast",msg);document.body.appendChild(t);setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},1400);}
+/* 轻量自测：给非做题模块补一个产出"对错/掌握"信号的判定 */
+function evalBar(boxId,mod,hint){
+  var c=$(boxId);if(!c)return;
+  c.innerHTML='<div class="evalbar"><span>🧠 自测：'+hint+'</span>'+
+    '<button class="btn green sm" data-ok="1">我会了 ✅</button>'+
+    '<button class="btn ghost sm" data-ok="0">再看一次</button></div>';
+  c.querySelectorAll("button").forEach(function(b){b.onclick=function(){
+    var ok=b.dataset.ok==="1";beep(ok);
+    logEvent({mod:mod,hint:hint,word:hint,ok:ok,user:ok?"我会了":"再看一次",tag:mod});
+    c.innerHTML='<div class="why"'+(ok?'':' style="border-color:var(--gold);background:#fffaf0"')+'><span class="lab"'+(ok?'':' style="color:var(--golddk)"')+'>'+(ok?"✅ 记下啦":"👀 再玩一遍")+'</span> '+(ok?"已存进首页「我的记录」。":"多看几次就记住了，下次再自测。")+'</div>';
+  };});
+}
+/* 导出（与 CLAUDE.md 标准格式一致：child/subject/events） */
+function exportObj(){return {child:"eddey",subject:"语文",app:"eddey_chinese_index_lab",exportedAt:new Date().toISOString(),events:loadEvents()};}
+function exportText(){
+  var a=loadEvents(),by={};
+  a.forEach(function(e){var m=e.mod||e.tag||"其他";if(!by[m])by[m]={n:0,ok:0,wrong:[]};by[m].n++;if(e.ok)by[m].ok++;else by[m].wrong.push(e.hint||e.word||"");});
+  var lines=["【弟弟 · 语文三下探索馆 学习记录】","导出时间："+new Date().toLocaleString(),"总互动 "+a.length+" 次，掌握/答对 "+a.filter(function(e){return e.ok;}).length,""];
+  Object.keys(by).forEach(function(m){var b=by[m];lines.push("· "+m+"：玩了 "+b.n+" 次，掌握/答对 "+b.ok+"，待加强 "+(b.n-b.ok));if(b.wrong.length)lines.push("    待加强："+b.wrong.slice(0,8).join("；"));});
+  lines.push("","———原始数据（投喂回爸爸端归档 data/learning/ 用）———",JSON.stringify(exportObj()));
+  return lines.join("\n");
+}
+function doCopy(){var t=exportText();if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast("已复制 ✅");},function(){fallbackCopy(t);});}else fallbackCopy(t);}
+function fallbackCopy(t){var ta=el("textarea");ta.value=t;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand("copy");toast("已复制 ✅");}catch(e){toast("请长按手动复制");}ta.remove();}
+function doDownload(){var blob=new Blob([exportText()],{type:"text/plain;charset=utf-8"});var u=URL.createObjectURL(blob);var a=el("a");a.href=u;a.download="eddey_语文探索馆_记录.txt";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},1000);toast("已存成文件 ⬇");}
+/* 首页「我的记录」面板：孩子自己也能看到玩了多少、错在哪 */
+function recPanelHtml(){
+  var a=loadEvents(),n=a.length,ok=a.filter(function(e){return e.ok;}).length,by={};
+  a.forEach(function(e){var m=e.mod||e.tag||"其他";if(!by[m])by[m]={n:0,ok:0};by[m].n++;if(e.ok)by[m].ok++;});
+  var weak=Object.keys(by).filter(function(m){return by[m].n-by[m].ok>0;}).map(function(m){return m+"(待加强"+(by[m].n-by[m].ok)+")";});
+  return '<div class="rec" id="recPanel"><h3>📒 我的记录</h3>'+
+    '<div class="nums">'+
+    '<div class="pill"><b>'+n+'</b><span>玩过的互动</span></div>'+
+    '<div class="pill"><b>'+ok+'</b><span>掌握/答对</span></div>'+
+    '<div class="pill"><b>'+(n-ok)+'</b><span>待加强</span></div></div>'+
+    (n?(weak.length?'<div class="weak">🔎 还要多玩：'+weak.join("、")+'</div>':'<div class="weak">🌟 都不错，继续保持～</div>')
+       :'<div class="weak">还没有记录。挑一个馆玩玩，玩完每个互动都会自动记下你的对错。</div>')+
+    '<div class="row"><button class="btn sm" id="recCopy">📋 复制记录</button><button class="btn ghost sm" id="recDown">💾 存成文件</button>'+(n?'<button class="btn gold sm" id="recClear">🧹 清空</button>':'')+'</div></div>';
+}
+function bindRec(){
+  var cp=$("recCopy");if(cp)cp.onclick=doCopy;
+  var dn=$("recDown");if(dn)dn.onclick=doDownload;
+  var cl=$("recClear");if(cl)cl.onclick=function(){if(confirm("确定清空本机记录？导出过就不怕丢。")){localStorage.removeItem(LS_KEY);refreshRec();}};
+}
+function refreshRec(){var p=$("recPanel");if(p){p.outerHTML=recPanelHtml();bindRec();}}
+
 /* ============ 探索馆首页 ============ */
 var MODS=[
  {id:"duoyin",ic:"🎡",nm:"多音字转盘",ds:"一个字几种读音？点一点看它变"},
@@ -144,9 +205,10 @@ var MODS=[
 function renderHome(){
   var h='<div class="intro">这是按你的<b>三下期末复习索引</b>做的探索馆。挑一个馆进去——每个馆都能<b>动手玩</b>、<b>讲清为什么</b>，把知识<b>记成画面</b>。</div><div class="grid">';
   MODS.forEach(function(m){h+='<div class="tile" data-id="'+m.id+'"><div class="ic">'+m.ic+'</div><div class="nm">'+m.nm+'</div><div class="ds">'+m.ds+'</div></div>';});
-  h+='</div>';
+  h+='</div>'+recPanelHtml();
   $("home").innerHTML=h;
   $("home").querySelectorAll(".tile").forEach(function(t){t.onclick=function(){openMod(t.dataset.id);};});
+  bindRec();
 }
 function openMod(id){$("home").classList.add("hide");$("view").classList.remove("hide");window.scrollTo(0,0);RENDER[id]($("stage"));}
 $("backBtn").onclick=function(){$("view").classList.add("hide");$("home").classList.remove("hide");window.scrollTo(0,0);};
@@ -195,6 +257,7 @@ RENDER.duoyin=function(stage){
       var ok=b.textContent===q.read;
       stage.querySelectorAll(".opt").forEach(function(x){x.onclick=null;if(x.textContent===q.read)x.classList.add("right");else if(x===b)x.classList.add("wrong");});
       beep(ok);
+      logEvent({mod:"多音字转盘",word:q.word,hint:"「"+q.word+"」中划线字的读音",ok:ok,user:b.textContent,tag:"多音字"});
       $("dyFb").innerHTML='<div class="why"'+(ok?'':' style="border-color:var(--red);background:var(--redbg)"')+'><span class="lab"'+(ok?'':' style="color:var(--red)"')+'>'+(ok?"✅ 对！":"正确读音是 "+q.read)+'</span> 「'+q.word+'」读 <b>'+q.read+'</b>。</div>';
     };});
     $("dyMore").onclick=runQuiz;$("dyBack").onclick=paint;
@@ -241,6 +304,7 @@ RENDER.zhuanshu=function(stage){
       '<div class="gears" id="zsGears"></div>'+
       '<div class="stage2" id="zsStage"></div>'+
       '<div id="zsWhy"></div>'+
+      '<div id="zsEval"></div>'+
       '<div class="row center" style="margin-top:12px">'+
       '<button class="btn" id="zsNext">▶ 下一步</button>'+
       '<button class="btn ghost sm" id="zsReset">↺ 重来</button>'+
@@ -260,7 +324,8 @@ RENDER.zhuanshu=function(stage){
     $("zsWhy").innerHTML='<div class="why"><span class="lab">'+st.lab+'</span><br>'+st.why+'</div>';
     zss++;
     if(zss>=S.steps.length){$("zsNext").disabled=true;$("zsNext").textContent="✅ 完成";beep(true);
-      setTimeout(function(){$("zsWhy").innerHTML+='<div class="result">🎉 转述句：'+S.result+'</div>';},400);}
+      setTimeout(function(){$("zsWhy").innerHTML+='<div class="result">🎉 转述句：'+S.result+'</div>';
+        evalBar("zsEval","转述句变身机","这句的「我→他/她」和标点变身，我会了吗");},400);}
   }
   load(0);
 };
@@ -293,7 +358,8 @@ RENDER.duoyi=function(stage){
     stage.querySelectorAll(".chip").forEach(function(c){c.onclick=function(){i=+c.dataset.i;paint();};});
     var opened={};
     stage.querySelectorAll(".sense").forEach(function(s){s.onclick=function(){s.classList.add("open");opened[s.dataset.k]=1;beep(true);
-      if(Object.keys(opened).length>=d.cases.length){$("dyiTip").innerHTML='✅ 看出来了吗？同一个「'+d.w+'」，两个句子里意思<b>完全不同</b>——要<b>联系句子</b>才能体会。';}
+      if(Object.keys(opened).length>=d.cases.length){$("dyiTip").innerHTML='✅ 看出来了吗？同一个「'+d.w+'」，两个句子里意思<b>完全不同</b>——要<b>联系句子</b>才能体会。<div id="dyiEval"></div>';
+        evalBar("dyiEval","一词多义","「"+d.w+"」两个句子里的不同意思，我能说出来吗");}
     };});
   }
   paint();
@@ -313,7 +379,9 @@ var UNITS=[
 RENDER.naotu=function(stage){
   stage.innerHTML='<div class="card"><div class="h2">🕸️ 三下课文 · 关系脑图</div><div class="hint">三下课文按<b>八个单元</b>分组，每个单元一个<b>主题</b>。点中间花瓣上的数字，看这个单元有哪些课文、是什么主题——<b>按主题记，比一篇篇背更牢</b>。</div>'+
     '<div id="ntSvg" style="margin-top:6px"></div>'+
-    '<div class="infocard" id="ntInfo">👆 点一个单元数字（一～八）看看</div></div>';
+    '<div class="infocard" id="ntInfo">👆 点一个单元数字（一～八）看看</div>'+
+    '<div class="row center" style="margin-top:10px"><button class="btn gold sm" id="ntQuiz">🎯 考考我：这篇课文在哪个单元</button></div>'+
+    '<div id="ntQ"></div></div>';
   var cx=180,cy=180,R=128,r=27,n=UNITS.length,s='<svg viewBox="0 0 360 360" role="img">',pos=[];
   for(var i=0;i<n;i++){var a=(-90+i*360/n)*Math.PI/180;pos.push([cx+R*Math.cos(a),cy+R*Math.sin(a)]);}
   for(i=0;i<n;i++){s+='<line id="ntl'+i+'" x1="'+cx+'" y1="'+cy+'" x2="'+pos[i][0]+'" y2="'+pos[i][1]+'" stroke="#f0d8c2" stroke-width="3"/>';}
@@ -332,6 +400,22 @@ RENDER.naotu=function(stage){
     var u=UNITS[i];
     $("ntInfo").innerHTML='<b>第'+u.n+'单元 · '+u.t+'</b><br>主题：<b style="color:var(--purple)">'+u.note+'</b><br>课文：'+u.ke;
   }
+  function ntQuiz(){
+    var ans=Math.floor(Math.random()*n),txt=UNITS[ans].ke.split("、")[0];
+    var opts=shuffle(UNITS.map(function(_,k){return k;}).filter(function(k){return k!==ans;})).slice(0,3);
+    opts.push(ans);opts=shuffle(opts);
+    $("ntQ").innerHTML='<div class="hint" style="margin-top:10px">课文《'+txt+'》在哪个单元？</div><div class="opts">'+
+      opts.map(function(k){return '<button class="opt" data-k="'+k+'">第'+UNITS[k].n+'单元 · '+UNITS[k].t+'</button>';}).join("")+'</div><div id="ntFb"></div>';
+    $("ntQ").querySelectorAll(".opt").forEach(function(b){b.onclick=function(){
+      var k=+b.dataset.k,ok=k===ans,u=UNITS[ans];
+      $("ntQ").querySelectorAll(".opt").forEach(function(x){x.onclick=null;var kk=+x.dataset.k;if(kk===ans)x.classList.add("right");else if(x===b)x.classList.add("wrong");});
+      beep(ok);
+      logEvent({mod:"课文关系脑图",word:txt,hint:"《"+txt+"》属第几单元",ok:ok,user:"第"+UNITS[k].n+"单元",tag:"课文归类"});
+      $("ntFb").innerHTML='<div class="why"'+(ok?'':' style="border-color:var(--red);background:var(--redbg)"')+'><span class="lab"'+(ok?'':' style="color:var(--red)"')+'>'+(ok?"✅ 对！":"应是第"+u.n+"单元")+'</span> 《'+txt+'》属<b>第'+u.n+'单元 · '+u.t+'</b>（'+u.note+'）。</div><div class="row center" style="margin-top:8px"><button class="btn sm" id="ntMore">再考一题</button></div>';
+      $("ntMore").onclick=ntQuiz;
+    };});
+  }
+  $("ntQuiz").onclick=ntQuiz;
 };
 
 /* ============ 5. 古诗·日积月累馆 ============ */
@@ -347,7 +431,7 @@ var SCROLLS=[
 ];
 RENDER.shige=function(stage){
   var h='<div class="card"><div class="h2">📜 古诗 · 日积月累馆</div><div class="hint">三件法宝：① <b>翻卡</b>背《大林寺桃花》；② 点<b>紫色的字</b>看意思；③ <b>名句卷轴</b>翻面，先看意思猜句子再核对。</div></div>'+
-    '<div class="card"><div class="h2" style="font-size:16px">① 《大林寺桃花》理解翻卡</div><div class="hint">看上句／提示，先自己想下句，再点卡片翻开。</div><div class="cards" id="shCards" style="margin-top:8px"></div></div>'+
+    '<div class="card"><div class="h2" style="font-size:16px">① 《大林寺桃花》理解翻卡</div><div class="hint">看上句／提示，先自己想下句，再点卡片翻开。</div><div class="cards" id="shCards" style="margin-top:8px"></div><div id="shEval"></div></div>'+
     '<div class="card"><div class="h2" style="font-size:16px">② 点字看意思</div><div class="hint">点紫色的字，看它在诗里的意思。</div>'+
       '<div class="poemline" style="margin-top:6px">人间四月<span class="zi" data-i="0">芳菲</span><span class="zi" data-i="1">尽</span>，<br>山寺桃花<span class="zi" data-i="2">始</span>盛开。<br>长恨春归无<span class="zi" data-i="3">觅</span>处，<br>不知转入此中来。</div>'+
       '<div style="text-align:center;font-size:12px;color:var(--muted);margin-top:4px">——〔唐〕白居易</div>'+
@@ -365,6 +449,7 @@ RENDER.shige=function(stage){
   stage.querySelectorAll(".zi").forEach(function(z){z.onclick=function(){var d=GUSHI_ZI[+z.dataset.i];$("ziPop").innerHTML='<div class="zipop"><b style="color:var(--purple);font-size:16px">'+d[0]+'</b> ＝ '+d[1]+'</div>';};});
   $("scrollBox").innerHTML=SCROLLS.map(function(m){return '<div class="flip" style="height:74px;margin-bottom:8px"><div class="inner"><div class="face f" style="background:linear-gradient(180deg,#fff0e6,#fff)"><div class="t2" style="margin:0">意思：'+m[0]+'</div></div><div class="face b" style="background:linear-gradient(180deg,#fffaf0,#fff5e0)"><div class="poem">'+m[1]+'</div><div class="src">——'+m[2]+'</div></div></div></div>';}).join("");
   $("scrollBox").querySelectorAll(".flip").forEach(function(f){f.onclick=function(){f.classList.toggle("on");};});
+  evalBar("shEval","古诗·日积月累","《大林寺桃花》我能背下来吗");
 };
 
 /* ============ 6. 寻物启事·拼装台 ============ */
@@ -375,7 +460,7 @@ var XW=[
  {key:"date",lbl:"日期（靠右）",txt:"5月20日",cls:"sign"}
 ];
 RENDER.xunwu=function(stage){
-  var placed=0;
+  var placed=0,wrongCount=0;
   function paint(){
     var h='<div class="card"><div class="h2">📮 寻物启事 · 拼装台</div><div class="hint">寻物启事有固定<b>格式</b>。按<b>从上到下</b>的正确顺序点下面的零件，把它摆进启事里：<b>标题 → 正文 → 署名 → 日期</b>。摆对了会自动归位。</div>'+
       '<div class="note" id="xwNote">'+XW.map(function(p,i){return '<div class="slot" id="xwslot'+i+'">第 '+(i+1)+' 行：'+p.lbl+'</div>';}).join("")+'</div>'+
@@ -396,11 +481,12 @@ RENDER.xunwu=function(stage){
       placed++;beep(true);
       if(placed>=XW.length){
         $("xwChips").innerHTML='';
-        $("xwDone").innerHTML='<div class="why"><span class="lab">🎉 拼好啦！记住寻物启事的格式：</span><br>① <b>标题</b>"寻物启事"<b>居中</b>写；② <b>正文</b>说清楚"<b>什么时候、在哪里、丢了什么、怎么联系</b>"，别忘说"谢谢"；③ <b>署名和日期</b>写在<b>右下角</b>，日期在署名下面。</div><div class="row center" style="margin-top:8px"><button class="btn green sm" id="xwAgain">再拼一次 ↺</button></div>';
-        $("xwAgain").onclick=function(){placed=0;paint();};
+        logEvent({mod:"寻物启事拼装",word:"寻物启事格式",hint:"按 标题→正文→署名→日期 排序",ok:wrongCount===0,user:"错放 "+wrongCount+" 次",tag:"应用文格式"});
+        $("xwDone").innerHTML='<div class="why"><span class="lab">🎉 拼好啦！记住寻物启事的格式：</span><br>① <b>标题</b>"寻物启事"<b>居中</b>写；② <b>正文</b>说清楚"<b>什么时候、在哪里、丢了什么、怎么联系</b>"，别忘说"谢谢"；③ <b>署名和日期</b>写在<b>右下角</b>，日期在署名下面。'+(wrongCount===0?'（这次<b>一次都没放错</b>，棒！）':'（这次放错了 '+wrongCount+' 次，再拼一次试试全对～）')+'</div><div class="row center" style="margin-top:8px"><button class="btn green sm" id="xwAgain">再拼一次 ↺</button></div>';
+        $("xwAgain").onclick=function(){placed=0;wrongCount=0;paint();};
       }else{drawChips();}
     }else{
-      beep(false);
+      beep(false);wrongCount++;
       var c=$("xwChips").querySelector('[data-i="'+i+'"]');if(c){c.classList.add("wrong");setTimeout(function(){c.classList.remove("wrong");},700);}
       $("xwDone").innerHTML='<div class="why" style="border-color:var(--red);background:var(--redbg)"><span class="lab" style="color:var(--red)">还不是这一行～</span> 现在该放第 '+(placed+1)+' 行：<b>'+XW[placed].lbl+'</b>。按"标题→正文→署名→日期"的顺序来。</div>';
     }
