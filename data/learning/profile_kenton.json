@@ -1,7 +1,7 @@
 {
   "child": "kenton",
   "name": "Kenton",
-  "updated": "2026-06-14",
+  "updated": "2026-06-20",
   "学习总档案": "docs/学习记忆_哥哥.md —— 长期画像/三科错题/复习规则权威总档，出题前必读",
   "教材": { "英语": "上海《尖子生笔记·同步教材》英语 四年级下（沪教版/钟书金牌）", "参考": "data/learning/textbook_reference.json" },
   "summary": "2026-06-13 导入默写软件 37 次真实练习。英语词汇与句型整体扎实，语文默写量大且准；薄弱集中在语文第23课词语和英语个别单词。",
@@ -40,13 +40,15 @@
         "M2U3 家庭生活(bedroom)": { "mastery": 80, "trend": "flat", "last_seen": "2026-06-13" },
         "M3U1 声音(sound)": { "mastery": 80, "trend": "flat", "last_seen": "2026-06-13" },
         "句型默写(疑问句/节日句)": { "mastery": 80, "trend": "flat", "last_seen": "2026-06-13" },
-        "M1-M4 单词整体": { "mastery": 92, "trend": "up", "last_seen": "2026-06-13" }
+        "M1-M4 单词整体": { "mastery": 92, "trend": "up", "last_seen": "2026-06-13" },
+        "外教课英语(句子语序/介词by/听辨)": { "mastery": 78, "trend": "flat", "last_seen": "2026-06-20" }
       }
     }
   },
   "milestones": [
     { "date": "2026-06-13", "text": "首次导入默写软件真实数据：37 次练习。英语/语文整体扎实，定位薄弱点：语文第23课词语、英语 nest/swan。" },
-    { "date": "2026-06-14", "text": "四下5-8单元复习软件 13 关导出归档：整体优秀、无反复错题。薄弱集中在易错字音(彬/矩/屑/矢)、名句出处(老子/周易)、近义辨析。明细见 data/learning/chinese_review_kenton_sessions.json。" }
+    { "date": "2026-06-14", "text": "四下5-8单元复习软件 13 关导出归档：整体优秀、无反复错题。薄弱集中在易错字音(彬/矩/屑/矢)、名句出处(老子/周易)、近义辨析。明细见 data/learning/chinese_review_kenton_sessions.json。" },
+    { "date": "2026-06-20", "text": "首次用外教课复习软件 Travel & Transport，正确率86%(61⭐)。整体强、错题少且偏粗心：句子语序(I love traveling by car 把 by 放错)、缩写说全(No.→number one)、介词(I go to school by bus,误填 take)、听音判对错错2。发音关没练。⚠️『同义词配对』2个错是软件日志bug(假错题)、且『冠词the』那道实为考介词 by(软件错因标签也不准)——均不计入掌握度。详见家长页导出。" }
   ],
   "_schema": {
     "knowledge_points": "形如 { \"小数除法\": { \"mastery\": 85, \"trend\": \"up|flat|down\", \"last_seen\": \"YYYY-MM-DD\" } }，mastery 为 0-100 的掌握度估计",
