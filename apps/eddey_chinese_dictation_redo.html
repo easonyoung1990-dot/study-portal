@@ -168,8 +168,8 @@ function mkUtter(t,lang){
   u.pitch=1.0;return u;
 }
 
-/* ===== 神经真人配音层(预合成),失败回退浏览器TTS。复用主默写软件音频夹 ===== */
-const AUDIO_DIR="audio/eddey_chinese_dictation/";
+/* ===== 神经真人配音层(预合成),失败回退浏览器TTS。本软件专用音频(Kokoro小晓女声,已校准多音字) ===== */
+const AUDIO_DIR="audio/eddey_chinese_dictation_redo/";
 let exAudio=null;let audioTok=0;
 function audioHash(s){const b=new TextEncoder().encode(s);let x=0x811c9dc5>>>0;for(let i=0;i<b.length;i++){x^=b[i];x=Math.imul(x,0x01000193)>>>0;}return ('0000000'+x.toString(16)).slice(-8);}
 function getExAudio(){if(!exAudio){exAudio=new Audio();exAudio.setAttribute('playsinline','');exAudio.preload='auto';try{document.body.appendChild(exAudio);}catch(e){}}return exAudio;}
