@@ -571,6 +571,24 @@
       "archive_file": "(各软件 localStorage 导出)",
       "result": "每人整合为1个语文总复习软件(默写+易错小测带讲解+错词本);删除旧语文软件12个,保留3个交互探索馆。修正弟弟提防多音字报读。",
       "follow_up": "等两娃用新软件导出后回填掌握度。"
+    },
+    {
+      "id": "chinese_express_labs_2026-06-20",
+      "date": "2026-06-20",
+      "child": "both",
+      "subject": "语文",
+      "grade": "哥哥四下/弟弟三下",
+      "kind": "主观题交互引导实验室(教+考)",
+      "knowledge_points": [
+        "复述/概括故事(按顺序+谁/做了什么/结果)",
+        "阅读按点答(因为所以/品质词+原文事例≥2点)",
+        "仿写连续动作(动词链)"
+      ],
+      "difficulty": "巩固-拔高",
+      "app_file": "apps/eddey_chinese_express_lab.html | apps/kenton_chinese_express_lab.html",
+      "archive_file": "(交互引导式,暂不归档分数)",
+      "result": "主观题做成会动·引导式实验室:三段式(方法→动画示范→自己做+检验)。弟弟攻复述(最弱)+阅读按点答;哥哥攻仿写连续动作+阅读品质题按点答。",
+      "follow_up": "观察孩子使用,后续可加更多故事/短文素材;复述模块可接入更多课文。"
     }
   ]
 }

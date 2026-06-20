@@ -2,6 +2,20 @@
   {
     "child": "kenton",
     "subject": "语文",
+    "title": "语文表达实验室 · 四下（主观题会动·引导式：仿写连续动作分镜机+阅读按点答得分雷达，先教思路再考）",
+    "file": "apps/kenton_chinese_express_lab.html",
+    "added": "2026-06-20"
+  },
+  {
+    "child": "eddey",
+    "subject": "语文",
+    "title": "语文表达实验室 · 三下（主观题会动·引导式：复述故事三步拼装机+阅读按点答找得分点，先教思路再考）",
+    "file": "apps/eddey_chinese_express_lab.html",
+    "added": "2026-06-20"
+  },
+  {
+    "child": "kenton",
+    "subject": "语文",
     "title": "语文总复习 · 四下（错字+易错字 报默·易错点小测带讲解·错词本反复练）",
     "file": "apps/kenton_chinese_master.html",
     "added": "2026-06-20"
