@@ -1,6 +1,20 @@
 [
   {
     "child": "kenton",
+    "subject": "英语",
+    "title": "外教课复习 · Travel & Transport（旅行+交通·should建议·过去式·课堂改错）",
+    "file": "apps/preply-travel-vocabulary.html",
+    "added": "2026-06-20"
+  },
+  {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "外教课复习 · Travel & Transport（旅行+交通·should建议·过去式·课堂改错）",
+    "file": "apps/preply-travel-vocabulary.html",
+    "added": "2026-06-20"
+  },
+  {
+    "child": "kenton",
     "subject": "语文",
     "title": "语文表达实验室 · 四下（主观题会动·引导式：仿写连续动作分镜机+阅读按点答得分雷达，先教思路再考）",
     "file": "apps/kenton_chinese_express_lab.html",
