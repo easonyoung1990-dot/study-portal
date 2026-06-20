@@ -236,5 +236,19 @@
     "title": "数学专项 · 试商余数+除法含0+比大小（错题汇总·讲解+回炉）",
     "file": "apps/eddey_math_div_redo.html",
     "added": "2026-06-16"
+  },
+  {
+    "child": "kenton",
+    "subject": "编程",
+    "title": "打字训练馆 · 盲打指法（手指分区键盘+实时速度/准确率+C++符号专项+错键回炉）",
+    "file": "apps/typing_dojo.html?who=kenton",
+    "added": "2026-06-20"
+  },
+  {
+    "child": "eddey",
+    "subject": "编程",
+    "title": "打字训练馆 · 盲打指法（手指分区键盘+实时速度/准确率+拼音打字+错键回炉）",
+    "file": "apps/typing_dojo.html?who=eddey",
+    "added": "2026-06-20"
   }
 ]

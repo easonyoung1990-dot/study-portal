@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff7f0">
+<title>打字训练馆 · 家庭学习门户</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+  .accent { color: var(--accent); }
+  .panel { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; margin-bottom: 14px; }
+  .stats { display: flex; gap: 8px; }
+  .stat { flex: 1; background: var(--card); border-radius: 16px; box-shadow: var(--shadow); padding: 10px 6px; text-align: center; }
+  .stat .v { font-size: 22px; font-weight: 800; line-height: 1; }
+  .stat .l { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { border: 2px solid #eee; background: #fff; border-radius: 999px; padding: 7px 12px; font-size: 13px; font-weight: 700;
+          cursor: pointer; position: relative; color: var(--ink); }
+  .chip.on { border-color: var(--accent); background: var(--accent-soft); }
+  .chip .best { display:block; font-size:10px; color: var(--muted); font-weight:600; margin-top:1px; }
+  .tip { font-size: 13px; color: var(--muted); margin: 8px 2px 12px; line-height: 1.5; }
+  .zh { font-size: 22px; font-weight: 800; text-align: center; letter-spacing: 4px; margin-bottom: 8px; }
+  .prompt { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 24px; line-height: 1.9;
+            background: #fbfbfd; border-radius: 16px; padding: 16px; word-break: break-all; min-height: 64px; letter-spacing: 1px; }
+  .prompt .done { color: var(--candy-green); }
+  .prompt .done.bad { color: #ff6b6b; }
+  .prompt .cur { background: var(--accent); color: #fff; border-radius: 5px; padding: 0 2px; }
+  .prompt .cur.err { background: #ff6b6b; }
+  .prompt .sp { display: inline-block; min-width: .55em; }
+  .fingerhint { text-align: center; font-size: 14px; font-weight: 700; margin: 12px 0 8px; min-height: 20px; }
+
+  .kb { display: grid; gap: 5px; justify-content: center; }
+  .kb .row { display: flex; gap: 5px; justify-content: center; }
+  .key { min-width: 30px; height: 34px; border-radius: 7px; display: grid; place-items: center;
+         font-size: 12px; font-weight: 700; color: #6b6470; border: 2px solid transparent;
+         font-family: monospace; padding: 0 4px; }
+  .key.wide { min-width: 90px; }
+  .key.space { min-width: 150px; }
+  .key.home { box-shadow: inset 0 -3px 0 rgba(0,0,0,.18); }
+  .key.next { border-color: var(--accent); color: var(--ink); transform: translateY(-2px);
+              box-shadow: 0 4px 10px rgba(0,0,0,.18); }
+  .key.shiftnext { border-color: var(--candy-purple); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 12px; justify-content: center; font-size: 11px; color: var(--muted); margin-top: 10px; }
+  .legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 3px; vertical-align: -1px; }
+
+  .btn { border: none; border-radius: 14px; padding: 12px 16px; font-size: 15px; font-weight: 800; cursor: pointer; color: #fff;
+         background: var(--accent); box-shadow: var(--shadow); }
+  .btn.ghost { background: #fff; color: var(--ink); border: 2px solid #eee; box-shadow: none; }
+  .btnrow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .toggle { font-size: 13px; background:#fff; border:2px solid #eee; border-radius:999px; padding:6px 12px; cursor:pointer; font-weight:700; }
+  .result { text-align: center; padding: 6px 0; }
+  .result .big { font-size: 30px; font-weight: 800; }
+  .miss { display:inline-block; background:#fff0f0; color:#c0392b; border-radius:8px; padding:3px 8px; margin:3px; font-family:monospace; font-weight:800; }
+  textarea { width: 100%; height: 130px; border-radius: 12px; border: 2px solid #eee; padding: 10px; font-family: monospace; font-size: 12px; }
+  .note { font-size: 12px; color: var(--muted); text-align:center; margin-top:6px; }
+  h2 { font-size: 17px; margin: 4px 2px 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back" id="backLink" href="../apps.html">‹</a>
+    <h1>⌨️ 打字训练馆 <span id="whoTag" class="accent"></span></h1>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="v" id="sTime">0.0s</div><div class="l">⏱ 用时</div></div>
+    <div class="stat"><div class="v accent" id="sWpm">0</div><div class="l">⚡ 速度(字/分)</div></div>
+    <div class="stat"><div class="v" id="sAcc">100%</div><div class="l">🎯 准确率</div></div>
+  </div>
+
+  <div class="panel">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <strong>选关卡</strong>
+      <button class="toggle" id="soundBtn">🔔 声音开</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="tip" id="tip"></div>
+  </div>
+
+  <div class="panel">
+    <div class="zh" id="zh" style="display:none"></div>
+    <div class="prompt" id="prompt">点上面的关卡开始练习 👆</div>
+    <div class="fingerhint" id="fhint"></div>
+    <div class="kb" id="kb"></div>
+    <div class="legend" id="legend"></div>
+    <div class="btnrow">
+      <button class="btn ghost" id="againBtn">🔁 重练本行</button>
+      <button class="btn ghost" id="nextBtn">下一行 ⏭</button>
+      <button class="btn ghost" id="blindBtn">🙈 盲打模式</button>
+    </div>
+    <div class="note">💻 用电脑键盘练习效果最好；尽量<strong>别低头看键盘</strong>，靠手指记位置。</div>
+  </div>
+
+  <div class="panel">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h2 style="margin:0">📊 我的打字记录</h2>
+      <button class="toggle" id="recBtn">展开 ▾</button>
+    </div>
+    <div id="recBody" style="display:none;margin-top:12px"></div>
+  </div>
+
+  <div class="footer-note">每天 10 分钟，盲打肌肉记忆靠的是天天练，不是练一次很久。</div>
+</div>
+
+<script>
+// ---------- 主题（按 who 区分哥哥/弟弟） ----------
+function getParam(k){ return new URLSearchParams(location.search).get(k); }
+const who = (getParam("who")==="eddey") ? "eddey" : "kenton";
+const CHILD = { kenton:{name:"Kenton", zh:"哥哥", emo:"🦁", accent:"#36c5d6", soft:"#e3fbff"},
+                eddey:{name:"Eddey", zh:"弟弟", emo:"🐯", accent:"#ff8a5b", soft:"#fff0e6"} }[who];
+document.documentElement.style.setProperty("--accent", CHILD.accent);
+document.documentElement.style.setProperty("--accent-soft", CHILD.soft);
+document.getElementById("whoTag").textContent = CHILD.emo + CHILD.name;
+document.getElementById("backLink").href = "../apps.html?who=" + who;
+const STORE_KEY = "mx_typing_" + who;
+
+// ---------- 存档 ----------
+function load(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }catch(e){ return {}; } }
+function save(){ localStorage.setItem(STORE_KEY, JSON.stringify(store)); }
+let store = load();
+store.bests = store.bests || {};   // {lessonId:{wpm,acc}}
+store.missed = store.missed || {}; // {char:count}
+store.totalSec = store.totalSec || 0;
+store.totalLines = store.totalLines || 0;
+store.events = store.events || [];
+
+// ---------- 关卡内容 ----------
+const LESSONS = [
+  { id:"home", name:"1·基准键", tip:"八指放 A S D F / J K L ；大拇指管空格。F 和 J 有小凸点，靠它回家，别看键盘！",
+    lines:["asdf jkl; asdf jkl;","aj sk dl f; fj dk sl a;","as df jk l; sad lad ask;","a sad lass; dad asks; all fall;"] },
+  { id:"top", name:"2·上排", tip:"食指够上去打 R T / Y U，打完马上回基准键。",
+    lines:["qwer tyui op qwer tyui","we try your power quiet","write type root tree quote"] },
+  { id:"bottom", name:"3·下排", tip:"逗号句号斜杠由右手中指/无名指/小指管。",
+    lines:["zxcv bnm, zxcv bnm.","a lazy cat, a brave man.","mix vivid club zoom number"] },
+  { id:"num", name:"4·数字行", tip:"数字也盲打：4 5 左食指、6 7 右食指，从基准键向上够。",
+    lines:["1234 5678 90 1234 5678","call 100 200 305 480 90","year 2026 room 808 no.7"] },
+  { id:"word", name:"5·常用词", tip:"看单词整体，别一个字母一个字母找键。",
+    lines:["the and you that have with this from they","school summer friend English basketball","what when where because together every"] },
+  { id:"sent", name:"6·英文句", tip:"句首大写用对侧 Shift，句号别忘。先打准，再求快。",
+    lines:["I like to play basketball with my friends.","We are learning English this summer.","Kenton and Eddey practice typing every day."] },
+  { id:"cpp", name:"7·★C++符号", tip:"编程必备：; { } ( ) < > 用得最多，慢一点也要打准。",
+    lines:["int main() { return 0; }","for (i = 0; i < n; i++) {}","if (a && b) { cout << a; }","cin >> x; cout << x + 1 << endl;"] },
+  { id:"pinyin", name:"8·拼音中文", tip:"看上面的汉字，打它的拼音字母（不用打声调）。先对再快。",
+    zh:["你好 世界","我 爱 学习","今天 天气 很好","篮球 真 好玩","暑假 快乐"],
+    lines:["nihao shijie","wo ai xuexi","jintian tianqi henhao","lanqiu zhen haowan","shujia kuaile"] }
+];
+
+// ---------- 手指分区 ----------
+const FINGER = { lp:{n:"左手小指",c:"#ff8a5b"}, lr:{n:"左手无名指",c:"#ffd166"}, lm:{n:"左手中指",c:"#8ce99a"}, li:{n:"左手食指",c:"#36c5d6"},
+                 th:{n:"大拇指",c:"#b39ddb"},
+                 ri:{n:"右手食指",c:"#36c5d6"}, rm:{n:"右手中指",c:"#8ce99a"}, rr:{n:"右手无名指",c:"#ffd166"}, rp:{n:"右手小指",c:"#ff8a5b"} };
+const FMAP = {
+  "`":"lp","1":"lp","q":"lp","a":"lp","z":"lp",
+  "2":"lr","w":"lr","s":"lr","x":"lr",
+  "3":"lm","e":"lm","d":"lm","c":"lm",
+  "4":"li","5":"li","r":"li","t":"li","f":"li","g":"li","v":"li","b":"li",
+  "6":"ri","7":"ri","y":"ri","u":"ri","h":"ri","j":"ri","n":"ri","m":"ri",
+  "8":"rm","i":"rm","k":"rm",",":"rm",
+  "9":"rr","o":"rr","l":"rr",".":"rr",
+  "0":"rp","-":"rp","=":"rp","p":"rp","[":"rp","]":"rp","\\":"rp",";":"rp","'":"rp","/":"rp",
+  " ":"th"
+};
+// 需要 Shift 才能打出的字符 → 对应的基础键
+const SHIFTMAP = { "{":"[","}":"]","(":"9",")":"0","<":",",">":".","?":"/",":":";","\"":"'","+":"=","_":"-",
+                   "*":"8","&":"7","^":"6","%":"5","$":"4","#":"3","@":"2","!":"1","~":"`","|":"\\" };
+function baseAndShift(ch){
+  if(ch>="A"&&ch<="Z") return { base:ch.toLowerCase(), shift:true };
+  if(SHIFTMAP[ch]!==undefined) return { base:SHIFTMAP[ch], shift:true };
+  return { base:ch, shift:false };
+}
+
+// ---------- 渲染键盘 ----------
+const ROWS = [
+  ["`","1","2","3","4","5","6","7","8","9","0","-","="],
+  ["q","w","e","r","t","y","u","i","o","p","[","]","\\"],
+  ["a","s","d","f","g","h","j","k","l",";","'"],
+  ["z","x","c","v","b","n","m",",",".","/"]
+];
+const HOME = ["a","s","d","f","j","k","l",";"];
+const keyEls = {};
+function tint(c){ return c + "22"; } // 透明淡色
+function buildKb(){
+  const kb = document.getElementById("kb");
+  kb.innerHTML = "";
+  ROWS.forEach((row,ri)=>{
+    const r = document.createElement("div"); r.className="row";
+    if(ri===2) r.style.paddingLeft="14px";
+    if(ri===3) r.style.paddingLeft="28px";
+    row.forEach(k=>{
+      const el = document.createElement("div");
+      el.className = "key" + (HOME.includes(k)?" home":"");
+      el.textContent = (k==="\\")?"\\":k;
+      const f = FMAP[k]; if(f) el.style.background = tint(FINGER[f].c);
+      keyEls[k] = el; r.appendChild(el);
+    });
+    kb.appendChild(r);
+  });
+  // 末行：Shift / 空格 / Shift
+  const r = document.createElement("div"); r.className="row";
+  const lsh = document.createElement("div"); lsh.className="key wide"; lsh.textContent="⇧Shift"; lsh.style.background=tint(FINGER.lp.c); keyEls["__lsh"]=lsh;
+  const sp = document.createElement("div"); sp.className="key space"; sp.textContent="space"; sp.style.background=tint(FINGER.th.c); keyEls[" "]=sp;
+  const rsh = document.createElement("div"); rsh.className="key wide"; rsh.textContent="Shift⇧"; rsh.style.background=tint(FINGER.rp.c); keyEls["__rsh"]=rsh;
+  r.appendChild(lsh); r.appendChild(sp); r.appendChild(rsh); kb.appendChild(r);
+
+  // 图例
+  const lg = document.getElementById("legend");
+  lg.innerHTML = ["li","lm","lr","lp"].map(f=>`<span><i style="background:${FINGER[f].c}"></i>${FINGER[f].n}</span>`).join("")
+    + `<span><i style="background:${FINGER.th.c}"></i>拇指</span>`
+    + ["ri","rm","rr","rp"].map(f=>`<span><i style="background:${FINGER[f].c}"></i>${FINGER[f].n}</span>`).join("");
+}
+function clearHi(){ Object.values(keyEls).forEach(e=>e.classList.remove("next","shiftnext")); }
+function highlightNext(ch){
+  clearHi();
+  if(ch===undefined) return;
+  const {base, shift} = baseAndShift(ch);
+  const el = keyEls[base];
+  const f = FMAP[base];
+  if(el){ el.classList.add("next"); }
+  let fingerTxt = f ? FINGER[f].n : "";
+  if(shift){
+    // 用对侧 Shift：左手键→右Shift，右手键→左Shift
+    const useRight = f && f[0]==="l";
+    keyEls[useRight?"__rsh":"__lsh"].classList.add("shiftnext");
+    fingerTxt = (useRight?"右手小指 Shift":"左手小指 Shift") + " + " + fingerTxt;
+  }
+  const label = (base===" ")?"空格":("「"+ (ch===" "?"␣":ch) +"」");
+  document.getElementById("fhint").innerHTML = blind ? "🙈 盲打中…靠手指记位置" : (fingerTxt? `下一个 ${label}：<span class="accent">${fingerTxt}</span>` : "");
+}
+
+// ---------- 打字引擎 ----------
+let curLesson=null, lineIdx=0, text="", pos=0, correct=0, errors=0, started=false, t0=0, tick=null, lineMissed={}, blind=false, soundOn=true;
+
+function setLesson(idx){
+  curLesson = LESSONS[idx];
+  lineIdx = 0;
+  loadLine();
+  renderChips();
+}
+function loadLine(){
+  text = curLesson.lines[lineIdx % curLesson.lines.length];
+  pos=0; correct=0; errors=0; started=false; lineMissed={};
+  clearInterval(tick);
+  document.getElementById("sTime").textContent="0.0s";
+  document.getElementById("sWpm").textContent="0";
+  document.getElementById("sAcc").textContent="100%";
+  const zh = document.getElementById("zh");
+  if(curLesson.zh){ zh.style.display="block"; zh.textContent = curLesson.zh[lineIdx % curLesson.zh.length]; }
+  else zh.style.display="none";
+  renderPrompt(false);
+  highlightNext(text[0]);
+}
+function renderPrompt(err){
+  const p = document.getElementById("prompt");
+  let html="";
+  for(let i=0;i<text.length;i++){
+    const ch=text[i]; const disp = ch===" " ? "<span class='sp'>&nbsp;</span>" : escapeHtml(ch);
+    if(i<pos) html += `<span class="done">${disp}</span>`;
+    else if(i===pos) html += `<span class="cur${err?" err":""}">${ch===" "?"&nbsp;":escapeHtml(ch)}</span>`;
+    else html += `<span>${disp}</span>`;
+  }
+  p.innerHTML = html;
+}
+function escapeHtml(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function startTick(){
+  tick = setInterval(()=>{
+    const sec=(Date.now()-t0)/1000;
+    document.getElementById("sTime").textContent = sec.toFixed(1)+"s";
+    const wpm = sec>0 ? Math.round((correct/5)/(sec/60)) : 0;
+    document.getElementById("sWpm").textContent = wpm;
+  },150);
+}
+function finishLine(){
+  clearInterval(tick);
+  const sec=(Date.now()-t0)/1000;
+  const wpm = sec>0 ? Math.round((text.length/5)/(sec/60)) : 0;
+  const acc = Math.round(text.length/(text.length+errors)*100);
+  document.getElementById("sTime").textContent=sec.toFixed(1)+"s";
+  document.getElementById("sWpm").textContent=wpm;
+  document.getElementById("sAcc").textContent=acc+"%";
+  // 存档
+  const b = store.bests[curLesson.id] || {wpm:0,acc:0};
+  if(wpm > b.wpm) b.wpm = wpm;
+  if(acc > b.acc) b.acc = acc;
+  store.bests[curLesson.id] = b;
+  store.totalSec += sec; store.totalLines += 1;
+  store.events.push({ts:Date.now(), lesson:curLesson.id, len:text.length, sec:Math.round(sec), wpm, acc});
+  if(store.events.length>300) store.events = store.events.slice(-300);
+  save();
+  renderChips(); renderRecord();
+  sound(true, true);
+  const p=document.getElementById("prompt");
+  p.innerHTML = `<div class="result"><div class="big accent">${wpm} 字/分</div>
+    🎯 准确率 ${acc}%　⏱ ${sec.toFixed(1)}s ${acc===100?"　🌟全对！":""}<br>
+    <span style="font-size:13px;color:var(--muted)">${wpm>=b.wpm?"🏆 刷新本关最佳！":"本关最佳 "+b.wpm+" 字/分"}</span></div>`;
+  document.getElementById("fhint").textContent = "👏 这一行完成，点「下一行」继续";
+  clearHi();
+}
+function onChar(key){
+  if(!curLesson) return;
+  const target=text[pos];
+  if(key===target){
+    if(!started){ started=true; t0=Date.now(); startTick(); }
+    correct++; pos++;
+    sound(true);
+    renderPrompt(false);
+    if(pos>=text.length) finishLine();
+    else highlightNext(text[pos]);
+  } else {
+    errors++;
+    lineMissed[target]=(lineMissed[target]||0)+1;
+    store.missed[target]=(store.missed[target]||0)+1;
+    const acc = Math.round(correct/(correct+errors)*100);
+    document.getElementById("sAcc").textContent=(isNaN(acc)?100:acc)+"%";
+    sound(false);
+    renderPrompt(true);
+    setTimeout(()=>{ if(pos<text.length) renderPrompt(false); },120);
+  }
+}
+document.addEventListener("keydown", e=>{
+  if(document.activeElement && document.activeElement.tagName==="TEXTAREA") return;
+  if(e.key==="Shift"||e.key==="Control"||e.key==="Alt"||e.key==="Meta"||e.key==="CapsLock") return;
+  if(e.key==="Backspace"||e.key==="Tab"){ e.preventDefault(); return; }
+  if(e.key.length!==1) return;
+  e.preventDefault();
+  resumeAudio();
+  onChar(e.key);
+});
+
+// ---------- 声音 ----------
+let actx=null;
+function resumeAudio(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(actx&&actx.state==="suspended") actx.resume(); }
+function sound(ok, win){
+  if(!soundOn||!actx) return;
+  const o=actx.createOscillator(), g=actx.createGain();
+  o.connect(g); g.connect(actx.destination);
+  if(win){ o.frequency.value=880; o.type="triangle"; }
+  else if(ok){ o.frequency.value=660; o.type="sine"; }
+  else { o.frequency.value=160; o.type="square"; }
+  g.gain.setValueAtTime(ok?0.07:0.10, actx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime+(win?0.25:0.08));
+  o.start(); o.stop(actx.currentTime+(win?0.25:0.08));
+}
+
+// ---------- UI 渲染 ----------
+function renderChips(){
+  const c=document.getElementById("chips"); c.innerHTML="";
+  LESSONS.forEach((L,i)=>{
+    const b=store.bests[L.id];
+    const el=document.createElement("div");
+    el.className="chip"+(curLesson&&curLesson.id===L.id?" on":"");
+    el.innerHTML = L.name + (b?`<span class="best">最快 ${b.wpm} 字/分</span>`:`<span class="best">未练</span>`);
+    el.onclick=()=>{ setLesson(i); document.getElementById("tip").textContent=L.tip; };
+    c.appendChild(el);
+  });
+}
+function renderRecord(){
+  const body=document.getElementById("recBody");
+  const missArr=Object.entries(store.missed).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const mins=(store.totalSec/60);
+  let html = `<div style="font-size:14px;line-height:1.8">
+    总练习行数：<b>${store.totalLines}</b>　累计用时：<b>${mins.toFixed(1)} 分钟</b><br>
+    各关最佳速度：<br>${LESSONS.map(L=>{const b=store.bests[L.id];return `· ${L.name}：${b?b.wpm+" 字/分 / 准确"+b.acc+"%":"未练"}`;}).join("<br>")}
+  </div>`;
+  html += `<div style="margin-top:10px"><b>最常打错的键（错键回炉）：</b><br>${ missArr.length? missArr.map(([k,n])=>`<span class="miss">${k===" "?"␣":escapeHtml(k)} ×${n}</span>`).join("") : "<span style='color:var(--muted)'>还没有错键记录 👍</span>" }</div>`;
+  html += `<div class="btnrow">
+      <button class="btn ghost" id="wrongDrill">🔁 错键特训</button>
+      <button class="btn ghost" id="copyBtn">📋 复制记录</button>
+      <button class="btn ghost" id="fileBtn">💾 存成文件</button>
+      <button class="btn ghost" id="resetBtn" style="color:#c0392b">清空记录</button>
+    </div><textarea id="exp" style="margin-top:10px;display:none"></textarea>`;
+  body.innerHTML=html;
+  document.getElementById("wrongDrill").onclick=startWrongDrill;
+  document.getElementById("copyBtn").onclick=()=>doExport(true);
+  document.getElementById("fileBtn").onclick=()=>doExport(false);
+  document.getElementById("resetBtn").onclick=()=>{ if(confirm("确定清空打字记录？")){ store={}; localStorage.removeItem(STORE_KEY); store=load(); store.bests={};store.missed={};store.totalSec=0;store.totalLines=0;store.events=[]; renderChips(); renderRecord(); } };
+}
+function startWrongDrill(){
+  const missArr=Object.entries(store.missed).sort((a,b)=>b[1]-a[1]).slice(0,8).map(e=>e[0]);
+  if(!missArr.length){ alert("还没有错键，先去练几关吧！"); return; }
+  let s=""; for(let r=0;r<4;r++){ missArr.forEach(k=>{ s+= (k===" "?" ":k+k+" "); }); }
+  curLesson={ id:"wrongdrill", name:"错键特训", lines:[s.trim()] };
+  lineIdx=0; document.getElementById("tip").textContent="把你最常打错的键反复打对，慢一点没关系。";
+  loadLine();
+}
+function buildExportText(){
+  const lines=["【"+CHILD.zh+" · 打字训练记录】",
+    "总行数 "+store.totalLines+"，累计 "+(store.totalSec/60).toFixed(1)+" 分钟",
+    "各关最佳：" ];
+  LESSONS.forEach(L=>{const b=store.bests[L.id]; if(b) lines.push("  "+L.name+"："+b.wpm+" 字/分，准确 "+b.acc+"%");});
+  const missArr=Object.entries(store.missed).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  lines.push("最常打错的键："+(missArr.map(([k,n])=>(k===" "?"␣":k)+"×"+n).join(" ")||"无"));
+  const json = JSON.stringify({child:CHILD.zh, subject:"打字", events:store.events, bests:store.bests, missed:store.missed});
+  return lines.join("\n")+"\n\n"+json;
+}
+function doExport(copy){
+  const txt=buildExportText();
+  if(copy){ navigator.clipboard?.writeText(txt).then(()=>alert("已复制，发给爸爸即可📋")).catch(()=>{ const t=document.getElementById("exp"); t.style.display="block"; t.value=txt; t.select(); }); }
+  else { const blob=new Blob([txt],{type:"text/plain"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="打字记录_"+CHILD.zh+"_"+new Date().toISOString().slice(0,10)+".txt"; a.click(); }
+}
+
+// ---------- 按钮 ----------
+document.getElementById("againBtn").onclick=()=>{ if(curLesson) loadLine(); };
+document.getElementById("nextBtn").onclick=()=>{ if(!curLesson) return; lineIdx++; loadLine(); };
+document.getElementById("blindBtn").onclick=function(){ blind=!blind; document.getElementById("kb").style.opacity=blind?"0.12":"1"; this.textContent=blind?"👁 显示键盘":"🙈 盲打模式"; if(curLesson) highlightNext(text[pos]); };
+document.getElementById("soundBtn").onclick=function(){ soundOn=!soundOn; resumeAudio(); this.textContent=soundOn?"🔔 声音开":"🔕 声音关"; };
+document.getElementById("recBtn").onclick=function(){ const b=document.getElementById("recBody"); const open=b.style.display==="none"; b.style.display=open?"block":"none"; this.textContent=open?"收起 ▴":"展开 ▾"; if(open) renderRecord(); };
+
+// ---------- 启动 ----------
+buildKb();
+renderChips();
+document.getElementById("tip").textContent = "👆 先从「1·基准键」开始：把手指放好，眼睛看屏幕不看键盘。";
+</script>
+</body>
+</html>
