@@ -162,13 +162,24 @@ document.body.addEventListener('touchstart',warm,{once:true});
 document.body.addEventListener('click',warm,{once:true});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){haltAudio();try{speechSynthesis.cancel();}catch(e){}stopTimer();}});
 setInterval(()=>{if('speechSynthesis'in window&&speechSynthesis.speaking){try{speechSynthesis.pause();speechSynthesis.resume();}catch(e){}}},9000);
+function pickZhVoice(){
+  if(!voices||!voices.length)return null;
+  const zh=voices.filter(v=>/zh|cmn|Chinese/i.test(v.lang||'')||/中文|普通话|国语|Chinese/i.test(v.name||''));
+  if(!zh.length)return null;
+  // 优先 Chrome 谷歌中文神经音；其次 zh-CN；再退而求其次
+  return zh.find(v=>/Google/i.test(v.name||'')&&/zh[-_]CN|cmn/i.test(v.lang||''))
+       ||zh.find(v=>/Google|Microsoft|Ting-Ting|Mei-Jia/i.test(v.name||''))
+       ||zh.find(v=>/zh[-_]CN/i.test(v.lang||''))||zh[0];
+}
 function mkUtter(t,lang){
   const u=new SpeechSynthesisUtterance(t);
-  const v=voices.find(v=>/zh|cmn|Chinese/i.test(v.lang));if(v)u.voice=v;u.lang='zh-CN';u.rate=0.95;
+  const v=pickZhVoice();if(v)u.voice=v;u.lang='zh-CN';u.rate=0.85;  // 默写放慢,听清好写
   u.pitch=1.0;return u;
 }
 
-/* ===== 神经真人配音层(预合成),失败回退浏览器TTS。本软件专用音频(Kokoro小晓女声,已校准多音字) ===== */
+/* ===== 朗读：优先用浏览器(Chrome)自带中文语音；无语音合成时回退预合成MP3 ===== */
+/* 家长要求：先用 Chrome 能正常放的自带 TTS（谷歌中文神经音）。如需切回预合成神经音，把 USE_BROWSER_TTS 改为 false。 */
+const USE_BROWSER_TTS=true;
 const AUDIO_DIR="audio/eddey_chinese_dictation_redo/";
 let exAudio=null;let audioTok=0;
 function audioHash(s){const b=new TextEncoder().encode(s);let x=0x811c9dc5>>>0;for(let i=0;i<b.length;i++){x^=b[i];x=Math.imul(x,0x01000193)>>>0;}return ('0000000'+x.toString(16)).slice(-8);}
@@ -176,6 +187,7 @@ function getExAudio(){if(!exAudio){exAudio=new Audio();exAudio.setAttribute('pla
 function haltAudio(){audioTok++;if(exAudio){try{exAudio.pause();}catch(e){}}}
 function ttsSpeakOnce(t,lang){try{speechSynthesis.cancel();speechSynthesis.resume();}catch(e){}try{speechSynthesis.speak(mkUtter(t,lang));}catch(e){}}
 function speakOnce(t,lang){
+  if(USE_BROWSER_TTS&&('speechSynthesis'in window)){ttsSpeakOnce(t,lang);return;}
   try{speechSynthesis.cancel();}catch(e){}
   audioTok++;const myTok=audioTok;
   const a=getExAudio();let done=false;
@@ -209,6 +221,7 @@ function ttsSpeakTimes(t,lang,times,sid,onDone){
 }
 function speakTimes(t,lang,times,onDone){
   const sid=++speakSession;
+  if(USE_BROWSER_TTS&&('speechSynthesis'in window)){ttsSpeakTimes(t,lang,times,sid,onDone);return;}
   const myTok=++audioTok;
   try{speechSynthesis.cancel();}catch(e){}
   let count=0,fired=false;
