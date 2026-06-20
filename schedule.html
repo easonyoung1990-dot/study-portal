@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff7f0">
+<title>暑期课表（9点后起床版）</title>
+<style>
+  :root{ --bg:#fff7f0; --ink:#3a2e3f; --muted:#8a7e91; --card:#fff; --sh:0 6px 18px rgba(120,90,140,.14); --r:18px;
+         --kenton:#36c5d6; --eddey:#ff8a5b; --p:#b197fc; --g:#8ce99a; --y:#ffd166; }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;color:var(--ink);
+       background:radial-gradient(circle at 12% 8%,#ffe9f3 0,transparent 40%),radial-gradient(circle at 88% 4%,#e6f9ff 0,transparent 38%),var(--bg);min-height:100vh;}
+  .wrap{max-width:620px;margin:0 auto;padding:16px 14px 50px;}
+  h1{font-size:21px;margin:6px 2px 2px;}
+  .sub{color:var(--muted);font-size:13px;margin:0 2px 14px;}
+  .tabs{display:flex;gap:8px;margin-bottom:14px;position:sticky;top:0;background:linear-gradient(var(--bg),var(--bg) 70%,transparent);padding:6px 0;z-index:5;}
+  .tab{flex:1;border:2px solid #eee;background:#fff;border-radius:999px;padding:10px;font-weight:800;font-size:15px;cursor:pointer;color:var(--ink);}
+  .tab.on{border-color:var(--ink);background:var(--ink);color:#fff;}
+  .box{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:14px;margin-bottom:12px;}
+  .box h3{margin:0 0 8px;font-size:15px;}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .chip{font-size:12px;font-weight:700;border-radius:999px;padding:5px 10px;background:#f3eef9;color:#5b4b7a;}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;color:var(--muted);}
+  .pickup{font-size:13px;line-height:1.7;}
+  .pickup b{color:var(--ink);}
+  .day{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:14px;margin-bottom:12px;border-left:7px solid var(--p);}
+  .day .dh{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .day .dn{font-size:17px;font-weight:800;}
+  .day .loc{font-size:11px;font-weight:700;border-radius:999px;padding:3px 9px;background:#eef6ff;color:#2a6ea8;}
+  .day .loc.jq{background:#fff0e6;color:#b85a26;}
+  .day .loc.ay{background:#f0fff0;color:#2f8a3f;}
+  .row{display:flex;gap:10px;padding:6px 0;border-top:1px dashed #eee;font-size:14px;line-height:1.45;}
+  .row:first-of-type{border-top:none;}
+  .row .tm{flex:0 0 60px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums;}
+  .row .ac{flex:1;}
+  .row.hi .ac{font-weight:700;}
+  .row.car{background:#fff7ef;border-radius:10px;margin:3px -6px;padding:7px 6px;}
+  .end{color:var(--muted);font-size:12px;}
+  .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:18px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>☀️ 暑期课表 · 9 点后起床版</h1>
+  <p class="sub">哥哥 Kenton 🦁 ／ 弟弟 Eddey 🐯　·　点上方切换【在沪版／探亲版】</p>
+
+  <div class="tabs">
+    <div class="tab on" id="tabSH" onclick="show('SH')">🏙 在沪版</div>
+    <div class="tab" id="tabAY" onclick="show('AY')">📍 探亲版</div>
+  </div>
+
+  <div class="box">
+    <h3>💻 线上栈（随处可用 · 免接送）</h3>
+    <div class="chips">
+      <span class="chip">📐 学习机·数学(每天30′)</span>
+      <span class="chip">🔤 剑桥英语线上(30′·2×)</span>
+      <span class="chip">🌐 外教(50′·3×)</span>
+      <span class="chip">💻 核桃编程(1×)</span>
+      <span class="chip">⌨️ 打字+📚自学(每天)</span>
+    </div>
+  </div>
+
+  <div class="box" id="pickupBox">
+    <h3>🚗 接送清单</h3>
+    <div class="pickup" id="pickup"></div>
+  </div>
+
+  <div class="box">
+    <h3>图例</h3>
+    <div class="legend">
+      <span>🏠 在家自学</span><span>💻 线上免接送</span><span>👵 长辈就近带</span><span>🚗 家长接送(5点后/周末)</span>
+    </div>
+  </div>
+
+  <div id="days"></div>
+
+  <div class="foot">起床统一 9:00 后 · 运动放傍晚避暑 · 〔〕内为结束时间</div>
+</div>
+
+<script>
+const PICKUP = {
+ SH:`<b>周中（工作日·就近）</b><br>· 周一/周三 傍晚 篮球（👵带·家长下班接）<br>· 周二/周五 晚 C++（🚗）<br>· 周四 晚 无人机（🚗）<br>· 弟弟练字 白天（👵就近）<br><b>周末（就近）</b><br>· 周六 上午 篮球营（🚗）<br>· 周日 上午 英语 KET 线下（🚗）<br><span class="end">数学走学习机线上，不占线下、不增接送。</span>`,
+ AY:`探亲两周<b>几乎零接送</b>：所有正课走线上栈；无人机户外、周日研学（本地博物馆／历史遗址）由<b>长辈带</b>。哥哥线下 KET 班暂停，回沪后周日续。`
+};
+
+const SH = [
+ {dn:"周一", loc:"工作日的家", cls:"", items:[
+   ["9:00","起床 · 早饭"],
+   ["10:00","⌨️ 打字热身 15′",1],
+   ["10:15","📚 自学 语／英 ＋ 📐 学习机·数学",1],
+   ["11:30","🍚 午饭 · 午休"],
+   ["14:30","✍️ 弟·练字班(👵就近) ／ 📖 哥·KET自学(学习机)",1],
+   ["15:30","🌐 外教(两人·线上 50′)",1],
+   ["17:30","🏀 篮球·就近(两人 · 👵带/🚗接) 〔19:00〕",1,"car"],
+   ["20:10","✍️ 弟·睡前练字 20′"]
+ ]},
+ {dn:"周二", loc:"工作日的家", cls:"", items:[
+   ["9:00","起床 · 早饭"],
+   ["10:00","⌨️ 打字 15′ ＋ 📚自学 ＋ 📐学习机数学",1],
+   ["11:30","🍚 午饭 · 午休"],
+   ["14:30","🔤 剑桥英语·线上(30′)",1],
+   ["15:30","自由 · 阅读（晚上有 C++）"],
+   ["18:00","🧩 C++ 小码王(两人·分级 · 🚗) 〔20:00〕",1,"car"],
+   ["20:10","✍️ 弟·睡前练字 20′"]
+ ]},
+ {dn:"周三", loc:"工作日的家", cls:"", items:[
+   ["9:00","起床 · 早饭"],
+   ["10:00","⌨️ 打字 15′ ＋ 📚自学 ＋ 📐学习机数学",1],
+   ["11:30","🍚 午饭 · 午休"],
+   ["14:30","✍️ 弟·练字班(👵) ／ 📖 哥·KET自学",1],
+   ["15:30","🌐 外教(两人·线上 50′)",1],
+   ["17:30","🏀 篮球·就近(两人 · 👵/🚗) 〔19:00〕",1,"car"],
+   ["20:10","✍️ 弟·睡前练字 20′"]
+ ]},
+ {dn:"周四", loc:"工作日的家", cls:"", items:[
+   ["9:00","起床 · 早饭"],
+   ["10:00","⌨️ 打字 15′ ＋ 📚自学 ＋ 📐学习机数学",1],
+   ["11:30","🍚 午饭 · 午休"],
+   ["14:30","🔤 剑桥英语·线上(30′)",1],
+   ["15:30","自由 · 阅读（晚上有无人机）"],
+   ["18:00","🚁 无人机(两人 · 🚗) 〔19:30〕",1,"car"],
+   ["20:10","✍️ 弟·睡前练字 20′"]
+ ]},
+ {dn:"周五", loc:"工作日的家", cls:"", items:[
+   ["9:00","起床 · 早饭"],
+   ["10:00","⌨️ 打字 15′ ＋ 📚自学 ＋ 📐学习机数学",1],
+   ["11:30","🍚 午饭 · 午休"],
+   ["14:30","✍️ 弟·练字班(👵) ／ 📖 哥·KET自学",1],
+   ["15:30","🌐 外教(两人·线上 50′)",1],
+   ["18:00","🧩 C++(哥·加强 · 🚗) ／ 弟·在家自由 〔20:00〕",1,"car"],
+   ["20:10","✍️ 弟·睡前练字 20′"]
+ ]},
+ {dn:"周六", loc:"周末的家", cls:"jq", items:[
+   ["9:00","起床 · 早饭（课前 ⌨️打字 10′）"],
+   ["10:00","🏀 篮球营(两人·就近 · 🚗) 〔11:30〕",1,"car"],
+   ["11:30","🍚 午饭 · 休息"],
+   ["14:30","🏡 家庭 ／ 轻错题回炉"],
+   ["20:10","✍️ 弟·睡前练字 20′"]
+ ]},
+ {dn:"周日", loc:"周末的家", cls:"jq", items:[
+   ["9:00","起床 · 早饭（课前 ⌨️打字 10′）"],
+   ["10:00","🔤 英语 KET·线下班(两人·就近 · 🚗) 〔12:00〕",1,"car"],
+   ["12:00","🍚 午饭 · 休息"],
+   ["14:30","🏡 家庭 · 出游"],
+   ["18:30","💻 核桃编程(两人·线上) 〔19:30〕",1],
+   ["20:10","✍️ 弟·睡前练字 20′"]
+ ]}
+];
+
+const AY = [
+ {dn:"周一", loc:"探亲·线上+居家", cls:"ay", items:[
+   ["9:00","起床 · 早饭"],["9:45","⌨️ 打字 15′"],
+   ["10:00","📚 自学 ＋ 📐 学习机·数学",1],
+   ["11:30","🍚 午饭 · 午休"],
+   ["14:30","🧩 C++·线上启蒙(两人)",1],
+   ["15:30","🌐 外教(线上 50′)",1],
+   ["17:00","🚁 无人机·操控练习(户外) ／ 🏀 运球自练",1],
+   ["19:30","📖 阅读 ＋ ✍️ 弟·练字"]
+ ]},
+ {dn:"周二", loc:"探亲·线上+居家", cls:"ay", items:[
+   ["9:00","起床 · 早饭"],["9:45","⌨️ 打字 15′"],
+   ["10:00","📚 自学 ＋ 📐 学习机·数学",1],
+   ["11:30","🍚 午饭 · 午休"],
+   ["14:30","🚁 无人机编程 ／ 模拟器",1],
+   ["15:30","🔤 剑桥英语·线上(30′)",1],
+   ["17:00","🏀 篮球自练",1],
+   ["19:30","📖 阅读 ＋ ✍️ 弟·练字"]
+ ]},
+ {dn:"周三", loc:"探亲·线上+居家", cls:"ay", items:[
+   ["9:00","起床 · 早饭"],["9:45","⌨️ 打字 15′"],
+   ["10:00","📚 自学 ＋ 📐 学习机·数学",1],
+   ["11:30","🍚 午饭 · 午休"],
+   ["14:30","🧩 C++·线上(两人)",1],
+   ["15:30","🌐 外教(线上 50′)",1],
+   ["17:00","🚁 无人机·操控练习(户外)",1],
+   ["19:30","📖 阅读 ＋ ✍️ 弟·练字"]
+ ]},
+ {dn:"周四", loc:"探亲·线上+居家", cls:"ay", items:[
+   ["9:00","起床 · 早饭"],["9:45","⌨️ 打字 15′"],
+   ["10:00","📚 自学 ＋ 📐 学习机·数学",1],
+   ["11:30","🍚 午饭 · 午休"],
+   ["14:30","🚁 无人机编程 ／ 模拟器",1],
+   ["15:30","🔤 剑桥英语·线上(30′)",1],
+   ["17:00","🏀 篮球自练",1],
+   ["19:30","📖 阅读 ＋ ✍️ 弟·练字"]
+ ]},
+ {dn:"周五", loc:"探亲·线上+居家", cls:"ay", items:[
+   ["9:00","起床 · 早饭"],["9:45","⌨️ 打字 15′"],
+   ["10:00","📚 自学 ＋ 📐 学习机·数学",1],
+   ["11:30","🍚 午饭 · 午休"],
+   ["14:30","✍️ 弟·练字(家) ／ 📖 哥·KET自学",1],
+   ["15:30","🌐 外教(线上 50′)",1],
+   ["17:00","🚁 无人机·操控练习(户外)",1],
+   ["19:30","📖 阅读 ＋ ✍️ 弟·练字"]
+ ]},
+ {dn:"周六", loc:"探亲·线上+居家", cls:"ay", items:[
+   ["9:00","起床 · 早饭"],["9:45","⌨️ 打字 ＋ 📐学习机数学",1],
+   ["11:30","🍚 午饭 · 午休"],
+   ["14:30","🧩 小码王 C++·线上(哥) ／ 💻 核桃(弟)",1],
+   ["15:30","✍️ 弟·练字(家)"],
+   ["17:00","🚁 无人机·户外飞行",1],
+   ["19:30","🏡 家庭 ＋ ✍️ 弟·练字"]
+ ]},
+ {dn:"周日", loc:"探亲·研学日", cls:"ay", items:[
+   ["9:00","起床 · 早饭"],
+   ["10:00","🏛 研学(长辈带)：本地博物馆／历史遗址",1,"car"],
+   ["—","（边走边练：中英讲解、写中英见闻日记）"],
+   ["18:30","💻 核桃编程(两人·线上)",1],
+   ["20:10","✍️ 弟·睡前练字 20′"]
+ ]}
+];
+
+function show(which){
+  document.getElementById("tabSH").classList.toggle("on", which==="SH");
+  document.getElementById("tabAY").classList.toggle("on", which==="AY");
+  document.getElementById("pickup").innerHTML = PICKUP[which];
+  const data = which==="SH"?SH:AY;
+  document.getElementById("days").innerHTML = data.map(d=>{
+    const rows = d.items.map(it=>{
+      const hi = it[2]?"hi":""; const car = it[3]?" "+it[3]:"";
+      return `<div class="row ${hi}${car}"><div class="tm">${it[0]}</div><div class="ac">${it[1]}</div></div>`;
+    }).join("");
+    return `<div class="day"><div class="dh"><span class="dn">${d.dn}</span>
+      <span class="loc ${d.cls}">${d.loc}</span></div>${rows}</div>`;
+  }).join("");
+}
+show("SH");
+</script>
+</body>
+</html>
