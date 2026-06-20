@@ -551,6 +551,26 @@
       "archive_file": "data/learning/dictation_kenton_review_2026-06-20.json",
       "result": "错词本12词中11词已连对2次毕业(含6.19八个真错词全攻克);仅凿壁偷光仍未掌握(错3次)。已加入软件首组『★仍需巩固·勤学成语』并种入错词本,连对2次才毕业。",
       "follow_up": "哥哥继续默写凿壁偷光,掌握后回填 profile mastery。"
+    },
+    {
+      "id": "chinese_apps_consolidation_2026-06-20",
+      "date": "2026-06-20",
+      "child": "both",
+      "subject": "语文",
+      "grade": "哥哥四下/弟弟三下",
+      "kind": "语文软件大整合(每人1个总复习软件)",
+      "knowledge_points": [
+        "错字/易错字报默",
+        "字音字形/近义/文学常识(哥哥)",
+        "选词/读音/转述句(弟弟)",
+        "错词本反复练",
+        "多音字报读订正(提防→堤防)"
+      ],
+      "difficulty": "巩固-拔高",
+      "app_file": "apps/kenton_chinese_master.html | apps/eddey_chinese_master.html",
+      "archive_file": "(各软件 localStorage 导出)",
+      "result": "每人整合为1个语文总复习软件(默写+易错小测带讲解+错词本);删除旧语文软件12个,保留3个交互探索馆。修正弟弟提防多音字报读。",
+      "follow_up": "等两娃用新软件导出后回填掌握度。"
     }
   ]
 }

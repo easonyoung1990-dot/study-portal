@@ -1,17 +1,24 @@
 [
   {
     "child": "kenton",
+    "subject": "语文",
+    "title": "语文总复习 · 四下（错字+易错字 报默·易错点小测带讲解·错词本反复练）",
+    "file": "apps/kenton_chinese_master.html",
+    "added": "2026-06-20"
+  },
+  {
+    "child": "eddey",
+    "subject": "语文",
+    "title": "语文总复习 · 三下（错字+易错字 报默·易错点小测带讲解·错词本反复练）",
+    "file": "apps/eddey_chinese_master.html",
+    "added": "2026-06-20"
+  },
+  {
+    "child": "kenton",
     "subject": "综合",
     "title": "语数英综合 · 输出爆破（第11天）",
     "file": "apps/kenton_day11_output.html",
     "added": "2026-06-11"
-  },
-  {
-    "child": "kenton",
-    "subject": "语文",
-    "title": "语文期末冲刺 · 四下5-8单元（104题）",
-    "file": "apps/kenton_chinese_review.html",
-    "added": "2026-06-13"
   },
   {
     "child": "kenton",
@@ -44,36 +51,8 @@
   {
     "child": "eddey",
     "subject": "语文",
-    "title": "语文练习 · 三下（口说作答+纸上默写，10关）",
-    "file": "apps/eddey_chinese.html",
-    "added": "2026-06-14"
-  },
-  {
-    "child": "eddey",
-    "subject": "语文",
-    "title": "语文听写 · 三下（限时报读·听词写字·拼音中文双读·错词本）",
-    "file": "apps/eddey_chinese_dictation.html",
-    "added": "2026-06-14"
-  },
-  {
-    "child": "eddey",
-    "subject": "语文",
-    "title": "语文期末闯关王 · 三下（13关·讲练合一·每题讲解·错题回炉）",
-    "file": "apps/eddey_chinese_review.html",
-    "added": "2026-06-19"
-  },
-  {
-    "child": "eddey",
-    "subject": "语文",
     "title": "语文 · 三下复习探索馆（会动的复习：多音字转盘/转述句变身机/一词多义/课文关系脑图/古诗日积月累馆/寻物启事拼装台）",
     "file": "apps/eddey_chinese_index_lab.html",
-    "added": "2026-06-19"
-  },
-  {
-    "child": "eddey",
-    "subject": "语文",
-    "title": "语文错词重默 · 三下（6.19默写错的11词·讲解为什么·报默重默·错词本）",
-    "file": "apps/eddey_chinese_dictation_redo.html",
     "added": "2026-06-19"
   },
   {
@@ -112,24 +91,10 @@
     "added": "2026-06-15"
   },
   {
-    "child": "kenton",
-    "subject": "语文",
-    "title": "语文冲刺软件 · 四下5-8单元（刷题48题·真人朗读·错题归档）",
-    "file": "apps/kenton_chinese_sprint.html",
-    "added": "2026-06-15"
-  },
-  {
     "child": "eddey",
     "subject": "英语",
     "title": "英语冲刺软件 · 三下（刷题45题·真人朗读·错题归档）",
     "file": "apps/eddey_english_sprint.html",
-    "added": "2026-06-15"
-  },
-  {
-    "child": "eddey",
-    "subject": "语文",
-    "title": "语文冲刺软件 · 三下（刷题48题·真人朗读·错题归档）",
-    "file": "apps/eddey_chinese_sprint.html",
     "added": "2026-06-15"
   },
   {
@@ -151,13 +116,6 @@
     "subject": "英语",
     "title": "英语错点专项（6.15老师讲评：单复数/一般现在时/oo短音/after/运动）",
     "file": "apps/eddey_english_redo_grammar.html",
-    "added": "2026-06-16"
-  },
-  {
-    "child": "kenton",
-    "subject": "语文",
-    "title": "语文易错专项 · 四下（易错字音/形近字/近义/关联词/名句主旨）",
-    "file": "apps/kenton_chinese_redo.html",
     "added": "2026-06-16"
   },
   {
@@ -191,13 +149,6 @@
   {
     "child": "kenton",
     "subject": "语文",
-    "title": "语文期末冲刺复习 · 错题闯关（四下五~八单元：默写/转述句/字音字形/文学常识/表达）",
-    "file": "apps/kenton_chinese_sprint_quiz.html",
-    "added": "2026-06-19"
-  },
-  {
-    "child": "kenton",
-    "subject": "语文",
     "title": "语文 · 思维实验室（转述句变身动画+名家名作关系脑图+古诗记忆翻卡，不是刷题）",
     "file": "apps/kenton_chinese_lab.html",
     "added": "2026-06-19"
@@ -208,27 +159,6 @@
     "title": "语文 · 四下复习探索馆（按期末索引：多音字转盘/形近字/关联词搭桥/句子医院/名家脑图/古诗记忆馆）",
     "file": "apps/kenton_chinese_index_lab.html",
     "added": "2026-06-19"
-  },
-  {
-    "child": "kenton",
-    "subject": "语文",
-    "title": "语文复习默写 · 报默+记录（词语5-8单元+古诗文5首+名言8句，自动报读·错词档案可导出）",
-    "file": "apps/kenton_chinese_dictation_review.html",
-    "added": "2026-06-19"
-  },
-  {
-    "child": "kenton",
-    "subject": "语文",
-    "title": "只默错的 · 错词专默（只默之前默错的词/句，连续默对2次自动消失）",
-    "file": "apps/kenton_wrong_dictation.html",
-    "added": "2026-06-19"
-  },
-  {
-    "child": "kenton",
-    "subject": "语文",
-    "title": "语文错词默写 · 四下（复习错词8+试卷易错+古诗名句·限时报默·错词本）",
-    "file": "apps/kenton_chinese_dictation_redo.html",
-    "added": "2026-06-16"
   },
   {
     "child": "eddey",
