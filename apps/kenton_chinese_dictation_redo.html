@@ -123,6 +123,7 @@ color:var(--ink);min-height:100vh;padding-bottom:30px;}
 /* ===================== 数据 ===================== */
 /* 三下期末复习索引「一、默写：词语表 P122-123」全覆盖，按课文分组 */
 const CN={
+ '★仍需巩固·勤学成语(6.20继续默写)':[["凿壁偷光","záo bì tōu guāng"],["悬梁刺股","xuán liáng cì gǔ"],["囊萤夜读","náng yíng yè dú"],["程门立雪","chéng mén lì xuě"]],
  '复习错词(家长核对·重点)':[["柔嫩","róu nèn"],["奢侈","shē chǐ"],["贤惠","xián huì"],["悲戚","bēi qī"],["临危不惧","lín wēi bù jù"],["焦躁不安","jiāo zào bù ān"],["心急如焚","xīn jí rú fén"],["维持","wéi chí"]],
  '试卷易错字词':[["乾坤","qián kūn"],["冰心","bīng xīn"],["玉壶","yù hú"],["练囊","liàn náng"],["萤火","yíng huǒ"],["不解之谜","bù jiě zhī mí"],["壮丽","zhuàng lì"],["心悦诚服","xīn yuè chéng fú"]],
  '古诗名句默写':[["洛阳亲友如相问，一片冰心在玉壶。","fú róng lóu sòng xīn jiàn"],["不要人夸好颜色，只留清气满乾坤。","mò méi"],["少壮不努力，老大徒伤悲。","cháng gē xíng"],["欲将轻骑逐，大雪满弓刀。","sài xià qǔ"],["书山有路勤为径，学海无涯苦作舟。","hán yù míng lián"]],
@@ -587,7 +588,7 @@ window.addEventListener('load',()=>{setTimeout(refreshHomeStat,100);});
 
 
 /* ===== 错词本(核心要求:默错过一次即记,连续答对2次才移出;外观不变,仅档案/导出新增) ===== */
-var WBKEY='mx_wrongbook_eddey_chinese_dictation';
+var WBKEY='mx_wrongbook_kenton_chinese_dictation';
 function loadWB(){try{return JSON.parse(localStorage.getItem(WBKEY))||{words:{}};}catch(e){return {words:{}};}}
 function saveWB(w){try{localStorage.setItem(WBKEY,JSON.stringify(w));}catch(e){}}
 function wbAddWrong(word,hint,lesson,lang){if(!word)return;var wb=loadWB();var w=wb.words[word]||{word:word,hint:hint||'',lesson:lesson||'',lang:lang||'zh',wrong:0,streak:0,mastered:false};w.wrong++;w.streak=0;w.mastered=false;if(lesson)w.lesson=lesson;if(hint)w.hint=hint;if(lang)w.lang=lang;wb.words[word]=w;saveWB(wb);}
@@ -596,6 +597,8 @@ function wbAll(){var wb=loadWB();return Object.keys(wb.words).map(function(k){re
 function wbActive(){return wbAll().filter(function(w){return !w.mastered;});}
 function startWrongbook(){var list=wbActive();if(!list.length){alert('错词本是空的，太棒了！');return;}var en=0;list.forEach(function(w){if(/[a-zA-Z]/.test(w.word)&&!/[\u4e00-\u9fa5]/.test(w.word))en++;});var isEn=en>list.length/2;S.mode=isEn?'word':'cn';S.key='错词重做';S.idx=0;S.miss=new Set();S.startTime=Date.now();S.perItem=[];S.lang=isEn?'en':'zh';S.times=2;S.items=list.map(function(w){return {t:w.word,hint:w.hint||w.lesson||'',say:w.word};});S.itemStart=Date.now();renderDict();show('dict');setTimeout(function(){runWord();},400);}
 (function(){if(typeof logEvent==='function'){var _o=logEvent;logEvent=function(ev){_o(ev);try{if(ev&&ev.type==='dict'&&ev.items){ev.items.forEach(function(it){if(it.ok)wbAddRight(it.word);else wbAddWrong(it.word,it.hint,ev.lesson,(ev.subject==='en')?'en':'zh');});}}catch(e){}};}})();
+/* 6.20 一次性种子:哥哥今天仍未掌握的词进错词本(连对2次才毕业)。已掌握的词不放,避免污染。 */
+(function(){try{var SEEDKEY='kenton_cn_redo_seed_20260620';if(localStorage.getItem(SEEDKEY))return;var wb=loadWB();if(!wb.words['凿壁偷光']){wbAddWrong('凿壁偷光','záo bì tōu guāng','★仍需巩固·勤学成语','zh');}localStorage.setItem(SEEDKEY,'1');}catch(e){}})();
 
 </script>
 </body>

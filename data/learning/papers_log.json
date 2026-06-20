@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-19",
+  "updated": "2026-06-20",
   "_latest_note": "2026-06-16 追加：哥哥英语期末复习卷错题 kenton_english_errors_2026-06-16；弟弟三下数学历史周练卷(四/六/八/九)错题 eddey_math_weekly_archive；考前英语——弟弟老师6.16复习总结 lesson_eddey_2026-06-16、哥哥M3/M4知识梳理 english_m3m4_kenton。",
   "_schema": {
     "id": "唯一编号，建议 <child>_dayNN 或 <child>_<subject>_<date>",
@@ -534,6 +534,23 @@
       "archive_file": "data/learning/dictation_eddey_review_2026-06-19.json",
       "result": "首轮全词语表默写整体好;默写错9词(适应/淡雅/展示/沿途/陌生/想念/受刑/提防/窟窿)+小测错2词(摧毁/唠叨)。已建错词重默软件(讲解+报默+错词本)。",
       "follow_up": "弟弟用错词重默软件掌握后,回填字词默写mastery。"
+    },
+    {
+      "id": "kenton_dictation_wrongbook_2026-06-20",
+      "date": "2026-06-20",
+      "child": "kenton",
+      "subject": "语文",
+      "grade": "四下",
+      "kind": "默写错词本导出归档+继续默写",
+      "knowledge_points": [
+        "复习默写错词(柔嫩/奢侈/贤惠/悲戚/临危不惧/焦躁不安/心急如焚/维持)",
+        "勤学成语默写(凿壁偷光/悬梁刺股/囊萤夜读/程门立雪)"
+      ],
+      "difficulty": "巩固",
+      "app_file": "apps/kenton_chinese_dictation_redo.html",
+      "archive_file": "data/learning/dictation_kenton_review_2026-06-20.json",
+      "result": "错词本12词中11词已连对2次毕业(含6.19八个真错词全攻克);仅凿壁偷光仍未掌握(错3次)。已加入软件首组『★仍需巩固·勤学成语』并种入错词本,连对2次才毕业。",
+      "follow_up": "哥哥继续默写凿壁偷光,掌握后回填 profile mastery。"
     }
   ]
 }

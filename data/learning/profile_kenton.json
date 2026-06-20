@@ -1,7 +1,7 @@
 {
   "child": "kenton",
   "name": "Kenton",
-  "updated": "2026-06-16",
+  "updated": "2026-06-20",
   "学习总档案": "docs/学习记忆_哥哥.md —— 长期画像/三科错题/复习规则权威总档，出题前必读",
   "教材": { "英语": "上海《尖子生笔记·同步教材》英语 四年级下（沪教版/钟书金牌）", "参考": "data/learning/textbook_reference.json" },
   "summary": "2026-06-13 导入默写软件 37 次真实练习。英语词汇与句型整体扎实，语文默写量大且准；薄弱集中在语文第23课词语和英语个别单词。",
@@ -22,7 +22,8 @@
         "课文主旨": { "mastery": 85, "trend": "flat", "last_seen": "2026-06-14" },
         "古文字义": { "mastery": 96, "trend": "up", "last_seen": "2026-06-14" },
         "默写与积累(古诗文/文学常识)": { "mastery": 60, "trend": "flat", "last_seen": "2026-06-19" },
-        "复习默写错词(柔嫩/奢侈/贤惠/悲戚/临危不惧/焦躁不安/心急如焚/维持)": { "mastery": 50, "trend": "flat", "last_seen": "2026-06-19" },
+        "复习默写错词(柔嫩/奢侈/贤惠/悲戚/临危不惧/焦躁不安/心急如焚/维持)": { "mastery": 90, "trend": "up", "last_seen": "2026-06-20" },
+        "勤学成语默写(凿壁偷光)": { "mastery": 40, "trend": "up", "last_seen": "2026-06-20" },
         "转述句": { "mastery": 70, "trend": "flat", "last_seen": "2026-06-19" },
         "易错字音(颊/刹/经传/盛名)": { "mastery": 70, "trend": "flat", "last_seen": "2026-06-19" },
         "易错字形(乾坤/谜/壮丽)": { "mastery": 68, "trend": "flat", "last_seen": "2026-06-19" },
@@ -64,7 +65,8 @@
     { "date": "2026-06-16", "text": "导入四下英语期末复习卷(学校卷·老师批改)错题：15组，高度命中长期弱项——时态切换(usually/now)、三单s/Does、名词复数(knives)、对划线提问/改疑问句、介词on/in/at/for、作文My week。基础词汇/听力/阅读判断较稳。明细见 data/learning/english_errors_kenton_2026-06-16.json。" },
     { "date": "2026-06-16", "text": "英语期末考前(6.17考)存档老师 M3/M4 知识梳理(M3U1 Shapes/M3U2 Colours/M3U3 Seasons/M4U1 My body/M4U2 Children's Day)核心词汇/句型/语法，并据此+错题出考前冲刺背诵PDF。明细见 data/learning/english_m3m4_kenton.json。" },
     { "date": "2026-06-19", "text": "归档四下语文五~八单元试卷错题(12页)：错点集中在默写积累(囊萤夜读/芙蓉楼/墨梅/长歌行/名联/文学常识，最多)与转述句。据此出《语文期末冲刺卷》(默写/转述句加量+各类错题整合)与错题闯关软件 kenton_chinese_sprint_quiz.html。明细见 data/learning/chinese_errors_kenton_2026-06-19.json。" },
-    { "date": "2026-06-19", "text": "复习默写软件首轮导出归档(23场)：词语/古诗文/名言整体好。家长核对确认真错词8个=柔嫩·奢侈·贤惠·悲戚·临危不惧·焦躁不安·心急如焚·维持(已入软件持久错词本,连续答对2次才移出)。注意:部分极快重默场次的标红疑似误标(字其实写对,如窟窿/爆炸),判分以家长核对为准。明细见 data/learning/dictation_kenton_review_2026-06-19.json。" }
+    { "date": "2026-06-19", "text": "复习默写软件首轮导出归档(23场)：词语/古诗文/名言整体好。家长核对确认真错词8个=柔嫩·奢侈·贤惠·悲戚·临危不惧·焦躁不安·心急如焚·维持(已入软件持久错词本,连续答对2次才移出)。注意:部分极快重默场次的标红疑似误标(字其实写对,如窟窿/爆炸),判分以家长核对为准。明细见 data/learning/dictation_kenton_review_2026-06-19.json。" },
+    { "date": "2026-06-20", "text": "默写错词本导出归档:12词中11词已连对2次毕业(含昨日8个真错词全部攻克),仅【凿壁偷光】仍未掌握(错3次、连对0/2)。已把凿壁偷光+悬梁刺股/囊萤夜读/程门立雪做成『★仍需巩固·勤学成语』首组放进 kenton_chinese_dictation_redo.html 并种入错词本(连对2次才毕业),供继续默写。明细见 data/learning/dictation_kenton_review_2026-06-20.json。" }
   ],
   "_schema": {
     "knowledge_points": "形如 { \"小数除法\": { \"mastery\": 85, \"trend\": \"up|flat|down\", \"last_seen\": \"YYYY-MM-DD\" } }，mastery 为 0-100 的掌握度估计",
