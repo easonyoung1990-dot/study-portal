@@ -63,7 +63,9 @@ var MODS=[
  {id:"pj",ic:"⚖️",nm:"平均数·移多补少",ds:"平均数怎么来的"},
  {id:"sd",ic:"📍",nm:"数对·确定位置",ds:"先列后行(几列几行)"},
  {id:"py",ic:"➡️",nm:"图形平移",ds:"整体移动·数对怎么变"},
- {id:"zh",ic:"🧩",nm:"组合图形面积",ds:"拆开/补全再算"}
+ {id:"zh",ic:"🧩",nm:"组合图形面积",ds:"拆开/补全再算"},
+ {id:"bc",ic:"🔼",nm:"小数大小比较",ds:"从高位一位位比"},
+ {id:"zm",ic:"🔤",nm:"用字母表示数",ds:"2a · 代入求值"}
 ];
 function renderHome(){
   var h='<div class="intro">这是<b>会动的数学</b>：每个馆先用图讲清一个<b>必考的基础概念</b>，你拖一拖看它怎么变；看懂了再做<b>深入一题</b>，学会<b>怎么想</b>。</div><div class="grid">';
@@ -313,6 +315,52 @@ function updZh(){
   s+='</svg>';$('zhsvg').innerHTML=s;
   var area=a*b-p*q;
   $('zhwhy').innerHTML=(window._zh==='cut'?'<b>拆法：</b>下面 '+a+'×'+(b-q)+'='+(a*(b-q))+' ＋ 上面 '+(a-p)+'×'+q+'='+((a-p)*q)+' = <b>'+area+'</b>':'<b>补法：</b>大 '+a+'×'+b+'='+(a*b)+' − 缺口 '+p+'×'+q+'='+(p*q)+' = <b>'+area+'</b>')+'（拆、补结果相同）。';
+}
+
+/* 10. 小数大小比较 */
+R.bc=function(){
+  $('stage').innerHTML='<div class="card"><div class="h2">🔼 小数大小比较 <span class="tag">必考</span></div>'+
+   '<div class="base"><b>基础概念：</b>比小数<b>从高位往低位</b>一位位比：先比<b>整数部分</b>；整数相同再比<b>十分位</b>，再比<b>百分位</b>……位数不够末尾<b>补0</b>。<b>不是位数越多越大！</b></div>'+
+   '<div class="sld">第一个数 A <input type="range" id="ba" min="0" max="999" value="80" oninput="updBc()"><span class="val" id="bav"></span></div>'+
+   '<div class="sld">第二个数 B <input type="range" id="bb" min="0" max="999" value="75" oninput="updBc()"><span class="val" id="bbv"></span></div>'+
+   '<div class="big" id="bbig"></div><div id="bsvg"></div><div class="why" id="bwhy"></div>'+
+   deep("0.8 和 0.75 谁大？","0.8 = 0.80，比 0.75 大（十分位 8>7）。<b>别被“0.75 位数多”骗了</b>——先比十分位就分出大小。",
+        "3.□6 < 3.46，□里能填几？","整数都是3；比十分位：□ 要比 4 <b>小</b>（□=4 时两数相等，不满足 <）。所以 □ 填 <b>0、1、2、3</b>。")+
+   '</div>';updBc();
+};
+function updBc(){
+  var a=(+$('ba').value)/100,b=(+$('bb').value)/100;$('bav').textContent=a.toFixed(2);$('bbv').textContent=b.toFixed(2);
+  var sign=a>b?'>':(a<b?'<':'=');
+  $('bbig').innerHTML=a.toFixed(2)+' <span style="color:#e8642f">'+sign+'</span> '+b.toFixed(2);
+  function dig(x){x=x.toFixed(2);return [x[0],x[2],x[3]];}
+  var da=dig(a),db=dig(b),labels=['个位','十分位','百分位'];
+  var diff=-1;for(var i=0;i<3;i++){if(da[i]!==db[i]){diff=i;break;}}
+  var u=50,x0=58,s='<svg viewBox="0 0 '+(x0+3*u+10)+' 104">';
+  for(var i=0;i<3;i++){var hl=(i===diff);
+    s+='<text x="'+(x0+i*u+(u-6)/2)+'" y="20" text-anchor="middle" font-size="10" fill="#7d8a96">'+labels[i]+'</text>';
+    s+='<rect x="'+(x0+i*u)+'" y="28" width="'+(u-6)+'" height="30" rx="4" fill="'+(hl?'#fff3d6':'#eef2f7')+'"/><text x="'+(x0+i*u+(u-6)/2)+'" y="49" text-anchor="middle" font-size="18" font-weight="800" fill="'+(hl?'#e8642f':'#23303a')+'">'+da[i]+'</text>';
+    s+='<rect x="'+(x0+i*u)+'" y="64" width="'+(u-6)+'" height="30" rx="4" fill="'+(hl?'#fff3d6':'#eef2f7')+'"/><text x="'+(x0+i*u+(u-6)/2)+'" y="85" text-anchor="middle" font-size="18" font-weight="800" fill="'+(hl?'#e8642f':'#23303a')+'">'+db[i]+'</text>';}
+  s+='<text x="'+(x0-10)+'" y="49" text-anchor="end" font-size="13" font-weight="800" fill="#2f6fb3">A</text><text x="'+(x0-10)+'" y="85" text-anchor="end" font-size="13" font-weight="800" fill="#2f6fb3">B</text>';
+  s+='</svg>';$('bsvg').innerHTML=s;
+  $('bwhy').innerHTML=(diff<0?'<b>每一位都相同 → 两数相等。</b>':'<b>比较：</b>前面几位相同，到 <b>'+labels[diff]+'</b> 分出大小（'+da[diff]+(a>b?' > ':' < ')+db[diff]+'），所以 '+a.toFixed(2)+' '+sign+' '+b.toFixed(2)+'。');
+}
+
+/* 11. 用字母表示数 */
+R.zm=function(){
+  $('stage').innerHTML='<div class="card"><div class="h2">🔤 用字母表示数 <span class="tag">必考</span></div>'+
+   '<div class="base"><b>基础概念：</b>可以用字母表示数。<b>a+a=2a</b>；<b>a×4 写成 4a</b>（数字在前、乘号省略）；含字母的式子，把字母<b>代入</b>一个数就能算出结果。</div>'+
+   '<div class="sld">设 a = <input type="range" id="zma" min="0" max="20" value="8" oninput="updZm()"><span class="val" id="zmav"></span></div>'+
+   '<div id="zmbox"></div>'+
+   deep("每本书 b 元，买 5 本要多少钱？","<b>5b 元</b>（b×5 写成 5b）。如果 b=7，就是 5×7=35 元。",
+        "小明 a 岁，爸爸比他大 28 岁，爸爸几岁？当 a=8 时爸爸多少岁？","爸爸 = <b>(a+28) 岁</b>；a=8 时 = 8+28 = <b>36 岁</b>。用字母把关系写成式子，给 a 一个数就能求出。")+
+   '</div>';updZm();
+};
+function updZm(){
+  var a=+$('zma').value;$('zmav').textContent=a;
+  var rows=[['2a （= a+a）',2*a],['a + 5',a+5],['4a （= a×4）',4*a],['10 + a',10+a],['a + 28 （爸爸年龄）',a+28]];
+  var h='<div class="base" style="background:#fff;border:1px solid var(--line)"><b>当 a = '+a+' 时：</b>';
+  h+=rows.map(function(r){return '<div style="display:flex;justify-content:space-between;padding:4px 2px;border-bottom:1px dashed #eef2f7"><span style="font-weight:800;color:var(--cd)">'+r[0]+'</span><span style="font-weight:800;color:#2e9c54">= '+r[1]+'</span></div>';}).join('');
+  h+='</div>';$('zmbox').innerHTML=h;
 }
 
 renderHome();

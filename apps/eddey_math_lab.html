@@ -55,7 +55,8 @@ var MODS=[
  {id:"xc",ic:"🚗",nm:"行程问题",ds:"速度×时间=路程"},
  {id:"zs",ic:"🌳",nm:"植树问题",ds:"棵数和段数差1"},
  {id:"yj",ic:"💰",nm:"元角分↔小数",ds:"3元2角=3.2元"},
- {id:"ny",ic:"📅",nm:"年月日",ds:"大月小月·平年闰年"}
+ {id:"ny",ic:"📅",nm:"年月日",ds:"大月小月·平年闰年"},
+ {id:"zhe",ic:"🧩",nm:"组合图形(剪拼)",ds:"剩余=大−剪掉"}
 ];
 function renderHome(){
   var h='<div class="intro">这是<b>会动的数学</b>：每个馆先用图讲清一个<b>必考的基础概念</b>，你拖一拖看它怎么变；看懂了再做<b>深入一题</b>，学会<b>怎么想</b>。</div><div class="grid">';
@@ -230,6 +231,32 @@ function updNy(){
   for(var d=1;d<=days;d++){var r=Math.floor((d-1)/7),c=(d-1)%7;s+='<rect x="'+(x0+c*u)+'" y="'+(y0+r*u)+'" width="'+(u-2)+'" height="'+(u-2)+'" rx="3" fill="'+col+'" stroke="#ddd"/><text x="'+(x0+c*u+(u-2)/2)+'" y="'+(y0+r*u+(u-2)/2+3)+'" text-anchor="middle" font-size="10" fill="#555">'+d+'</text>';}
   s+='</svg>';$('nysvg').innerHTML=s;
   $('nywhy').innerHTML='<b>记忆法：</b>左手握拳，<b>凸起的骨节是大月(31天)</b>、<b>凹下去的是小月(30天)</b>，二月单独记。大月：1,3,5,7,8,10,12；小月：4,6,9,11。'+(m===2?'（现在二月按 '+(window._leap?'闰年29天':'平年28天')+'）':'');
+}
+
+/* 8. 组合图形(剪拼) */
+R.zhe=function(){
+  $('stage').innerHTML='<div class="card"><div class="h2">🧩 组合图形（剪拼）<span class="tag">必考</span></div>'+
+   '<div class="base"><b>基础概念：</b>从长方形上剪掉一块，求<b>剩余面积</b>：<b>补法</b>＝大长方形面积 − 剪掉的面积。（不管剪在角上还是中间，都是大减小。）</div>'+
+   '<div class="sld">长 a <input type="range" id="ea" min="4" max="10" value="8" oninput="updZhe()"><span class="val" id="eav"></span></div>'+
+   '<div class="sld">宽 b <input type="range" id="eb" min="4" max="8" value="6" oninput="updZhe()"><span class="val" id="ebv"></span></div>'+
+   '<div class="sld">剪去·宽 p <input type="range" id="ep" min="1" max="5" value="3" oninput="updZhe()"><span class="val" id="epv"></span></div>'+
+   '<div class="sld">剪去·高 q <input type="range" id="eq" min="1" max="5" value="2" oninput="updZhe()"><span class="val" id="eqv"></span></div>'+
+   '<div id="ehsvg"></div><div class="why" id="ehwhy"></div>'+
+   deep("一张长18cm、宽12cm的纸，剪去一个边长3cm的正方形，剩下面积多少？","<b>补法</b>：18×12 − 3×3 = 216 − 9 = <b>207平方厘米</b>。先算大长方形，再减去剪掉的小正方形。",
+        "如果把小正方形剪在纸的正中间（挖个洞），剩下面积会变吗？","<b>不变</b>，还是 大 − 小 = 18×12 − 3×3 = 207。不管剪在角上还是中间，剩余面积都一样。")+
+   '</div>';updZhe();
+};
+function updZhe(){
+  var a=+$('ea').value,b=+$('eb').value,p=Math.min(+$('ep').value,a-1),q=Math.min(+$('eq').value,b-1);
+  $('eav').textContent=a;$('ebv').textContent=b;$('epv').textContent=p;$('eqv').textContent=q;
+  var u=22,x0=14,y0=10,cw=p*u,ch=q*u;
+  var s='<svg viewBox="0 0 '+(x0*2+a*u)+' '+(y0*2+b*u)+'">';
+  s+='<rect x="'+x0+'" y="'+y0+'" width="'+(a*u)+'" height="'+(b*u)+'" fill="#ffe1cc" stroke="#e8642f"/>';
+  s+='<rect x="'+(x0+(a-p)*u)+'" y="'+y0+'" width="'+cw+'" height="'+ch+'" fill="#fff" stroke="#e1553f" stroke-dasharray="4 3"/>';
+  s+='<text x="'+(x0+a*u/2)+'" y="'+(y0+b*u/2+ch/2+4)+'" text-anchor="middle" font-size="11" font-weight="800" fill="#c24e20">大 '+a+'×'+b+'='+(a*b)+'</text>';
+  s+='<text x="'+(x0+(a-p)*u+cw/2)+'" y="'+(y0+ch/2+3)+'" text-anchor="middle" font-size="9" font-weight="800" fill="#e1553f">剪'+p+'×'+q+'</text>';
+  s+='</svg>';$('ehsvg').innerHTML=s;
+  $('ehwhy').innerHTML='<b>剩余面积 = 大 − 剪掉：</b>'+a+'×'+b+' − '+p+'×'+q+' = '+(a*b)+' − '+(p*q)+' = <b>'+(a*b-p*q)+'</b>。';
 }
 
 renderHome();
