@@ -60,7 +60,10 @@ var MODS=[
  {id:"nj",ic:"📐",nm:"三角形内角和",ds:"三个角永远=180°"},
  {id:"sb",ic:"📏",nm:"三角形三边关系",ds:"哪三根小棒能拼成"},
  {id:"fp",ic:"✖️",nm:"乘法分配律",ds:"用面积看懂巧算"},
- {id:"pj",ic:"⚖️",nm:"平均数·移多补少",ds:"平均数怎么来的"}
+ {id:"pj",ic:"⚖️",nm:"平均数·移多补少",ds:"平均数怎么来的"},
+ {id:"sd",ic:"📍",nm:"数对·确定位置",ds:"先列后行(几列几行)"},
+ {id:"py",ic:"➡️",nm:"图形平移",ds:"整体移动·数对怎么变"},
+ {id:"zh",ic:"🧩",nm:"组合图形面积",ds:"拆开/补全再算"}
 ];
 function renderHome(){
   var h='<div class="intro">这是<b>会动的数学</b>：每个馆先用图讲清一个<b>必考的基础概念</b>，你拖一拖看它怎么变；看懂了再做<b>深入一题</b>，学会<b>怎么想</b>。</div><div class="grid">';
@@ -70,7 +73,12 @@ function renderHome(){
 }
 function openMod(id){$('home').classList.add('hide');$('view').classList.remove('hide');window.scrollTo(0,0);R[id]();}
 $('back').onclick=function(){$('view').classList.add('hide');$('home').classList.remove('hide');window.scrollTo(0,0);};
-function deep(q,a){return '<div class="deep"><span class="q">🤔 深入一题：</span>'+q+'<div style="margin-top:6px"><button class="btn gold sm" onclick="this.nextElementSibling.classList.toggle(\'hide\')">看思路</button><div class="hide" style="margin-top:6px;color:#7a5800">'+a+'</div></div></div>';}
+function deep(q,a,q2,a2){
+  var h='<div class="deep"><span class="q">🤔 深入思考：</span>';
+  h+='<div style="margin-top:4px"><b>① '+q+'</b><br><button class="btn gold sm" style="margin-top:5px" onclick="this.nextElementSibling.classList.toggle(\'hide\')">看思路</button><div class="hide" style="margin-top:6px;color:#7a5800">'+a+'</div></div>';
+  if(q2)h+='<div style="margin-top:11px"><b>② ★更深入：'+q2+'</b><br><button class="btn gold sm" style="margin-top:5px" onclick="this.nextElementSibling.classList.toggle(\'hide\')">看思路</button><div class="hide" style="margin-top:6px;color:#7a5800">'+a2+'</div></div>';
+  h+='</div>';return h;
+}
 var R={};
 
 /* 1. 小数数位放大镜 */
@@ -81,7 +89,8 @@ R.xs=function(){
    '<div class="sld">百分位 <input type="range" id="xh" min="0" max="9" value="5" oninput="updX()"><span class="val" id="xhv">5</span></div>'+
    '<div class="big" id="xbig"></div><div id="xsvg"></div>'+
    '<div class="why" id="xwhy"></div>'+
-   deep("0.45 里面有几个 0.01？", "把0.45看成百格图——填了45格，所以是 <b>45个0.01</b>。同理 0.4=40个0.01=4个0.1。")+
+   deep("0.45 里面有几个 0.01？", "把0.45看成百格图——填了45格，所以是 <b>45个0.01</b>。同理 0.4=40个0.01=4个0.1。",
+        "0.1、0.01、1 之间是几倍关系？为什么小数点后第一位叫十分位？", "相邻数位之间都是 <b>10倍</b>：1=10个0.1=100个0.01；0.1=10个0.01。因为把1平均分成10份(十分之一)所以第一位叫十分位，分成100份(百分之一)所以第二位叫百分位。")+
    '</div>';
   updX();
 };
@@ -102,7 +111,8 @@ R.jj=function(){
    '<div class="sld">第一个数 <input type="range" id="ja" min="0" max="99" value="35" oninput="updJ()"><span class="val" id="jav"></span></div>'+
    '<div class="sld">第二个数 <input type="range" id="jb" min="0" max="99" value="8" oninput="updJ()"><span class="val" id="jbv"></span></div>'+
    '<div id="jsvg"></div><div class="why" id="jwhy"></div>'+
-   deep("3.5 + 2 等于多少？", "把 2 看成 <b>2.0</b>，小数点对齐：3.5 + 2.0 = <b>5.5</b>。千万别把 2 对到十分位上变成 3.5+0.2。")+
+   deep("3.5 + 2 等于多少？", "把 2 看成 <b>2.0</b>，小数点对齐：3.5 + 2.0 = <b>5.5</b>。千万别把 2 对到十分位上变成 3.5+0.2。",
+        "3 − 0.8 怎么算？", "3 看成 <b>3.0</b>，对齐相减：3.0 − 0.8 = <b>2.2</b>。个位不够减，向个位借 1（=10个0.1），10个0.1减8个0.1=2个0.1。结果末尾别丢小数点。")+
    '</div>';updJ();
 };
 function updJ(){
@@ -128,7 +138,8 @@ R.nj=function(){
    '<div class="sld">∠A <input type="range" id="na" min="20" max="140" value="60" oninput="updN()"><span class="val" id="nav"></span></div>'+
    '<div class="sld">∠B <input type="range" id="nb" min="20" max="140" value="70" oninput="updN()"><span class="val" id="nbv"></span></div>'+
    '<div id="nsvg"></div><div class="why" id="nwhy"></div>'+
-   deep("一个三角形两个角是 60° 和 70°，第三个角多少度？", "180−60−70 = <b>50°</b>。口诀：第三角 = 180 − 另两角之和。直角三角形里，两个锐角加起来 = 90°。")+
+   deep("一个三角形两个角是 60° 和 70°，第三个角多少度？", "180−60−70 = <b>50°</b>。口诀：第三角 = 180 − 另两角之和。直角三角形里，两个锐角加起来 = 90°。",
+        "等腰三角形顶角是 100°，两个底角各几度？", "等腰三角形两个底角<b>相等</b>：(180−100)÷2 = <b>40°</b>。再记：等边三角形三个角都相等，每个 180÷3 = 60°。")+
    '</div>';updN();
 };
 function updN(){
@@ -155,7 +166,8 @@ R.sb=function(){
    '<div class="sld">边b <input type="range" id="sbb" min="1" max="10" value="4" oninput="updS()"><span class="val" id="sbv"></span></div>'+
    '<div class="sld">边c <input type="range" id="sc" min="1" max="10" value="5" oninput="updS()"><span class="val" id="scv"></span></div>'+
    '<div id="ssvg"></div><div class="why" id="swhy"></div>'+
-   deep("3、4、5 能拼成三角形吗？2、3、6 呢？", "3+4=7>5 ✅ 能；2+3=5 < 6 ✗ 不能（两根短的接起来还够不到长的）。只要检查<b>两短边之和 > 最长边</b>即可。")+
+   deep("3、4、5 能拼成三角形吗？2、3、6 呢？", "3+4=7>5 ✅ 能；2+3=5 < 6 ✗ 不能（两根短的接起来还够不到长的）。只要检查<b>两短边之和 > 最长边</b>即可。",
+        "两根小棒 5cm 和 8cm，第三根取整数厘米，可以是几？", "第三边要 <b>大于 8−5=3</b>、<b>小于 8+5=13</b>，所以是 <b>4、5、6…12cm（共9种）</b>。口诀：比两边的差大，比两边的和小。")+
    '</div>';updS();
 };
 function updS(){
@@ -177,7 +189,8 @@ R.fp=function(){
    '<div class="sld">b <input type="range" id="fb" min="1" max="9" value="4" oninput="updF()"><span class="val" id="fbv"></span></div>'+
    '<div class="sld">c <input type="range" id="fc" min="1" max="9" value="2" oninput="updF()"><span class="val" id="fcv"></span></div>'+
    '<div id="fsvg"></div><div class="why" id="fwhy"></div>'+
-   deep("用分配律巧算 25×44", "44=40+4，25×44 = 25×40 + 25×4 = 1000+100 = <b>1100</b>。把一个数拆成<b>整十/整百+零头</b>再分配，又快又准。")+
+   deep("用分配律巧算 25×44", "44=40+4，25×44 = 25×40 + 25×4 = 1000+100 = <b>1100</b>。把一个数拆成<b>整十/整百+零头</b>再分配，又快又准。",
+        "巧算 99×36", "99=100−1，99×36 = 100×36 − 1×36 = 3600−36 = <b>3564</b>。这是分配律的“减法版”：(100−1)×36 = 100×36 − 1×36。接近整百的数都能这么拆。")+
    '</div>';updF();
 };
 function updF(){
@@ -203,7 +216,8 @@ R.pj=function(){
    '<div class="sld">C <input type="range" id="pc" min="0" max="10" value="6" oninput="updP()"><span class="val" id="pcv"></span></div>'+
    '<div class="sld">D <input type="range" id="pd" min="0" max="10" value="4" oninput="updP()"><span class="val" id="pdv"></span></div>'+
    '<div id="psvg"></div><div class="row"><button class="btn gold sm" onclick="window._lvl=!window._lvl;updP();">'+'⚖️ 移多补少 / 看原来</button></div><div class="why" id="pwhy"></div>'+
-   deep("4个人平均每人5本，一共多少本？", "总数 = 平均数 × 个数 = 5 × 4 = <b>20本</b>。求总数就把平均数<b>乘回去</b>。")+
+   deep("4个人平均每人5本，一共多少本？", "总数 = 平均数 × 个数 = 5 × 4 = <b>20本</b>。求总数就把平均数<b>乘回去</b>。",
+        "小明前3次考试平均90分，他想4次平均到92分，第4次要考几分？", "4次总分要 92×4 = 368，前3次 90×3 = 270，第4次 = 368−270 = <b>98分</b>。思路：先用“平均×个数”求出需要的总分，再减已有的。")+
    '</div>';window._lvl=false;updP();
 };
 function updP(){
@@ -217,6 +231,88 @@ function updP(){
   var ay=base-avg*u;s+='<line x1="6" y1="'+ay+'" x2="274" y2="'+ay+'" stroke="#e1553f" stroke-dasharray="5 4" stroke-width="2"/><text x="278" y="'+(ay+4)+'" text-anchor="end" font-size="11" fill="#e1553f">平均'+avg+'</text>';
   s+='</svg>';$('psvg').innerHTML=s;
   $('pwhy').innerHTML='<b>算一算：</b>总和 '+v.join('+')+' = '+sum+'，÷ 4 = <b>平均数 '+avg+'</b>。'+(window._lvl?'（已"移多补少"——每根都齐到红线）':'（点上面按钮看"移多补少"动画）');
+}
+
+/* 7. 数对 */
+R.sd=function(){
+  $('stage').innerHTML='<div class="card"><div class="h2">📍 数对 · 确定位置 <span class="tag">必考</span></div>'+
+   '<div class="base"><b>基础概念：</b>用<b>数对</b>表示位置，写成 <b>(列, 行)</b>——<b>先列后行</b>：先看第几<b>列</b>(从左往右数)，再看第几<b>行</b>(从下往上数)。</div>'+
+   '<div class="sld">第几列 <input type="range" id="dc" min="1" max="6" value="2" oninput="updSd()"><span class="val" id="dcv"></span></div>'+
+   '<div class="sld">第几行 <input type="range" id="dr" min="1" max="6" value="3" oninput="updSd()"><span class="val" id="drv"></span></div>'+
+   '<div id="dsvg"></div><div class="big" id="dbig"></div><div class="why" id="dwhy"></div>'+
+   deep("点A的数对是 (4,2)，它在哪里？","先找第<b>4列</b>(从左数第4格)，再找第<b>2行</b>(从下数第2格)，交叉处就是A。记牢<b>先列后行</b>，别写反成(2,4)。",
+        "A在(2,3)，向右平移3格、再向上1格，新数对是？","向右→列+3=5，向上→行+1=4，所以是 <b>(5,4)</b>。规律：右移加在列上、上移加在行上。")+
+   '</div>';updSd();
+};
+function updSd(){
+  var c=+$('dc').value,r=+$('dr').value;$('dcv').textContent=c;$('drv').textContent=r;
+  var n=6,u=28,x0=26,top=8;var s='<svg viewBox="0 0 '+(x0+n*u+8)+' '+(top+n*u+24)+'">';
+  for(var i=0;i<=n;i++){s+='<line x1="'+(x0+i*u)+'" y1="'+top+'" x2="'+(x0+i*u)+'" y2="'+(top+n*u)+'" stroke="#dbe7f3"/><line x1="'+x0+'" y1="'+(top+i*u)+'" x2="'+(x0+n*u)+'" y2="'+(top+i*u)+'" stroke="#dbe7f3"/>';}
+  for(var col=1;col<=n;col++)s+='<text x="'+(x0+(col-0.5)*u)+'" y="'+(top+n*u+16)+'" text-anchor="middle" font-size="11" fill="#7d8a96">'+col+'</text>';
+  for(var row=1;row<=n;row++)s+='<text x="'+(x0-9)+'" y="'+(top+(n-row+0.5)*u+4)+'" text-anchor="middle" font-size="11" fill="#7d8a96">'+row+'</text>';
+  s+='<rect x="'+(x0+(c-1)*u)+'" y="'+(top+(n-r)*u)+'" width="'+u+'" height="'+u+'" fill="#fff3d6"/>';
+  var px=x0+(c-0.5)*u,py=top+(n-r+0.5)*u;
+  s+='<circle cx="'+px+'" cy="'+py+'" r="9" fill="#e8642f"/><text x="'+px+'" y="'+(py+4)+'" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">A</text>';
+  s+='</svg>';$('dsvg').innerHTML=s;
+  $('dbig').textContent='A 的数对 = ('+c+', '+r+')';
+  $('dwhy').innerHTML='<b>读法：</b>A 在第 <b>'+c+'</b> 列（从左数）、第 <b>'+r+'</b> 行（从下数），数对 <b>('+c+','+r+')</b>。列在前、行在后，别写反。';
+}
+
+/* 8. 图形平移 */
+R.py=function(){
+  $('stage').innerHTML='<div class="card"><div class="h2">➡️ 图形平移 <span class="tag">必考</span></div>'+
+   '<div class="base"><b>基础概念：</b>平移＝图形<b>整体沿直线移动</b>，<b>方向、形状、大小都不变</b>，只是位置变。看图形上<b>一个点</b>移动几格，整个图形就移动几格。</div>'+
+   '<div class="sld">向右 <input type="range" id="mx" min="0" max="5" value="3" oninput="updPy()"><span class="val" id="mxv"></span></div>'+
+   '<div class="sld">向上 <input type="range" id="my" min="0" max="4" value="2" oninput="updPy()"><span class="val" id="myv"></span></div>'+
+   '<div id="pysvg"></div><div class="why" id="pywhy"></div>'+
+   deep("一个图形平移以后，周长和面积变不变？","都<b>不变</b>！平移只改变位置，形状大小没变，所以周长、面积都和原来一样。",
+        "三角形一个顶点从 (1,1) 平移到 (4,3)，是怎么平移的？","横着 1→4 是<b>向右3格</b>，竖着 1→3 是<b>向上2格</b>。所以向右平移3格、向上平移2格。看对应点的变化就知道平移方向和格数。")+
+   '</div>';updPy();
+};
+function updPy(){
+  var dx=+$('mx').value,dy=+$('my').value;$('mxv').textContent=dx;$('myv').textContent=dy;
+  var n=8,u=24,x0=10,top=8;var shape=[[0,0],[0,1],[1,0]];
+  function cell(c,r,fill,op){var X=x0+c*u,Y=top+(n-1-r)*u;return '<rect x="'+X+'" y="'+Y+'" width="'+u+'" height="'+u+'" fill="'+fill+'" fill-opacity="'+op+'" stroke="#ccc"/>';}
+  var s='<svg viewBox="0 0 '+(x0*2+n*u)+' '+(top*2+n*u)+'">';
+  for(var i=0;i<=n;i++){s+='<line x1="'+(x0+i*u)+'" y1="'+top+'" x2="'+(x0+i*u)+'" y2="'+(top+n*u)+'" stroke="#eef2f7"/><line x1="'+x0+'" y1="'+(top+i*u)+'" x2="'+(x0+n*u)+'" y2="'+(top+i*u)+'" stroke="#eef2f7"/>';}
+  shape.forEach(function(p){s+=cell(p[0],p[1],'#cdd9e6',0.85);});
+  shape.forEach(function(p){s+=cell(p[0]+dx,p[1]+dy,'#e8642f',0.9);});
+  s+='</svg>';$('pysvg').innerHTML=s;
+  $('pywhy').innerHTML='<b>看图：</b>灰色是原图形，橙色是<b>向右'+dx+'格、向上'+dy+'格</b>平移后的——形状大小完全一样，只是挪了位置。';
+}
+
+/* 9. 组合图形面积 */
+R.zh=function(){
+  $('stage').innerHTML='<div class="card"><div class="h2">🧩 组合图形面积 <span class="tag">必考</span></div>'+
+   '<div class="base"><b>基础概念：</b>不规则图形两种算法：<b>① 拆</b>——切成几个长方形，分别算再相加；<b>② 补</b>——补成一个大长方形，再减去多补的。</div>'+
+   '<div class="sld">大长 a <input type="range" id="za" min="4" max="9" value="8" oninput="updZh()"><span class="val" id="zav"></span></div>'+
+   '<div class="sld">大宽 b <input type="range" id="zb" min="4" max="8" value="6" oninput="updZh()"><span class="val" id="zbv"></span></div>'+
+   '<div class="sld">缺口宽 p <input type="range" id="zp" min="1" max="5" value="3" oninput="updZh()"><span class="val" id="zpv"></span></div>'+
+   '<div class="sld">缺口高 q <input type="range" id="zq" min="1" max="5" value="2" oninput="updZh()"><span class="val" id="zqv"></span></div>'+
+   '<div class="row"><button class="btn gold sm" onclick="window._zh=(window._zh===\'cut\'?\'fill\':\'cut\');updZh()">🔄 换种方法：拆 / 补</button></div>'+
+   '<div id="zhsvg"></div><div class="why" id="zhwhy"></div>'+
+   deep("一块L形地，大长方形 8×6，右上角挖去 2×3，面积是多少？","<b>补法</b>：8×6 − 2×3 = 48−6 = <b>42</b>。<b>拆法</b>：下面 8×(6−3)=24 ＋ 上面 (8−2)×3=18 = 42。两种都行、结果一样。",
+        "为什么拆法和补法结果一定相等？","因为算的是<b>同一块图形</b>，只是数法不同：拆是“一块块加起来”，补是“先多算再减掉多的”，最后都等于那块L形的面积。考试两种都会更稳。")+
+   '</div>';window._zh='cut';updZh();
+};
+function updZh(){
+  var a=+$('za').value,b=+$('zb').value,p=Math.min(+$('zp').value,a-1),q=Math.min(+$('zq').value,b-1);
+  $('zav').textContent=a;$('zbv').textContent=b;$('zpv').textContent=p;$('zqv').textContent=q;
+  var u=22,x0=14,y0=10,cw=p*u,ch=q*u;var s='<svg viewBox="0 0 '+(x0*2+a*u)+' '+(y0*2+b*u)+'">';
+  if(window._zh==='cut'){
+    s+='<rect x="'+x0+'" y="'+(y0+ch)+'" width="'+(a*u)+'" height="'+(b*u-ch)+'" fill="#cfe2f6" stroke="#2f6fb3"/>';
+    s+='<rect x="'+x0+'" y="'+y0+'" width="'+((a-p)*u)+'" height="'+ch+'" fill="#e9f7ee" stroke="#2e9c54"/>';
+    s+='<text x="'+(x0+a*u/2)+'" y="'+(y0+ch+(b*u-ch)/2+4)+'" text-anchor="middle" font-size="11" font-weight="800" fill="#2f6fb3">'+a+'×'+(b-q)+'='+(a*(b-q))+'</text>';
+    s+='<text x="'+(x0+(a-p)*u/2)+'" y="'+(y0+ch/2+4)+'" text-anchor="middle" font-size="10" font-weight="800" fill="#2e9c54">'+(a-p)+'×'+q+'='+((a-p)*q)+'</text>';
+  }else{
+    s+='<rect x="'+x0+'" y="'+y0+'" width="'+(a*u)+'" height="'+(b*u)+'" fill="#cfe2f6" stroke="#2f6fb3"/>';
+    s+='<rect x="'+(x0+(a-p)*u)+'" y="'+y0+'" width="'+cw+'" height="'+ch+'" fill="#fbe6e2" stroke="#e1553f" stroke-dasharray="4 3"/>';
+    s+='<text x="'+(x0+a*u/2)+'" y="'+(y0+b*u/2+ch/2+4)+'" text-anchor="middle" font-size="11" font-weight="800" fill="#2f6fb3">大 '+a+'×'+b+'='+(a*b)+'</text>';
+    s+='<text x="'+(x0+(a-p)*u+cw/2)+'" y="'+(y0+ch/2+3)+'" text-anchor="middle" font-size="9" font-weight="800" fill="#e1553f">−'+p+'×'+q+'</text>';
+  }
+  s+='</svg>';$('zhsvg').innerHTML=s;
+  var area=a*b-p*q;
+  $('zhwhy').innerHTML=(window._zh==='cut'?'<b>拆法：</b>下面 '+a+'×'+(b-q)+'='+(a*(b-q))+' ＋ 上面 '+(a-p)+'×'+q+'='+((a-p)*q)+' = <b>'+area+'</b>':'<b>补法：</b>大 '+a+'×'+b+'='+(a*b)+' − 缺口 '+p+'×'+q+'='+(p*q)+' = <b>'+area+'</b>')+'（拆、补结果相同）。';
 }
 
 renderHome();

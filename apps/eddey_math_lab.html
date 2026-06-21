@@ -54,7 +54,8 @@ var MODS=[
  {id:"fs",ic:"🍕",nm:"分数初步",ds:"几分之几，画出来"},
  {id:"xc",ic:"🚗",nm:"行程问题",ds:"速度×时间=路程"},
  {id:"zs",ic:"🌳",nm:"植树问题",ds:"棵数和段数差1"},
- {id:"yj",ic:"💰",nm:"元角分↔小数",ds:"3元2角=3.2元"}
+ {id:"yj",ic:"💰",nm:"元角分↔小数",ds:"3元2角=3.2元"},
+ {id:"ny",ic:"📅",nm:"年月日",ds:"大月小月·平年闰年"}
 ];
 function renderHome(){
   var h='<div class="intro">这是<b>会动的数学</b>：每个馆先用图讲清一个<b>必考的基础概念</b>，你拖一拖看它怎么变；看懂了再做<b>深入一题</b>，学会<b>怎么想</b>。</div><div class="grid">';
@@ -64,7 +65,12 @@ function renderHome(){
 }
 function openMod(id){$('home').classList.add('hide');$('view').classList.remove('hide');window.scrollTo(0,0);R[id]();}
 $('back').onclick=function(){$('view').classList.add('hide');$('home').classList.remove('hide');window.scrollTo(0,0);};
-function deep(q,a){return '<div class="deep"><span class="q">🤔 深入一题：</span>'+q+'<div style="margin-top:6px"><button class="btn gold sm" onclick="this.nextElementSibling.classList.toggle(\'hide\')">看思路</button><div class="hide" style="margin-top:6px;color:#7a5800">'+a+'</div></div></div>';}
+function deep(q,a,q2,a2){
+  var h='<div class="deep"><span class="q">🤔 深入思考：</span>';
+  h+='<div style="margin-top:4px"><b>① '+q+'</b><br><button class="btn gold sm" style="margin-top:5px" onclick="this.nextElementSibling.classList.toggle(\'hide\')">看思路</button><div class="hide" style="margin-top:6px;color:#7a5800">'+a+'</div></div>';
+  if(q2)h+='<div style="margin-top:11px"><b>② ★更深入：'+q2+'</b><br><button class="btn gold sm" style="margin-top:5px" onclick="this.nextElementSibling.classList.toggle(\'hide\')">看思路</button><div class="hide" style="margin-top:6px;color:#7a5800">'+a2+'</div></div>';
+  h+='</div>';return h;
+}
 var R={};
 
 /* 1. 面积 vs 周长 */
@@ -74,7 +80,8 @@ R.zc=function(){
    '<div class="sld">长 <input type="range" id="zl" min="1" max="10" value="5" oninput="updZ()"><span class="val" id="zlv"></span></div>'+
    '<div class="sld">宽 <input type="range" id="zw" min="1" max="8" value="3" oninput="updZ()"><span class="val" id="zwv"></span></div>'+
    '<div id="zsvg"></div><div class="why" id="zwhy"></div>'+
-   deep("一个长方形长6米、宽4米，周长和面积各是多少？", "周长=（6+4)×2 = <b>20米</b>；面积=6×4 = <b>24平方米</b>。一个量边线（米），一个量里面（平方米），单位不一样！")+
+   deep("一个长方形长6米、宽4米，周长和面积各是多少？", "周长=（6+4)×2 = <b>20米</b>；面积=6×4 = <b>24平方米</b>。一个量边线（米），一个量里面（平方米），单位不一样！",
+        "两个长方形周长一样，面积一定一样吗？", "<b>不一定！</b>周长都是12米：5×1面积5、4×2面积8、3×3面积9——周长相同，面积可以差很多。规律：<b>越接近正方形，面积越大</b>。")+
    '</div>';updZ();
 };
 function updZ(){
@@ -93,7 +100,8 @@ R.cf=function(){
    '<div class="sld">第一个数 <input type="range" id="ca" min="11" max="29" value="23" oninput="updC()"><span class="val" id="cav"></span></div>'+
    '<div class="sld">第二个数 <input type="range" id="cb" min="11" max="19" value="12" oninput="updC()"><span class="val" id="cbv"></span></div>'+
    '<div id="csvg"></div><div class="why" id="cwhy"></div>'+
-   deep("竖式算 23×12 时，那两层分别是什么？", "第一层 23×2=46（个位2乘）；第二层 23×10=230（十位1乘，要错位）；合起来 46+230 = <b>276</b>。正好是四块面积之和。")+
+   deep("竖式算 23×12 时，那两层分别是什么？", "第一层 23×2=46（个位2乘）；第二层 23×10=230（十位1乘，要错位）；合起来 46+230 = <b>276</b>。正好是四块面积之和。",
+        "为什么第二层要往左错一位？", "因为十位上的“1”其实是 <b>10</b>，23×10=230，末尾的 0 让它对齐到十位，所以第二层要左移一位（那个 0 通常省略不写，但位置不能错）。")+
    '</div>';updC();
 };
 function updC(){
@@ -121,7 +129,8 @@ R.fs=function(){
    '<div class="sld">分母(平均分几份) <input type="range" id="fm" min="2" max="8" value="4" oninput="updFs()"><span class="val" id="fmv"></span></div>'+
    '<div class="sld">分子(取几份) <input type="range" id="fn" min="0" max="8" value="1" oninput="updFs()"><span class="val" id="fnv"></span></div>'+
    '<div id="fsvg"></div><div class="big" id="fbig"></div><div class="why" id="fwhy"></div>'+
-   deep("1/3 和 1/2 哪个大？", "画出来比：同样大的饼，分成2份每份大、分成3份每份小，所以 <b>1/2 > 1/3</b>。分子都是1时，<b>分母越大，分数越小</b>。")+
+   deep("1/3 和 1/2 哪个大？", "画出来比：同样大的饼，分成2份每份大、分成3份每份小，所以 <b>1/2 > 1/3</b>。分子都是1时，<b>分母越大，分数越小</b>。",
+        "3/5 和 2/5 哪个大？同分母怎么比？", "<b>同分母看分子</b>：分子大的分数就大，所以 3/5 > 2/5（分成5份，涂3份比涂2份多）。口诀：分母相同比分子，分子相同比分母(分母大反而小)。")+
    '</div>';updFs();
 };
 function updFs(){
@@ -140,7 +149,8 @@ R.xc=function(){
    '<div class="sld">速度(千米/时) <input type="range" id="xv" min="10" max="100" step="10" value="60" oninput="updXc()"><span class="val" id="xvv"></span></div>'+
    '<div class="sld">时间(小时) <input type="range" id="xt" min="1" max="6" value="2" oninput="updXc()"><span class="val" id="xtv"></span></div>'+
    '<div id="xsvg"></div><div class="big" id="xbig"></div><div class="row"><button class="btn gold sm" onclick="driveCar()">🚗 出发！</button></div><div class="why" id="xwhy"></div>'+
-   deep("汽车每小时行60千米，从家到外婆家180千米，要几小时？", "时间 = 路程 ÷ 速度 = 180 ÷ 60 = <b>3小时</b>。三个量：知道两个就能求第三个（路程÷速度=时间，路程÷时间=速度）。")+
+   deep("汽车每小时行60千米，从家到外婆家180千米，要几小时？", "时间 = 路程 ÷ 速度 = 180 ÷ 60 = <b>3小时</b>。三个量：知道两个就能求第三个（路程÷速度=时间，路程÷时间=速度）。",
+        "3小时一共行了270千米，每小时行多少千米？", "速度 = 路程 ÷ 时间 = 270 ÷ 3 = <b>90千米/时</b>。把三句话记牢：路程=速度×时间、速度=路程÷时间、时间=路程÷速度。")+
    '</div>';updXc();
 };
 function updXc(){
@@ -163,7 +173,8 @@ R.zs=function(){
    '<div class="sld">栽几棵 <input type="range" id="zk" min="2" max="9" value="6" oninput="updZs()"><span class="val" id="zkv"></span></div>'+
    '<div class="sld">每段(米) <input type="range" id="zg" min="2" max="10" value="5" oninput="updZs()"><span class="val" id="zgv"></span></div>'+
    '<div id="zssvg"></div><div class="big" id="zsbig"></div><div class="why" id="zswhy"></div>'+
-   deep("路一边每隔5米栽1棵，从头到尾栽到第6棵，全长多少米？", "6棵 → 段数=6−1=<b>5段</b> → 全长=5×5=<b>25米</b>。先求段数（棵数−1），再乘每段长。")+
+   deep("路一边每隔5米栽1棵，从头到尾栽到第6棵，全长多少米？", "6棵 → 段数=6−1=<b>5段</b> → 全长=5×5=<b>25米</b>。先求段数（棵数−1），再乘每段长。",
+        "一条20米的路，两端都栽、每隔5米栽1棵，要栽几棵？", "先求段数 20÷5=4段，两端都栽 → 棵数=段数+1=<b>5棵</b>。反过来用：知道全长先求段数，再 +1。（如果只有一端栽：棵数=段数；两端都不栽：棵数=段数−1。）")+
    '</div>';updZs();
 };
 function updZs(){
@@ -186,13 +197,39 @@ R.yj=function(){
    '<div class="sld">角 <input type="range" id="yj" min="0" max="9" value="2" oninput="updYj()"><span class="val" id="yjv"></span></div>'+
    '<div class="sld">分 <input type="range" id="yf" min="0" max="9" value="0" oninput="updYj()"><span class="val" id="yfv"></span></div>'+
    '<div class="big" id="ybig"></div><div class="why" id="ywhy"></div>'+
-   deep("5角 写成用“元”作单位的小数是多少？8角5分呢？", "5角 = <b>0.5元</b>（没有元写0，角在十分位）；8角5分 = <b>0.85元</b>。记住：角→十分位，分→百分位。")+
+   deep("5角 写成用“元”作单位的小数是多少？8角5分呢？", "5角 = <b>0.5元</b>（没有元写0，角在十分位）；8角5分 = <b>0.85元</b>。记住：角→十分位，分→百分位。",
+        "3.07 元 是几元几角几分？", "对位看：个位3=3元，十分位0=<b>0角</b>，百分位7=<b>7分</b>，所以是 <b>3元零7分</b>。中间的 0 不能丢（不是3元7角）。")+
    '</div>';updYj();
 };
 function updYj(){
   var e=+$('ye').value,j=+$('yj').value,f=+$('yf').value;$('yev').textContent=e;$('yjv').textContent=j;$('yfv').textContent=f;
   $('ybig').textContent=e+'元'+j+'角'+f+'分 = '+e+'.'+j+''+f+' 元';
   $('ywhy').innerHTML='<b>对位：</b><b>'+e+'</b>(元/个位) . <b>'+j+'</b>(角/十分位) <b>'+f+'</b>(分/百分位) = <b>'+e+'.'+j+''+f+'元</b>。';
+}
+
+/* 7. 年月日 */
+R.ny=function(){
+  $('stage').innerHTML='<div class="card"><div class="h2">📅 年月日 <span class="tag">必考</span></div>'+
+   '<div class="base"><b>基础概念：</b>一年 <b>12个月</b>。<b>大月31天</b>：1、3、5、7、8、10、12月；<b>小月30天</b>：4、6、9、11月；<b>二月</b>特殊：平年28天、闰年29天。一年：平年 <b>365</b> 天、闰年 <b>366</b> 天。</div>'+
+   '<div class="sld">第几月 <input type="range" id="nm" min="1" max="12" value="2" oninput="updNy()"><span class="val" id="nmv"></span></div>'+
+   '<div class="row"><button class="btn gold sm" id="nyb" onclick="window._leap=!window._leap;updNy()">🔄 切换：平年 / 闰年</button></div>'+
+   '<div class="big" id="nybig"></div><div id="nysvg"></div><div class="why" id="nywhy"></div>'+
+   deep("2024 年是闰年吗？这一年 2 月有几天？","判断闰年：公历年份<b>能被4整除</b>就是闰年（整百年要能被400整除）。2024÷4=506 整除 → <b>闰年</b>，2月有 <b>29天</b>，全年366天。",
+        "平年一年 365 天，合多少个星期零几天？","365 ÷ 7 = 52 余 1，所以是 <b>52个星期零1天</b>。这也是为什么今年的某一天，明年同一天会往后挪 1 天（闰年挪 2 天）。")+
+   '</div>';window._leap=false;updNy();
+};
+function updNy(){
+  var m=+$('nm').value;$('nmv').textContent=m;
+  var big=[1,3,5,7,8,10,12],days,type,col;
+  if(m===2){days=window._leap?29:28;type='二月·'+(window._leap?'闰年':'平年');col='#fff0e6';}
+  else if(big.indexOf(m)>=0){days=31;type='大月';col='#e8f0fa';}
+  else{days=30;type='小月';col='#e9f7ee';}
+  $('nybig').textContent=m+'月 有 '+days+' 天（'+type+'）';
+  var cols=7,rows=Math.ceil(days/7),u=26,x0=10,y0=8;
+  var s='<svg viewBox="0 0 '+(x0*2+cols*u)+' '+(y0*2+rows*u)+'">';
+  for(var d=1;d<=days;d++){var r=Math.floor((d-1)/7),c=(d-1)%7;s+='<rect x="'+(x0+c*u)+'" y="'+(y0+r*u)+'" width="'+(u-2)+'" height="'+(u-2)+'" rx="3" fill="'+col+'" stroke="#ddd"/><text x="'+(x0+c*u+(u-2)/2)+'" y="'+(y0+r*u+(u-2)/2+3)+'" text-anchor="middle" font-size="10" fill="#555">'+d+'</text>';}
+  s+='</svg>';$('nysvg').innerHTML=s;
+  $('nywhy').innerHTML='<b>记忆法：</b>左手握拳，<b>凸起的骨节是大月(31天)</b>、<b>凹下去的是小月(30天)</b>，二月单独记。大月：1,3,5,7,8,10,12；小月：4,6,9,11。'+(m===2?'（现在二月按 '+(window._leap?'闰年29天':'平年28天')+'）':'');
 }
 
 renderHome();
