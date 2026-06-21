@@ -240,14 +240,14 @@
   {
     "child": "kenton",
     "subject": "语文",
-    "title": "错词重默 · 两娃（只默之前默错的词/句，连续默对2次自动消失）",
+    "title": "错词重默 · 两娃（只默之前默错的语文词，连续默对2次自动消失）",
     "file": "apps/wrong_redo_both.html",
     "added": "2026-06-21"
   },
   {
     "child": "eddey",
-    "subject": "英语",
-    "title": "错词重默 · 两娃（只默之前默错的词/句，连续默对2次自动消失）",
+    "subject": "语文",
+    "title": "错词重默 · 两娃（只默之前默错的语文词，连续默对2次自动消失）",
     "file": "apps/wrong_redo_both.html",
     "added": "2026-06-21"
   }

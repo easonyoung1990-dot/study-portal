@@ -222,7 +222,7 @@
 ## 常见任务做法（"更新门户"）
 
 - **加今日任务** → 改 `data/tasks.json`（更新 `date` 与对应孩子数组）。
-- **入库新软件** → 把 HTML 放进 `apps/`，在 `data/apps.json` 追加一条索引。
+- **入库新软件** → 把 HTML 放进 `apps/`，在 `data/apps.json` 追加一条索引。**`added` 必须填当天日期（`YYYY-MM-DD`，别用旧日期）**——软件库 `apps.html` 会自动按日期倒序（最新在前）、并给"当天"软件加 `🆕今日` 红标，方便家长按日期找到刚做的。
 - **更新积分** → 改 `data/scores.json`（同时更新 `updated`）。
 - **发布播报** → 在 `podcast/` 新建 `YYYY-MM-DD.html`，在 `data/podcast.json` 追加一条。
 - **加卷子** → PDF 放进 `papers/`，在对应 `tasks.json` 用 `type:"pdf"` 链接到它，
