@@ -45,12 +45,17 @@
 
 ## 配音（朗读语音）：一律用神经网络真人音
 
+> # 🔒 音色锁定（家长拍板，最高优先级，绝不再换）
+> **全部软件、全部播报的朗读音色一律固定为 edge-tts：中文 `zh-CN-XiaoxiaoNeural`（小晓）、英文 `en-US-AriaNeural`（Aria）。这是已定方案，不是"可选默认"。**
+> 家长**已明确不满"换了别人读的音色"**：今后**不准**用任何其它声音交付——不准用浏览器 TTS 当主音、不准用离线 MeloTTS/Kokoro 等当**最终**音、不准临时换男声/英音/别的 Neural 音色。
+> 离线 `gen_audio_offline.py` 的声音**不是小晓**，**只能当云端临时占位**；任何一期音频在交付/上线前，**最终都必须由爸爸电脑用 edge-tts 小晓+Aria 按同名覆盖**，否则就是没做完。
+
 **今后所有带朗读/报读的软件**（默写、听写、英语阅读、古诗、播报等，中英文都算）——**默认用预合成的神经真人音，不要用浏览器自带 TTS 当主音**（浏览器 TTS 机器味重、各浏览器发音不一致，仅作缺失时的自动回退）。
 
 - **怎么做**：构建时（爸爸电脑这个"生产层"）用 edge-tts 把该软件要朗读的词句预合成成 MP3，按内容哈希命名放到 `apps/audio/<软件名>/`；网页里的朗读函数（如 `speakOnce`）先播对应 MP3、缺失才回退浏览器 TTS。**页面本身仍是零依赖纯静态**——MP3 只是静态资源，和 `data/*.json` 一样在生产层生成后随仓库发布，不违反"无构建/无依赖"。
-- **音色**：英文 `en-US-AriaNeural`、中文 `zh-CN-XiaoxiaoNeural`；默写/听写类英文（必要时中文）放慢约 `-10%` 方便孩子书写。换音色按需（中文男声 `zh-CN-YunxiNeural`、英音 `en-GB-SoniaNeural` 等）。
+- **音色（🔒 锁定，不可改）**：英文 `en-US-AriaNeural`（Aria）、中文 `zh-CN-XiaoxiaoNeural`（小晓）——**所有软件/播报统一这一把，不要再换其它人声**。默写/听写类英文（必要时中文）放慢约 `-10%` 方便孩子书写（**仅调语速，不调音色**）。`zh-CN-YunxiNeural`、`en-GB-SoniaNeural` 等仅为历史备注，**当前一律不用**。
 - **工具**：本机 Python `C:\Users\User\AppData\Local\Programs\Python\Python313-arm64\python.exe`（已装 edge-tts）；生成脚本 `C:\Users\User\broadcast\gen_audio.py`（从 HTML 自动提取要读的文本）或 `gen_audio_manifest.py`（按每个软件的 `apps/audio/<名>/_manifest.json` 批量合成）。
-- **☁️ 云端会话补音频（edge-tts 被封时用）**：Claude Code 云端会话的网络会封掉 edge-tts 端点与 HuggingFace（403），在线合成跑不通。此时用仓库内 `tools/gen_audio_offline.py`——离线神经 TTS（sherpa-onnx + MeloTTS 中文模型，模型从 GitHub Releases 拉取），命名同样走 FNV 哈希，能直接在云端把 MP3 合成并提交。装好依赖即可：`pip install sherpa-onnx numpy` + `apt-get install -y ffmpeg`，然后 `python3 tools/gen_audio_offline.py <软件名...>`。注意它是另一把女声（非小晓），想统一回小晓就回本机跑 edge-tts 按同名覆盖。
+- **☁️ 云端会话补音频（edge-tts 被封时用）**：Claude Code 云端会话的网络会封掉 edge-tts 端点与 HuggingFace（403），在线合成跑不通。此时用仓库内 `tools/gen_audio_offline.py`——离线神经 TTS（sherpa-onnx + MeloTTS 中文模型，模型从 GitHub Releases 拉取），命名同样走 FNV 哈希，能直接在云端把 MP3 合成并提交。装好依赖即可：`pip install sherpa-onnx numpy` + `apt-get install -y ffmpeg`，然后 `python3 tools/gen_audio_offline.py <软件名...>`。**⚠️ 它是另一把女声（非小晓），只能当临时占位**——云端补音频时**务必同时写好 `apps/audio/<软件名>/_manifest.json`**（列全要读的中英文句子），并**明确告知家长：上线前要回本机跑 edge-tts 小晓+Aria 按同名覆盖**。本机覆盖命令：`python <你的 edge-tts gen 脚本> 读 _manifest.json`（小晓/Aria 输出，FNV 同名，自动替换占位音）。**绝不能把离线音色当最终交付。**
 - **关键一致性**：网页 JS 的 `audioHash()` 与脚本 `fnv()` 必须产出完全一致的哈希（对 `lang+"|"+text` 的 UTF-8 字节做 FNV-1a，输出 8 位十六进制）；改任一处都要同步另一处，否则音频全部 404、退回机器音。
 - **范本**：照抄 `apps/eddey_english.html` 或 `apps/news_20260615.html` 里已跑通的写法（`AUDIO_DIR` + 可复用音频元素 + `audioTok` 打断保护 + audio-first 回退 + 默写"读 N 遍"）。
 
