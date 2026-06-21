@@ -325,6 +325,16 @@
           "mastery": 60,
           "trend": "flat",
           "last_seen": "2026-06-15"
+        },
+        "一般过去时(go→went/ate)": {
+          "mastery": 55,
+          "trend": "flat",
+          "last_seen": "2026-06-20"
+        },
+        "英语语序(外教Preply:by/should+原形/take the bus)": {
+          "mastery": 52,
+          "trend": "down",
+          "last_seen": "2026-06-20"
         }
       }
     }
@@ -377,6 +387,10 @@
     {
       "date": "2026-06-20",
       "text": "新建《语文表达实验室》(apps/eddey_chinese_express_lab.html)：主观题交互引导式——复述故事三步拼装机(针对最弱『复述只答一点』,点选排序+谁/做了什么/结果+口述)、阅读按点答找得分点(因为…所以…/品质+事例)。三段式:方法→动画示范→自己做+检验。"
+    },
+    {
+      "date": "2026-06-20",
+      "text": "首次用外教课复习软件 Travel & Transport(preply-travel-vocabulary)，正确率86%(120⭐)。真实薄弱=英语语序(by位置/should+动词原形/take the bus结构,错3题)、过去式、听音判对错、地道用词(take the bus≠use a bus car)；发音timetable刷23次、comfortable16次。⚠️软件『同义词配对』关5个错是日志bug(记假错题),已剔除不计入掌握度。详见 english_eddey.json 2026-06-20 session。"
     }
   ],
   "_schema": {
