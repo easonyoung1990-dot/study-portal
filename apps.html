@@ -50,15 +50,19 @@
         return;
       }
       let html = "";
+      const pad = n => (n<10?'0':'')+n;
+      const _d = new Date();
+      const todayStr = _d.getFullYear()+'-'+pad(_d.getMonth()+1)+'-'+pad(_d.getDate());
       SUBJECT_ORDER.forEach(subj => {
         let items = apps.filter(a => norm(a.subject) === subj);
         if (!who) { const seen={}, uniq=[]; items.forEach(a=>{ if(!seen[a.file]){seen[a.file]=1;uniq.push(a);} }); items = uniq; }
         if (!items.length) return;
+        items.sort((a,b)=> (b.added||"").localeCompare(a.added||"")); // 最新在前
         const m = SUBJECT_META[subj];
         html += `<div style="margin:18px 0 8px;font-weight:800;font-size:16px;color:${m.color}">${m.ico} ${subj}</div>`;
         html += items.map(a => `<a class="app-card" style="border-left-color:${m.color}" href="${a.file}">
           <span class="ico">${m.ico}</span>
-          <span><div class="t">${a.title}</div><div class="meta">${CHILD_NAME[a.child]||a.child} · 加入于 ${a.added}</div></span>
+          <span><div class="t">${a.added===todayStr?'<span style="background:#e8642f;color:#fff;font-size:11px;font-weight:800;padding:1px 7px;border-radius:8px;margin-right:5px">🆕今日</span>':''}${a.title}</div><div class="meta">${CHILD_NAME[a.child]||a.child} · 📅 ${a.added}</div></span>
         </a>`).join("");
       });
       list.innerHTML = html || '<div class="empty">还没有软件 ✨</div>';

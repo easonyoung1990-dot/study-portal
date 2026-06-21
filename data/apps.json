@@ -228,27 +228,27 @@
     "subject": "数学",
     "title": "数学 · 四下探索馆（小数数位/小数加减/三角形内角和三边/分配律/平均数·可拖动动画讲基础）",
     "file": "apps/kenton_math_lab.html",
-    "added": "2026-06-19"
+    "added": "2026-06-21"
   },
   {
     "child": "eddey",
     "subject": "数学",
     "title": "数学 · 三下探索馆（面积vs周长/两位数乘法/分数/行程/植树/元角分·可拖动动画讲基础）",
     "file": "apps/eddey_math_lab.html",
-    "added": "2026-06-19"
+    "added": "2026-06-21"
   },
   {
     "child": "kenton",
     "subject": "语文",
     "title": "错词重默 · 两娃（只默之前默错的词/句，连续默对2次自动消失）",
     "file": "apps/wrong_redo_both.html",
-    "added": "2026-06-19"
+    "added": "2026-06-21"
   },
   {
     "child": "eddey",
     "subject": "英语",
     "title": "错词重默 · 两娃（只默之前默错的词/句，连续默对2次自动消失）",
     "file": "apps/wrong_redo_both.html",
-    "added": "2026-06-19"
+    "added": "2026-06-21"
   }
 ]
