@@ -1,6 +1,20 @@
 [
   {
     "child": "kenton",
+    "subject": "英语",
+    "title": "小小世界播报 6.22（夏至天文 · 章鱼海洋）",
+    "file": "apps/news_20260622.html",
+    "added": "2026-06-22"
+  },
+  {
+    "child": "eddey",
+    "subject": "英语",
+    "title": "小小世界播报 6.22（夏至天文 · 章鱼海洋）",
+    "file": "apps/news_20260622.html",
+    "added": "2026-06-22"
+  },
+  {
+    "child": "kenton",
     "subject": "外教Preply",
     "title": "外教课复习 · Transport & should（交通/给建议/过去式·课堂改错，截图生成版）",
     "file": "apps/preply-transport-and-advice.html",
