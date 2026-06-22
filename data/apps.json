@@ -1,6 +1,20 @@
 [
   {
     "child": "kenton",
+    "subject": "外教Preply",
+    "title": "外教课复习 · Choosing Travel Destinations（选目的地·should建议·现在进行时·主谓一致·发音诊所，Denys 6.20）",
+    "file": "apps/preply-choosing-travel-destinations.html",
+    "added": "2026-06-22"
+  },
+  {
+    "child": "eddey",
+    "subject": "外教Preply",
+    "title": "外教课复习 · Choosing Travel Destinations（选目的地·should建议·现在进行时·主谓一致·发音诊所，Denys 6.20）",
+    "file": "apps/preply-choosing-travel-destinations.html",
+    "added": "2026-06-22"
+  },
+  {
+    "child": "kenton",
     "subject": "英语",
     "title": "小小世界播报 6.22（夏至天文 · 章鱼海洋）",
     "file": "apps/news_20260622.html",
