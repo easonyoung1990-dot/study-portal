@@ -2,6 +2,20 @@
   {
     "child": "kenton",
     "subject": "AI",
+    "title": "🔬 AI 学院 · 引擎室（旗舰·暗色科幻指挥中心：拆词→词向量3D星空→神经网络→注意力→训练场，手绘高维可视化讲清AI怎么思考）",
+    "file": "apps/ai_academy.html?who=kenton",
+    "added": "2026-06-25"
+  },
+  {
+    "child": "eddey",
+    "subject": "AI",
+    "title": "🔬 AI 学院 · 引擎室（旗舰·暗色科幻指挥中心：拆词→词向量3D星空→神经网络→注意力→训练场，手绘高维可视化讲清AI怎么思考）",
+    "file": "apps/ai_academy.html?who=eddey",
+    "added": "2026-06-25"
+  },
+  {
+    "child": "kenton",
+    "subject": "AI",
     "title": "AI 探索馆 · 和 AI 做朋友（预测机/配方台/侦探馆/创意工坊/安全馆/分类岛·会动地讲清AI怎么回事，激发好奇与创造）",
     "file": "apps/ai_lab.html?who=kenton",
     "added": "2026-06-25"
