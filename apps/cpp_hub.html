@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>核桃编程 · C++ 学习馆</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --orange-1:#FF6B35; --orange-2:#FF8C42; --orange-3:#FFB347;
+  --purple-1:#6B5BFF; --green-1:#2BB673; --green-2:#4ECDC4; --blue-1:#3B82F6;
+  --yellow-1:#FFD93D; --ink:#2D2A4A; --ink-soft:#5A5775;
+  --card:#fff; --shadow:0 8px 28px rgba(45,42,74,.12);
+}
+html,body{ font-family:"PingFang SC","Microsoft YaHei",sans-serif; color:var(--ink);
+  background:linear-gradient(135deg,#FFF8F0 0%,#FFE8D6 100%); min-height:100%;}
+body{ -webkit-tap-highlight-color:transparent; }
+.wrap{ max-width:680px; margin:0 auto; padding:0 16px 60px; }
+
+.hero{ text-align:center; padding:30px 16px 14px; }
+.hero .badge{ width:74px;height:74px;border-radius:20px;margin:0 auto 12px;
+  display:flex;align-items:center;justify-content:center;font-size:40px;
+  background:linear-gradient(135deg,var(--orange-1),var(--orange-2));color:#fff;
+  box-shadow:0 10px 26px rgba(255,107,53,.45);}
+.hero h1{ font-size:28px; font-weight:900; letter-spacing:-.5px; }
+.hero p{ color:var(--ink-soft); font-size:14px; margin-top:6px; line-height:1.6;}
+.home{ display:inline-block; margin-top:12px; text-decoration:none; background:#fff;
+  border:2px solid var(--orange-1); color:var(--orange-1); padding:7px 16px; border-radius:999px;
+  font-weight:800; font-size:13px; }
+
+.stats{ display:flex; gap:10px; margin:8px 0 20px; }
+.stat{ flex:1; background:var(--card); border-radius:16px; box-shadow:var(--shadow); padding:14px; text-align:center;}
+.stat b{ display:block; font-size:26px; font-weight:900; color:var(--orange-1); }
+.stat span{ font-size:12px; color:var(--ink-soft); font-weight:700;}
+
+.grouphead{ display:flex; align-items:center; gap:8px; margin:22px 4px 10px; font-size:16px; font-weight:900;}
+.grouphead .dot{ width:10px;height:10px;border-radius:50%; }
+.grouphead .cnt{ margin-left:auto; font-size:12px; color:var(--ink-soft); font-weight:700;}
+
+.lesson{ display:block; text-decoration:none; color:inherit; background:var(--card); border-radius:20px;
+  box-shadow:var(--shadow); padding:16px 16px; margin-bottom:14px; position:relative; overflow:hidden;
+  border:2px solid transparent; transition:.18s; }
+.lesson:active{ transform:scale(.985); }
+.lesson::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:6px; }
+.lesson.review::before{ background:var(--green-1); }
+.lesson.preview::before{ background:var(--blue-1); }
+.lesson.mix::before{ background:var(--orange-1); }
+.ltop{ display:flex; align-items:center; gap:10px; }
+.lcode{ font-size:12px; font-weight:900; padding:3px 9px; border-radius:999px; color:#fff; }
+.lcode.review{ background:var(--green-1); }
+.lcode.preview{ background:var(--blue-1); }
+.lcode.mix{ background:var(--orange-1); }
+.lemoji{ font-size:30px; margin-left:auto; }
+.lesson h3{ font-size:18px; font-weight:900; margin:9px 0 4px; }
+.lesson p{ font-size:13px; color:var(--ink-soft); line-height:1.6; }
+.tags{ display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+.tag{ font-size:11px; font-weight:800; background:#FFF3E8; color:#C84B1A; padding:3px 9px; border-radius:999px;}
+.tag.blue{ background:#EEF4FF; color:var(--blue-1);}
+.tag.green{ background:#EBFBF2; color:var(--green-1);}
+.go{ position:absolute; right:14px; bottom:14px; font-size:13px; font-weight:900; color:var(--orange-1);}
+.newflag{ position:absolute; top:12px; right:12px; background:var(--orange-1); color:#fff; font-size:11px;
+  font-weight:900; padding:2px 9px; border-radius:999px; box-shadow:0 3px 8px rgba(255,107,53,.4);}
+
+.note{ background:#fff; border-radius:16px; box-shadow:var(--shadow); padding:16px; margin-top:20px;
+  font-size:13px; color:var(--ink-soft); line-height:1.8;}
+.note b{ color:var(--orange-1);}
+.foot{ text-align:center; color:var(--ink-soft); font-size:12px; margin-top:18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="badge">🌰</div>
+    <h1>核桃编程 · C++ 学习馆</h1>
+    <p>把每节课的复习 / 预习软件收在一起<br>会动、能玩，先看懂"为什么"再练</p>
+    <a class="home" href="../index.html">🏠 回门户首页</a>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="stCount">3</b><span>学习软件</span></div>
+    <div class="stat"><b>L2</b><span>当前阶段</span></div>
+    <div class="stat"><b>C++</b><span>语言</span></div>
+  </div>
+
+  <div id="board"></div>
+
+  <div class="note">
+    💡 <b>怎么用</b>：先点「复习」类软件，把上节课的概念用会动的实验室再过一遍；课前再点「预习」类，提前熟悉下次课要学的东西。每个软件都有<b>跟读单词</b>、<b>可拖动/可点击的演示</b>和少量<b>理解检验</b>。<br>
+    🆕 新做的软件会带 <b>🆕</b> 标记。以后每上一节新课，这里会继续添加对应的复习 / 预习软件。
+  </div>
+  <div class="foot">核桃编程 C++ · 家庭学习门户</div>
+</div>
+
+<script>
+// C++ 学习软件清单（按课程顺序，最新在前）。以后加新课在这里追加一条即可。
+const APPS = [
+  {
+    code:'L2-4', kind:'preview', emoji:'🔢', isNew:true,
+    title:'L2-4 预习 · 赋值语句 & 变量运算',
+    desc:'模块15赋值语句初识 + 模块16简单变量运算。会动的赋值魔法盒、会跑的循环、if-else 分岔小球、命名规则、连线挑战。',
+    file:'hetao_coding_l2-4_preview.html',
+    tags:[['赋值语句','blue'],['变量循环','blue'],['if-else','blue'],['命名规则','blue']]
+  },
+  {
+    code:'L2-3', kind:'review', emoji:'🔐', isNew:true,
+    title:'L2-3 复习 · 智能密码门实验室',
+    desc:'上节课做的密码门项目。可拖动的舵机 rotateTo、能按的红外遥控 getIRKey、会拼接的密码串、if 验证开门动画。',
+    file:'hetao_coding_l2-3_review.html',
+    tags:[['rotateTo 舵机','green'],['getIRKey 遥控','green'],['字符串拼接','green'],['密码验证','green']]
+  },
+  {
+    code:'L2-2/2-3', kind:'mix', emoji:'🚀', isNew:false,
+    title:'L2-2 复习 & L2-3 预习（听读版）',
+    desc:'if-else 语句复习 + 智能门 / 密码门预习。语音听读版讲义，一句句念给孩子听。',
+    file:'hetao_coding_l2-2_l2-3.html',
+    tags:[['if-else',''],['舵机门',''],['听读版','']]
+  }
+];
+
+const KIND = {
+  review:{label:'复习',color:'var(--green-1)'},
+  preview:{label:'预习',color:'var(--blue-1)'},
+  mix:{label:'复习+预习',color:'var(--orange-1)'}
+};
+
+// 分组：复习 / 预习 / 综合
+const board=document.getElementById('board');
+function group(kind,title,dotColor){
+  const list=APPS.filter(a=>a.kind===kind);
+  if(!list.length) return;
+  const h=document.createElement('div'); h.className='grouphead';
+  h.innerHTML=`<span class="dot" style="background:${dotColor}"></span>${title}<span class="cnt">${list.length} 个</span>`;
+  board.appendChild(h);
+  list.forEach(a=>{
+    const card=document.createElement('a'); card.className='lesson '+a.kind; card.href=a.file;
+    card.innerHTML=`
+      ${a.isNew?'<span class="newflag">🆕 新</span>':''}
+      <div class="ltop">
+        <span class="lcode ${a.kind}">${a.code} · ${KIND[a.kind].label}</span>
+        <span class="lemoji">${a.emoji}</span>
+      </div>
+      <h3>${a.title}</h3>
+      <p>${a.desc}</p>
+      <div class="tags">${a.tags.map(t=>`<span class="tag ${t[1]}">${t[0]}</span>`).join('')}</div>
+      <div class="go">打开 →</div>`;
+    board.appendChild(card);
+  });
+}
+group('preview','📘 课前预习',KIND.preview.color);
+group('review','📗 课后复习',KIND.review.color);
+group('mix','📙 综合（听读版）',KIND.mix.color);
+document.getElementById('stCount').textContent=APPS.length;
+</script>
+</body>
+</html>
